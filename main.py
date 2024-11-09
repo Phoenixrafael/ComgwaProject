@@ -7,3 +7,9 @@ import pygame
 # kimdoyun likes parksieul
 
 print("Hello, world!")
+
+# line 7 is false
+
+# line 5 is true
+
+print("Hello")
