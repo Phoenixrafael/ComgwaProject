@@ -4,6 +4,7 @@ import sys, math, inspect
 class Scene():
     """
     게임의 한 장면을 맡는 Scene이라는 객체란다.
+    Scene에서 변수 선언은 전역변수를 쓰지 말고, 모두 self.~~와 같은 형태로 선언해줘.
     :param string name: Scene의 이름을 정의해. 얘는 SceneManager에서 원하는 Scene을 불러올 때 사용한단다.
     :param callable onStart: Scene이 처음 실행될 때 실행될 함수야. 주로 변수 초기화와 같은 기능을 할 때 쓰렴.
     :param callable onUpdate: Scene이 실행되는 동안 매 틱마다 실행되는 함수란다.
@@ -106,16 +107,40 @@ def makeline(sentence, color, size, position):
     font_size = pygame.font.Font(None, size)
     return [font_size.render(sentence, True, color), position]
 
-def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 100)) :
+def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(80, 80)) :
     """
     타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
-    :param sprite: 자를 타일맵 스프라이트를 지정해줘.
-    :param int column: 열의 번호를 지정해줘. (가장 왼쪽이 0)
-    :param int row: 행의 번호를 지정해줘. (가장 위쪽이 0)
-    :param (int, int) size: 타일맵의 스프라이트 크기를 지정해줘. 기본값인 (32, 32)에서 바뀔 일은 딱히 없을거야.
-    :param (int, int) displaySize: 실제로 화면에 표시될 크기를 지정해줘.
-    :return:
+    :param sprite: 자를 타일맵 스프라이트를 지정해.
+    :param int column: 몇번째 열의 스프라이트를 가져올지 지정해. (가장 왼쪽이 0)
+    :param int row: 몇번째 행의 스프라이트를 가져올지 지정해. (가장 위쪽이 0)
+    :param (int, int) size: 타일맵의 스프라이트 크기를 지정해. 기본값인 (32, 32)에서 바뀔 일은 딱히 없을거야.
+    :return 자른 이미지를 리턴한단다.
     """
-    croppedSprite = pygame.Surface(size)
+    croppedSprite = pygame.Surface(size).convert_alpha()
+    croppedSprite.fill((0, 0, 0, 0))
     croppedSprite.blit(sprite, (-column * size[0], -row * size[1]))
     return pygame.transform.scale(croppedSprite, displaySize)
+
+class Tilemap():
+    def __init__(self, columns, rows, gridSize=(80, 80)) :
+        self.columns = columns
+        self.rows = rows
+        self.spriteList = [[[] for i in range(rows)] for j in range(columns)]
+        self.gridSize = gridSize
+
+    def getMergedTiles(self):
+        mergedTile = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows))
+        for i in range(self.rows) :
+            for j in range(self.columns) :
+                for sprite in self.spriteList[j][i] :
+                    mergedTile.blit(sprite, (j * self.gridSize[0], i * self.gridSize[1]))
+        return mergedTile
+
+    def addSprite(self, columnNo, rowNo, sprite):
+        self.spriteList[columnNo][rowNo].append(sprite)
+
+    def deleteSprite(self, columnNo, rowNo, sprite):
+        try :
+            self.spriteList[columnNo][rowNo].remove(sprite)
+        except :
+            print("Warning : couldn't remove a sprite")

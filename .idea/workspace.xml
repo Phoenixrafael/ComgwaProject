@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c697d97d-9ce1-4f67-b4a3-c2552ab7742f" name="Changes" comment="cutscene 만듦, cutscene 테스트해봄">
+    <list default="true" id="c697d97d-9ce1-4f67-b4a3-c2552ab7742f" name="Changes" comment="간략한 주석 추가">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comgwa.py" beforeDir="false" afterPath="$PROJECT_DIR$/comgwa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +125,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731690295977</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="간략한 주석 추가">
+      <option name="closed" value="true" />
+      <created>1731690744089</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731690744089</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,6 +152,7 @@
     <MESSAGE value="돈 바른 에셋 파일 추가" />
     <MESSAGE value="타일맵 에셋에 원하는 좌표 지정해서 크롭하는 메서드 구현" />
     <MESSAGE value="cutscene 만듦, cutscene 테스트해봄" />
-    <option name="LAST_COMMIT_MESSAGE" value="cutscene 만듦, cutscene 테스트해봄" />
+    <MESSAGE value="간략한 주석 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="간략한 주석 추가" />
   </component>
 </project>
