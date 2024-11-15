@@ -70,7 +70,6 @@ class SceneManager():
     def run(self) :
         self.scenes[0].run()
 
-
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 100)) :
     """
     타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
@@ -84,3 +83,27 @@ def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 1
     croppedSprite = pygame.Surface(size)
     croppedSprite.blit(sprite, (-column * size[0], -row * size[1]))
     return pygame.transform.scale(croppedSprite, displaySize)
+
+class Tilemap():
+    def __init__(self, columns, rows, gridSize=(100, 100)) :
+        self.columns = columns
+        self.rows = rows
+        self.spriteList = [[[] for i in range(rows)] for j in range(columns)]
+        self.gridSize = gridSize
+
+    def getMergedTiles(self):
+        mergedTile = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows))
+        for i in range(self.rows) :
+            for j in range(self.columns) :
+                for sprite in self.spriteList[j][i] :
+                    mergedTile.blit(sprite, (j * self.gridSize[0], i * self.gridSize[1]))
+        return mergedTile
+
+    def addSprite(self, columnNo, rowNo, sprite):
+        self.spriteList[columnNo][rowNo].append(sprite)
+
+    def deleteSprite(self, columnNo, rowNo, sprite):
+        try :
+            self.spriteList[columnNo][rowNo].remove(sprite)
+        except :
+            print("Warning : couldn't remove a sprite")
