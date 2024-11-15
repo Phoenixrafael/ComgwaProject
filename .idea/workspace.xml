@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c697d97d-9ce1-4f67-b4a3-c2552ab7742f" name="Changes" comment="타일맵 에셋에 원하는 좌표 지정해서 크롭하는 메서드 구현">
+    <list default="true" id="c697d97d-9ce1-4f67-b4a3-c2552ab7742f" name="Changes" comment="comgwa.py의 코드에 주석 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comgwa.py" beforeDir="false" afterPath="$PROJECT_DIR$/comgwa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/example.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,13 +115,22 @@
       <option name="project" value="LOCAL" />
       <updated>1731680602205</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="comgwa.py의 코드에 주석 추가">
+      <option name="closed" value="true" />
+      <created>1731681582906</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731681582906</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test commit" />
     <MESSAGE value="돈 바른 에셋 파일 추가" />
     <MESSAGE value="타일맵 에셋에 원하는 좌표 지정해서 크롭하는 메서드 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="타일맵 에셋에 원하는 좌표 지정해서 크롭하는 메서드 구현" />
+    <MESSAGE value="comgwa.py의 코드에 주석 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="comgwa.py의 코드에 주석 추가" />
   </component>
 </project>
