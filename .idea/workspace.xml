@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c697d97d-9ce1-4f67-b4a3-c2552ab7742f" name="Changes" comment="comgwa.py 주석 수정">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+    <list default="true" id="c697d97d-9ce1-4f67-b4a3-c2552ab7742f" name="Changes" comment="Tilemap 클래스 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset/terrain/terrain_tiles.png" beforeDir="false" afterPath="$PROJECT_DIR$/asset/terrain/terrain_tiles.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comgwa.py" beforeDir="false" afterPath="$PROJECT_DIR$/comgwa.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -135,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731682733947</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Tilemap 클래스 구현">
+      <option name="closed" value="true" />
+      <created>1731686571809</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731686571809</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -144,6 +150,7 @@
     <MESSAGE value="타일맵 에셋에 원하는 좌표 지정해서 크롭하는 메서드 구현" />
     <MESSAGE value="comgwa.py의 코드에 주석 추가" />
     <MESSAGE value="comgwa.py 주석 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="comgwa.py 주석 수정" />
+    <MESSAGE value="Tilemap 클래스 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tilemap 클래스 구현" />
   </component>
 </project>

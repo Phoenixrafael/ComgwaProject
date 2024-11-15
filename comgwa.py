@@ -70,7 +70,7 @@ class SceneManager():
     def run(self) :
         self.scenes[0].run()
 
-def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 100)) :
+def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(80, 80)) :
     """
     타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
     :param sprite: 자를 타일맵 스프라이트를 지정해.
@@ -80,12 +80,13 @@ def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 1
     :param (int, int) displaySize: 실제로 화면에 표시될 크기를 지정해줘.
     :return: 자른 이미지를 리턴한단다.
     """
-    croppedSprite = pygame.Surface(size)
+    croppedSprite = pygame.Surface(size).convert_alpha()
+    croppedSprite.fill((0, 0, 0, 0))
     croppedSprite.blit(sprite, (-column * size[0], -row * size[1]))
     return pygame.transform.scale(croppedSprite, displaySize)
 
 class Tilemap():
-    def __init__(self, columns, rows, gridSize=(100, 100)) :
+    def __init__(self, columns, rows, gridSize=(80, 80)) :
         self.columns = columns
         self.rows = rows
         self.spriteList = [[[] for i in range(rows)] for j in range(columns)]
