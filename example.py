@@ -1,4 +1,5 @@
-import pygame, pygame.event, pygame.locals
+import pygame, pygame.event
+from pygame.locals import *
 import comgwa
 from comgwa import Scene
 
@@ -15,9 +16,9 @@ def colorScene_onUpdate(color) :
 
 def colorScene_onEvent(nextSceneName) :
     def dec_onEvent(self, event) :
-        if(event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE) :
+        if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE:
             self.manager.loadScene(self, nextSceneName)
-        if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_RETURN):
+        if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_RETURN:
             self.counter += 1
             print("Hello, enter is pushed! this is scene", self.name, "and counter is ", self.counter)
     return dec_onEvent
@@ -28,5 +29,4 @@ blueScene = comgwa.Scene("blueScene", colorScene_onStart, colorScene_onUpdate((0
 
 scenes = [redScene, greenScene, blueScene]
 manager = comgwa.SceneManager(scenes)
-comgwa.SceneManager()
 manager.run()

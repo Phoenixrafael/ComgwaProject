@@ -1,5 +1,6 @@
 import pygame, pygame.event, pygame.locals
 import comgwa
+pygame.init()
 
 '''
 게임에 필요한 파일(Asset) 및 불러오기 메서드 정의

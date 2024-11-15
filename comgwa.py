@@ -12,7 +12,7 @@ class Scene():
     :param (int, int) displaySize: 해당 Scene의 화면 크기를 나타내는 변수야. 기본값은 (1280, 720)이란다.
     """
     def __init__(self, name, onStart=None, onUpdate=None, onEvent=None, tick=60, displaySize=(1280, 720)):
-        assert onStart == None or callable(onStart), "onStart는 함수여야합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
+        assert onStart == None or callable(onStart), "onStart는 함수여야 합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
         assert onUpdate == None or callable(onUpdate), "onUpdate는 함수여야 합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
         assert onEvent == None or callable(onEvent), "onEvent는 함수여야 합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
         assert onStart == None or list(inspect.signature(onStart).parameters.keys()) == ["self"], \
@@ -52,25 +52,60 @@ class SceneManager():
     여러 개의 Scene들을 합쳐서 관리하는 개쩌는 객체입니다.
     :param list[Scene] scenes: 관리할 Scene 객체의 리스트입니다.
     """
-    def __init__(self, scenes) :
+    def __init__(self, scenes):
         assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재합니다;; 똥강아지야;"
-        for scene in scenes :
+        for scene in scenes:
             scene.manager = self
         self.scenes = scenes
 
-    def loadScene(self, thisScene, sceneName) :
+    def loadScene(self, thisScene, sceneName):
         targetScene = None
-        for scene in self.scenes :
+        for scene in self.scenes:
             if(scene.name == sceneName) : targetScene = scene
-        if(targetScene != None) :
+        if targetScene != None:
             thisScene.stop = True
             targetScene.run()
     
-    def run(self) :
+    def run(self):
         self.scenes[0].run()
 
+class CutScene:
+    def __init__(self, name, background, lines, displaySize=(1280, 720)):
+        self.name = name
+        self.surface = pygame.display.set_mode(displaySize)
+        self.background = background
+        self.surface.blit(background, (0, 0))
+        self.lines = lines # 대사 목록
+        self.lineindex = 0
+        pygame.display.flip()
 
-def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 100)) :
+    def run(self):
+        end = 0
+        while True:
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.locals.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE:
+                    if self.lineindex == len(self.lines):
+                        end = 1; break
+                    self.surface.fill((0, 0, 0))
+                    self.surface.blit(self.background, (0, 0))
+                    for text_info in self.lines[self.lineindex]:
+                        text = text_info[0]
+                        text_rect = text.get_rect(center = text_info[1])
+                        self.surface.blit(text, text_rect)
+                    pygame.display.flip()
+                    self.lineindex += 1
+
+            if end: break
+
+def makeline(sentence, color, size, position):
+    font_size = pygame.font.Font(None, size)
+    return [font_size.render(sentence, True, color), position]
+
+def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 100)):
     """
     타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
     :param sprite: 자를 타일맵 스프라이트를 지정해줘.
