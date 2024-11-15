@@ -41,9 +41,9 @@ class Scene():
                 if event.type == pygame.locals.QUIT:
                     pygame.quit()
                     sys.exit()
-                else :
+                else:
                     self.stop = self.stop or self.onEvent(self, event)
-            if self.stop : break
+            if self.stop: break
             pygame.time.Clock().tick(self.tick)
 
 
@@ -52,17 +52,17 @@ class SceneManager():
     여러 개의 Scene들을 합쳐서 관리하는 개쩌는 객체입니다.
     :param list[Scene] scenes: 관리할 Scene 객체의 리스트입니다.
     """
-    def __init__(self, scenes) :
+    def __init__(self, scenes):
         assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재합니다;; 똥강아지야;"
-        for scene in scenes :
+        for scene in scenes:
             scene.manager = self
         self.scenes = scenes
 
-    def loadScene(self, thisScene, sceneName) :
+    def loadScene(self, thisScene, sceneName):
         targetScene = None
-        for scene in self.scenes :
-            if(scene.name == sceneName) : targetScene = scene
-        if(targetScene != None) :
+        for scene in self.scenes:
+            if(scene.name == sceneName): targetScene = scene
+        if targetScene != None:
             thisScene.stop = True
             targetScene.run()
     
@@ -75,7 +75,7 @@ class CutScene:
         self.surface = pygame.display.set_mode(displaySize)
         self.background = background
         self.surface.blit(background, (0, 0))
-        self.lines = lines # 대사 목록
+        self.lines = lines # 대사 목록, 시용법은 cutscenetest.py 참고
         self.lineindex = 0
         pygame.display.flip()
 
@@ -102,6 +102,7 @@ class CutScene:
             if end: break
 
 def makeline(sentence, color, size, position):
+    """ 대사 text 객체를 만드는 함수, lines에 넣어서 사용 """
     font_size = pygame.font.Font(None, size)
     return [font_size.render(sentence, True, color), position]
 
