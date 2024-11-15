@@ -69,6 +69,41 @@ class SceneManager():
     def run(self) :
         self.scenes[0].run()
 
+class CutScene:
+    def __init__(self, name, background, lines, displaySize=(1280, 720)):
+        self.name = name
+        self.surface = pygame.display.set_mode(displaySize)
+        self.background = background
+        self.surface.blit(background, (0, 0))
+        self.lines = lines # 대사 목록
+        self.lineindex = 0
+        pygame.display.flip()
+
+    def run(self):
+        end = 0
+        while True:
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.locals.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE:
+                    if self.lineindex == len(self.lines):
+                        end = 1; break
+                    self.surface.fill((0, 0, 0))
+                    self.surface.blit(self.background, (0, 0))
+                    for text_info in self.lines[self.lineindex]:
+                        text = text_info[0]
+                        text_rect = text.get_rect(center = text_info[1])
+                        self.surface.blit(text, text_rect)
+                    pygame.display.flip()
+                    self.lineindex += 1
+
+            if end: break
+
+def makeline(sentence, color, size, position):
+    font_size = pygame.font.Font(None, size)
+    return [font_size.render(sentence, True, color), position]
 
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 100)) :
     """
