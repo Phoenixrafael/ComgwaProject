@@ -1,5 +1,7 @@
 import pygame, pygame.event, pygame.locals
 import comgwa
+from comgwa import Scene
+
 
 ## comgwa 라이브러리 테스트용 코드입니다 :)
 
@@ -26,4 +28,5 @@ blueScene = comgwa.Scene("blueScene", colorScene_onStart, colorScene_onUpdate((0
 
 scenes = [redScene, greenScene, blueScene]
 manager = comgwa.SceneManager(scenes)
+comgwa.SceneManager()
 manager.run()
