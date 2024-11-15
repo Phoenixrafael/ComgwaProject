@@ -5,7 +5,7 @@ import sys, math, inspect
 
 '''
 class Scene():
-    def __init__(self, name, onStart=None, onUpdate=None, onEvent=None, tick=60):
+    def __init__(self, name, onStart=None, onUpdate=None, onEvent=None, tick=60, displaySize=(1280, 720)):
         assert onStart == None or callable(onStart), "onStart는 함수여야합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
         assert onUpdate == None or callable(onUpdate), "onUpdate는 함수여야 합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
         assert onEvent == None or callable(onEvent), "onEvent는 함수여야 합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
@@ -21,7 +21,7 @@ class Scene():
         self.onEvent = onEvent if onEvent != None else lambda self, event : 0
         self.tick = tick
         self.name = name
-        self.surface = pygame.display.set_mode((1080, 720))
+        self.surface = pygame.display.set_mode(displaySize)
         self.manager = None
         self.stop = False
 
@@ -61,3 +61,8 @@ class SceneManager():
     
     def run(self) :
         self.scenes[0].run()
+
+def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(100, 100)) :
+    croppedSprite = pygame.Surface(size)
+    croppedSprite.blit(sprite, (-column * size[0], -row * size[1]))
+    return pygame.transform.scale(croppedSprite, displaySize)
