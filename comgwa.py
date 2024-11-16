@@ -102,7 +102,7 @@ class CutScene(Scene):
 
             if end: break
 
-def makeline(sentence, color, size, position):
+def makeLine(sentence, color, size, position):
     """
     대사 text 객체를 만드는 함수, lines에 넣어서 사용
     :param string sentence: 얘는 말할 대사를 의미하는듯 하구나.
