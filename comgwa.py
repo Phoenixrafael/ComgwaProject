@@ -1,6 +1,7 @@
 import pygame, pygame.event, pygame.locals
 import sys, math, inspect
 
+
 class Scene():
     """
     게임의 한 장면을 맡는 Scene이라는 객체란다.
@@ -113,7 +114,7 @@ def makeLine(sentence, color, size, position):
     font_size = pygame.font.Font(None, size)
     return [font_size.render(sentence, True, color), position]
 
-def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(80, 80)) :
+def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """
     타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
     :param sprite: 자를 타일맵 스프라이트를 지정해.
@@ -125,7 +126,7 @@ def getSpriteFromTileMap(sprite, column, row, size=(32, 32), displaySize=(80, 80
     croppedSprite = pygame.Surface(size).convert_alpha()
     croppedSprite.fill((0, 0, 0, 0))
     croppedSprite.blit(sprite, (-column * size[0], -row * size[1]))
-    return pygame.transform.scale(croppedSprite, displaySize)
+    return croppedSprite
 
 class Tilemap():
     def __init__(self, columns, rows, gridSize=(80, 80)) :
@@ -134,12 +135,12 @@ class Tilemap():
         self.spriteList = [[[] for i in range(rows)] for j in range(columns)]
         self.gridSize = gridSize
 
-    def getMergedTiles(self):
+    def getMapSprite(self):
         mergedTile = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows))
         for i in range(self.rows) :
             for j in range(self.columns) :
                 for sprite in self.spriteList[j][i] :
-                    mergedTile.blit(sprite, (j * self.gridSize[0], i * self.gridSize[1]))
+                    mergedTile.blit(pygame.transform.scale(sprite, self.gridSize), (j * self.gridSize[0], i * self.gridSize[1]))
         return mergedTile
 
     def addSprite(self, columnNo, rowNo, sprite):
@@ -150,3 +151,45 @@ class Tilemap():
             self.spriteList[columnNo][rowNo].remove(sprite)
         except :
             print("Warning : couldn't remove a sprite")
+
+    def clearSprites(self):
+        self.spriteList = [[[] for i in range(self.rows)] for j in range(self.columns)]
+
+class Map(Tilemap):
+    """
+    게임의 맵을 관리하는 클래스임니다.
+    :param string mapStr: ㅁㄴㅇㄹ
+    :param dictionary spriteDict: ㅁㄴㅇㄹ
+    """
+    def __init__(self, mapStr, spriteDict, gridSize=(80, 80)):
+        self.updateMap(mapStr)
+        self.spriteDict = spriteDict
+        super().__init__(len(self.bitArray[0]), len(self.bitArray), gridSize)
+
+    def updateMap(self, mapStr):
+        lines = [i for i in list(mapStr.split()) if i != ""]
+        self.bitArray = []
+        for line in lines :
+            bits = []
+            for char in line :
+                bits.append(0 if char=='_' else 1)
+            self.bitArray.append(bits)
+
+    def getBit(self, i, j):
+        if(not (0 <= i < len(self.bitArray))) : return 0
+        if(not (0 <= j < len(self.bitArray[0]))) : return 0
+        return self.bitArray[i][j]
+
+    def getSprite(self, i, j):
+        return self.spriteDict[(self.getBit(i-1, j),
+                                self.getBit(i, j-1),
+                                self.getBit(i+1, j),
+                                self.getBit(i, j+1))]
+
+    def getMapSprite(self):
+        self.clearSprites()
+        for i in range(len(self.bitArray)) :
+            for j in range(len(self.bitArray[0])) :
+                self.addSprite(j, i, self.spriteDict[0])
+                if(self.getBit(i, j)) : self.addSprite(j, i, self.getSprite(i, j))
+        return super().getMapSprite()
