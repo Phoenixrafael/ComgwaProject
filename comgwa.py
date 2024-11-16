@@ -161,9 +161,10 @@ class Map(Tilemap):
     :param string mapStr: ㅁㄴㅇㄹ
     :param dictionary spriteDict: ㅁㄴㅇㄹ
     """
-    def __init__(self, mapStr, spriteDict, gridSize=(80, 80)):
+    def __init__(self, mapStr, spriteDict, isTall=True, gridSize=(80, 80)):
         self.updateMap(mapStr)
         self.spriteDict = spriteDict
+        self.isTall = isTall
         super().__init__(len(self.bitArray[0]), len(self.bitArray), gridSize)
 
     def updateMap(self, mapStr):
@@ -182,22 +183,28 @@ class Map(Tilemap):
 
     def placeSprite(self, i, j):
         if(self.getBit(i, j)) :
-            self.addSprite(j, i, self.spriteDict[(self.getBit(i-1, j), self.getBit(i, j-1),
+            if(self.isTall) : self.addSprite(j, i, self.spriteDict[(3, 0)])
+            self.addSprite(j, i, self.spriteDict[(1, self.getBit(i-1, j), self.getBit(i, j-1),
                                                   self.getBit(i+1, j), self.getBit(i, j+1))])
             if(self.getBit(i-1, j) and self.getBit(i, j-1) and (not self.getBit(i-1, j-1))) :
-                self.addSprite(j, i, self.spriteDict[1])
+                self.addSprite(j, i, self.spriteDict[(2, 1)])
             if(self.getBit(i+1, j) and self.getBit(i, j-1) and (not self.getBit(i+1, j-1))) :
-                self.addSprite(j, i, self.spriteDict[4])
+                self.addSprite(j, i, self.spriteDict[(2, 4)])
             if(self.getBit(i+1, j) and self.getBit(i, j+1) and (not self.getBit(i+1, j+1))) :
-                self.addSprite(j, i, self.spriteDict[3])
+                self.addSprite(j, i, self.spriteDict[(2, 3)])
             if(self.getBit(i-1, j) and self.getBit(i, j+1) and (not self.getBit(i-1, j+1))) :
-                self.addSprite(j, i, self.spriteDict[2])
+                self.addSprite(j, i, self.spriteDict[(2, 2)])
+        elif(self.isTall) :
+            if(self.getBit(i-1, j)) :
+                self.addSprite(j, i, self.spriteDict[(3, self.getBit(i-1, j-1), self.getBit(i-1, j+1))])
+
+
 
 
     def getMapSprite(self):
         self.clearSprites()
         for i in range(len(self.bitArray)) :
             for j in range(len(self.bitArray[0])) :
-                self.addSprite(j, i, self.spriteDict[0])
+                self.addSprite(j, i, self.spriteDict[(0)])
                 self.placeSprite(i, j)
         return super().getMapSprite()
