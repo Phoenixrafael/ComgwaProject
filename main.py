@@ -32,6 +32,10 @@ terrainDict[(0, 1, 0, 1)] = getSpriteFromTileMap(terrain, 1, 3)
 terrainDict[(0, 1, 0, 0)] = getSpriteFromTileMap(terrain, 2, 3)
 terrainDict[(0, 0, 0, 0)] = getSpriteFromTileMap(terrain, 3, 3)
 terrainDict[0] = getSpriteFromTileMap(terrain, 2, 4)
+terrainDict[1] = getSpriteFromTileMap(terrain, 4, 0)
+terrainDict[2] = getSpriteFromTileMap(terrain, 5, 0)
+terrainDict[3] = getSpriteFromTileMap(terrain, 6, 0)
+terrainDict[4] = getSpriteFromTileMap(terrain, 7, 0)
 
 '''
 테스트용 코드
@@ -42,11 +46,12 @@ def testUpdate(self) :
     map = comgwa.Map(
         """
         _____________
-        __________oo_
-        _____ooo__o__
-        _______ooooo_
-        ________ooo__
-        _ooooooooo___
+        _________ooo_
+        _ooo_____o_o_
+        _____________
+        _oo_______oo_
+        __oo_____oo__
+        ___ooooooo___
         _____________
         """, terrainDict
     )

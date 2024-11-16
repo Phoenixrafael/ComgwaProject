@@ -180,16 +180,24 @@ class Map(Tilemap):
         if(not (0 <= j < len(self.bitArray[0]))) : return 0
         return self.bitArray[i][j]
 
-    def getSprite(self, i, j):
-        return self.spriteDict[(self.getBit(i-1, j),
-                                self.getBit(i, j-1),
-                                self.getBit(i+1, j),
-                                self.getBit(i, j+1))]
+    def placeSprite(self, i, j):
+        if(self.getBit(i, j)) :
+            self.addSprite(j, i, self.spriteDict[(self.getBit(i-1, j), self.getBit(i, j-1),
+                                                  self.getBit(i+1, j), self.getBit(i, j+1))])
+            if(self.getBit(i-1, j) and self.getBit(i, j-1) and (not self.getBit(i-1, j-1))) :
+                self.addSprite(j, i, self.spriteDict[1])
+            if(self.getBit(i+1, j) and self.getBit(i, j-1) and (not self.getBit(i+1, j-1))) :
+                self.addSprite(j, i, self.spriteDict[4])
+            if(self.getBit(i+1, j) and self.getBit(i, j+1) and (not self.getBit(i+1, j+1))) :
+                self.addSprite(j, i, self.spriteDict[3])
+            if(self.getBit(i-1, j) and self.getBit(i, j+1) and (not self.getBit(i-1, j+1))) :
+                self.addSprite(j, i, self.spriteDict[2])
+
 
     def getMapSprite(self):
         self.clearSprites()
         for i in range(len(self.bitArray)) :
             for j in range(len(self.bitArray[0])) :
                 self.addSprite(j, i, self.spriteDict[0])
-                if(self.getBit(i, j)) : self.addSprite(j, i, self.getSprite(i, j))
+                self.placeSprite(i, j)
         return super().getMapSprite()
