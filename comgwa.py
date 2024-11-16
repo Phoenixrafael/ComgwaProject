@@ -70,7 +70,7 @@ class SceneManager():
     def run(self) :
         self.scenes[0].run()
 
-class CutScene:
+class CutScene(Scene):
     def __init__(self, name, background, lines, displaySize=(1280, 720)):
         self.name = name
         self.surface = pygame.display.set_mode(displaySize)
@@ -103,7 +103,13 @@ class CutScene:
             if end: break
 
 def makeline(sentence, color, size, position):
-    """ 대사 text 객체를 만드는 함수, lines에 넣어서 사용 """
+    """
+    대사 text 객체를 만드는 함수, lines에 넣어서 사용
+    :param string sentence: 얘는 말할 대사를 의미하는듯 하구나.
+    :param color: 대사의 색을 의미하는듯 하구나.
+    :param int size: 대사의 크기를 의미하는듯 하구나.
+    :param (int, int) position: 대사를 표시할 위치를 의마하는듯 하구나.
+    """
     font_size = pygame.font.Font(None, size)
     return [font_size.render(sentence, True, color), position]
 
