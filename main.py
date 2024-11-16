@@ -8,10 +8,10 @@ from comgwa import getSpriteFromTileMap
 
 pygame.init()
 pygame.display.set_mode((1280, 720))
-stanleySprite = pygame.image.load("asset//character//stanley.png").convert_alpha()
-zeroSprite = pygame.image.load("asset//character//zero.png").convert_alpha()
-terrain1 = pygame.image.load("asset//terrain//terrain_tiles.png").convert_alpha()
-terrain2 = pygame.image.load("asset//terrain//water_and_island_tiles.png").convert_alpha()
+stanleySprite = pygame.image.load("asset//sprite//character//stanley.png").convert_alpha()
+zeroSprite = pygame.image.load("asset//sprite//character//zero.png").convert_alpha()
+terrain1 = pygame.image.load("asset//sprite//terrain//terrain_tiles.png").convert_alpha()
+terrain2 = pygame.image.load("asset//sprite//terrain//water_and_island_tiles.png").convert_alpha()
 
 
 '''
