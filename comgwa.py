@@ -99,7 +99,10 @@ class CutScene(Scene):
                     self.surface.blit(self.lineback, (160, 470))
                     for text_info in self.lines[self.lineindex]:
                         text = text_info[0]
-                        text_rect = text.get_rect(center = text_info[1])
+                        if text_info[2] == 1:
+                            text_rect = text.get_rect(center = text_info[1])
+                        else:
+                            text_rect = text.get_rect(midleft = text_info[1])
                         self.surface.blit(text, text_rect)
                     pygame.display.flip()
                     self.lineindex += 1
@@ -154,16 +157,18 @@ def makeLine(sentence, color, size, position):
     :param int size: 대사의 크기를 의미하는듯 하구나.
     :param position: 대사를 표시할 위치를 의마하는듯 하구나.
     """
+    type = 0
     if position == "person":
+        type = 1
         position = (309, 521)
     elif position == "oneline":
-        position = (640, 620)
+        position = (230, 630)
     elif position == "twoline1":
-        position = (640, 600)
+        position = (230, 608)
     elif position == "twoline2":
-        position = (640, 650)
+        position = (230, 658)
     font_size = pygame.font.Font(None, size)
-    return [font_size.render(sentence, True, color), position]
+    return [font_size.render(sentence, True, color), position, type]
 
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """

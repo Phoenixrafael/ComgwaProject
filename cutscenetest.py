@@ -21,7 +21,7 @@ person3 = comgwa.makeLine("Warden", black, 50, "person")
 
 line1 = comgwa.makeLine("Hello!", black, 50, "oneline")
 line2 = comgwa.makeLine("Hi!", black, 50, "twoline1")
-line3 = comgwa.makeLine("I'm hungry.", magenta, 60, "twoline2")
+line3 = comgwa.makeLine("I'm hungry.", magenta, 50, "twoline2")
 line4 = comgwa.makeLine("Wow!", black, 50, "oneline")
 line5 = comgwa.makeLine("Thank you for your efforts, Sieul!", red, 70, "oneline")
 
