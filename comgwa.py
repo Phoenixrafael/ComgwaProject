@@ -48,7 +48,6 @@ class Scene():
             if self.stop: break
             pygame.time.Clock().tick(self.tick)
 
-
 class SceneManager():
     """
     여러 개의 Scene들을 합쳐서 관리하는 개쩌는 객체입니다.
@@ -103,8 +102,30 @@ class CutScene(Scene):
 
             if end: break
 
+# todo
 # class LevelScene(Scene):
-#     def __init__(self, mapStr, ):
+#     """
+#     레벨을 관리하는 씬 객체입니다.
+#     :param list[(str, dict)] terrains: ㅁㄴㅇㄹ
+#     """
+#     def __init__(self, terrains, objects):
+#         self.terrains = terrains
+#         self.objects = objects
+#
+#     def onStart(self):
+#         def onStartDeco(self):
+#             pass
+#         return onStartDeco
+#
+#     def onUpdate(self):
+#         def onUpdateDeco(self):
+#             pass
+#         return onUpdateDeco
+#
+#     def onEvent(self):
+#         def onEventDeco(self):
+#             pass
+#         return onEventDeco
 
 def makeLine(sentence, color, size, position):
     """
@@ -132,9 +153,16 @@ def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     return croppedSprite
 
 def getTerrainDict(terrainTilemapSprite) :
+    """
+    어쩌고저쩌고.png 파일을 실제 맵에 놓을 수 있는 파일의 형태로 바꿔주는 아이입니다. 아마도?
+    :param terrainTilemapSprite: 어쩌고저쩌고.png 파일을 load한 아이를 여따 넣으세요.
+    :return: terrainDict라고 불리우는 정제된 무언가를 내놓습니다.
+    """
     terrain = terrainTilemapSprite
     terrainDict = dict()
-    terrainDict[(0)] = getSpriteFromTileMap(terrain, 5, 3)
+    # 0으로 시작하는 아이는 빈 칸입니다.
+    terrainDict[(0,)] = getSpriteFromTileMap(terrain, 5, 3)
+    # 1로 시작하는 아이는 (1, W연결, A연결, S연결, D연결)을 의미합니다.
     terrainDict[(1, 0, 0, 1, 1)] = getSpriteFromTileMap(terrain, 0, 0)
     terrainDict[(1, 0, 1, 1, 1)] = getSpriteFromTileMap(terrain, 1, 0)
     terrainDict[(1, 0, 1, 1, 0)] = getSpriteFromTileMap(terrain, 2, 0)
@@ -151,11 +179,13 @@ def getTerrainDict(terrainTilemapSprite) :
     terrainDict[(1, 0, 1, 0, 1)] = getSpriteFromTileMap(terrain, 1, 3)
     terrainDict[(1, 0, 1, 0, 0)] = getSpriteFromTileMap(terrain, 2, 3)
     terrainDict[(1, 0, 0, 0, 0)] = getSpriteFromTileMap(terrain, 3, 3)
+    # 2로 시작하는 아이는 (2, 좌상비어있음, 우상비어있음, 우하비어있음, 좌하비어있음)을 의미합니다.
     terrainDict[(2, 1)] = getSpriteFromTileMap(terrain, 4, 0)
     terrainDict[(2, 2)] = getSpriteFromTileMap(terrain, 5, 0)
     terrainDict[(2, 3)] = getSpriteFromTileMap(terrain, 6, 0)
     terrainDict[(2, 4)] = getSpriteFromTileMap(terrain, 7, 0)
     terrainDict[(3, 0)] = getSpriteFromTileMap(terrain, 4, 3)
+    # 3, 4으로 시작하는 아이는 (연결중이면3아니면4, 좌측연결여부, 우측연결여부)을 의미합니다.
     terrainDict[(3, 0, 0)] = getSpriteFromTileMap(terrain, 7, 2)
     terrainDict[(3, 0, 1)] = getSpriteFromTileMap(terrain, 4, 2)
     terrainDict[(3, 1, 0)] = getSpriteFromTileMap(terrain, 6, 2)
@@ -167,6 +197,11 @@ def getTerrainDict(terrainTilemapSprite) :
     return terrainDict
 
 class Tilemap():
+    """
+    게임의 타일맵을 관리하는 클래스입니다.
+    :param int columns: 열의 개수를 의미합니다.
+    :param int rows: 열의 개수를 의미합니다.
+    """
     def __init__(self, columns, rows, gridSize=(80, 80)) :
         self.columns = columns
         self.rows = rows
@@ -196,9 +231,11 @@ class Tilemap():
 
 class TerrainMap(Tilemap):
     """
-    게임의 맵을 관리하는 클래스임니다.
-    :param string mapStr: ㅁㄴㅇㄹ
-    :param dictionary terrainDict: ㅁㄴㅇㄹ
+    게임의 지형(같은 애들끼리 연결되서 막 난리나는 애들)을 관리하는 클래스일껄?
+    :param string mapStr: _는 빈 칸, 나머지 아무 문자는 채운 칸을 의미할껄?
+    :param dictionary terrainDict: 그냥 내가 위에 만들어놓은 어쩌고Terrain으로 끝나는 그거 넣으면 될껄?
+    :param int height: 얼마나 높게 띄울건지 정하는거일껄?
+    :param (int, int) gridSize: 한 칸이 어느정도 사이즈로 표시될지일껄?
     """
     def __init__(self, mapStr, terrainDict, height=1, gridSize=(80, 80)):
         self.updateMap(mapStr)
@@ -242,6 +279,6 @@ class TerrainMap(Tilemap):
         self.clearSprites()
         for i in range(len(self.bitArray)) :
             for j in range(len(self.bitArray[0])) :
-                self.addSprite(j, i, self.terrainDict[(0)])
+                self.addSprite(j, i, self.terrainDict[(0,)])
                 self.placeSprite(i, j)
         return super().getMapSprite()
