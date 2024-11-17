@@ -103,6 +103,9 @@ class CutScene(Scene):
 
             if end: break
 
+# class LevelScene(Scene):
+#     def __init__(self, mapStr, ):
+
 def makeLine(sentence, color, size, position):
     """
     대사 text 객체를 만드는 함수, lines에 넣어서 사용
@@ -128,6 +131,41 @@ def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     croppedSprite.blit(sprite, (-column * size[0], -row * size[1]))
     return croppedSprite
 
+def getTerrainDict(terrainTilemapSprite) :
+    terrain = terrainTilemapSprite
+    terrainDict = dict()
+    terrainDict[(0)] = getSpriteFromTileMap(terrain, 5, 3)
+    terrainDict[(1, 0, 0, 1, 1)] = getSpriteFromTileMap(terrain, 0, 0)
+    terrainDict[(1, 0, 1, 1, 1)] = getSpriteFromTileMap(terrain, 1, 0)
+    terrainDict[(1, 0, 1, 1, 0)] = getSpriteFromTileMap(terrain, 2, 0)
+    terrainDict[(1, 0, 0, 1, 0)] = getSpriteFromTileMap(terrain, 3, 0)
+    terrainDict[(1, 1, 0, 1, 1)] = getSpriteFromTileMap(terrain, 0, 1)
+    terrainDict[(1, 1, 1, 1, 1)] = getSpriteFromTileMap(terrain, 1, 1)
+    terrainDict[(1, 1, 1, 1, 0)] = getSpriteFromTileMap(terrain, 2, 1)
+    terrainDict[(1, 1, 0, 1, 0)] = getSpriteFromTileMap(terrain, 3, 1)
+    terrainDict[(1, 1, 0, 0, 1)] = getSpriteFromTileMap(terrain, 0, 2)
+    terrainDict[(1, 1, 1, 0, 1)] = getSpriteFromTileMap(terrain, 1, 2)
+    terrainDict[(1, 1, 1, 0, 0)] = getSpriteFromTileMap(terrain, 2, 2)
+    terrainDict[(1, 1, 0, 0, 0)] = getSpriteFromTileMap(terrain, 3, 2)
+    terrainDict[(1, 0, 0, 0, 1)] = getSpriteFromTileMap(terrain, 0, 3)
+    terrainDict[(1, 0, 1, 0, 1)] = getSpriteFromTileMap(terrain, 1, 3)
+    terrainDict[(1, 0, 1, 0, 0)] = getSpriteFromTileMap(terrain, 2, 3)
+    terrainDict[(1, 0, 0, 0, 0)] = getSpriteFromTileMap(terrain, 3, 3)
+    terrainDict[(2, 1)] = getSpriteFromTileMap(terrain, 4, 0)
+    terrainDict[(2, 2)] = getSpriteFromTileMap(terrain, 5, 0)
+    terrainDict[(2, 3)] = getSpriteFromTileMap(terrain, 6, 0)
+    terrainDict[(2, 4)] = getSpriteFromTileMap(terrain, 7, 0)
+    terrainDict[(3, 0)] = getSpriteFromTileMap(terrain, 4, 3)
+    terrainDict[(3, 0, 0)] = getSpriteFromTileMap(terrain, 7, 2)
+    terrainDict[(3, 0, 1)] = getSpriteFromTileMap(terrain, 4, 2)
+    terrainDict[(3, 1, 0)] = getSpriteFromTileMap(terrain, 6, 2)
+    terrainDict[(3, 1, 1)] = getSpriteFromTileMap(terrain, 5, 2)
+    terrainDict[(4, 0, 0)] = getSpriteFromTileMap(terrain, 7, 1)
+    terrainDict[(4, 0, 1)] = getSpriteFromTileMap(terrain, 4, 1)
+    terrainDict[(4, 1, 0)] = getSpriteFromTileMap(terrain, 6, 1)
+    terrainDict[(4, 1, 1)] = getSpriteFromTileMap(terrain, 5, 1)
+    return terrainDict
+
 class Tilemap():
     def __init__(self, columns, rows, gridSize=(80, 80)) :
         self.columns = columns
@@ -136,11 +174,12 @@ class Tilemap():
         self.gridSize = gridSize
 
     def getMapSprite(self):
-        mergedTile = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows))
+        mergedTile = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows)).convert_alpha()
+        mergedTile.fill((0, 0, 0, 0))
         for i in range(self.rows) :
             for j in range(self.columns) :
                 for sprite in self.spriteList[j][i] :
-                    mergedTile.blit(pygame.transform.scale(sprite, self.gridSize), (j * self.gridSize[0], i * self.gridSize[1]))
+                    mergedTile.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(), (j * self.gridSize[0], i * self.gridSize[1]))
         return mergedTile
 
     def addSprite(self, columnNo, rowNo, sprite):
@@ -155,16 +194,16 @@ class Tilemap():
     def clearSprites(self):
         self.spriteList = [[[] for i in range(self.rows)] for j in range(self.columns)]
 
-class Map(Tilemap):
+class TerrainMap(Tilemap):
     """
     게임의 맵을 관리하는 클래스임니다.
     :param string mapStr: ㅁㄴㅇㄹ
-    :param dictionary spriteDict: ㅁㄴㅇㄹ
+    :param dictionary terrainDict: ㅁㄴㅇㄹ
     """
-    def __init__(self, mapStr, spriteDict, isTall=True, gridSize=(80, 80)):
+    def __init__(self, mapStr, terrainDict, height=1, gridSize=(80, 80)):
         self.updateMap(mapStr)
-        self.spriteDict = spriteDict
-        self.isTall = isTall
+        self.terrainDict = terrainDict
+        self.height = height
         super().__init__(len(self.bitArray[0]), len(self.bitArray), gridSize)
 
     def updateMap(self, mapStr):
@@ -183,28 +222,26 @@ class Map(Tilemap):
 
     def placeSprite(self, i, j):
         if(self.getBit(i, j)) :
-            if(self.isTall) : self.addSprite(j, i, self.spriteDict[(3, 0)])
-            self.addSprite(j, i, self.spriteDict[(1, self.getBit(i-1, j), self.getBit(i, j-1),
-                                                  self.getBit(i+1, j), self.getBit(i, j+1))])
+            if(self.height) : self.addSprite(j, i, self.terrainDict[(3, 0)])
+            self.addSprite(j, i, self.terrainDict[(1, self.getBit(i - 1, j), self.getBit(i, j - 1),
+                                                   self.getBit(i+1, j), self.getBit(i, j+1))])
             if(self.getBit(i-1, j) and self.getBit(i, j-1) and (not self.getBit(i-1, j-1))) :
-                self.addSprite(j, i, self.spriteDict[(2, 1)])
+                self.addSprite(j, i, self.terrainDict[(2, 1)])
             if(self.getBit(i+1, j) and self.getBit(i, j-1) and (not self.getBit(i+1, j-1))) :
-                self.addSprite(j, i, self.spriteDict[(2, 4)])
+                self.addSprite(j, i, self.terrainDict[(2, 4)])
             if(self.getBit(i+1, j) and self.getBit(i, j+1) and (not self.getBit(i+1, j+1))) :
-                self.addSprite(j, i, self.spriteDict[(2, 3)])
+                self.addSprite(j, i, self.terrainDict[(2, 3)])
             if(self.getBit(i-1, j) and self.getBit(i, j+1) and (not self.getBit(i-1, j+1))) :
-                self.addSprite(j, i, self.spriteDict[(2, 2)])
-        elif(self.isTall) :
-            if(self.getBit(i-1, j)) :
-                self.addSprite(j, i, self.spriteDict[(3, self.getBit(i-1, j-1), self.getBit(i-1, j+1))])
-
-
-
+                self.addSprite(j, i, self.terrainDict[(2, 2)])
+        elif(self.height) :
+            for k in range(1, self.height+1) :
+                if(self.getBit(i-k, j)) :
+                    self.addSprite(j, i, self.terrainDict[(3 if (self.height == k) else 4, self.getBit(i - k, j - 1), self.getBit(i - k, j + 1))])
 
     def getMapSprite(self):
         self.clearSprites()
         for i in range(len(self.bitArray)) :
             for j in range(len(self.bitArray[0])) :
-                self.addSprite(j, i, self.spriteDict[(0)])
+                self.addSprite(j, i, self.terrainDict[(0)])
                 self.placeSprite(i, j)
         return super().getMapSprite()
