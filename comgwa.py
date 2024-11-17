@@ -102,30 +102,45 @@ class CutScene(Scene):
 
             if end: break
 
-# todo
-# class LevelScene(Scene):
-#     """
-#     레벨을 관리하는 씬 객체입니다.
-#     :param list[(str, dict)] terrains: ㅁㄴㅇㄹ
-#     """
-#     def __init__(self, terrains, objects):
-#         self.terrains = terrains
-#         self.objects = objects
-#
-#     def onStart(self):
-#         def onStartDeco(self):
-#             pass
-#         return onStartDeco
-#
-#     def onUpdate(self):
-#         def onUpdateDeco(self):
-#             pass
-#         return onUpdateDeco
-#
-#     def onEvent(self):
-#         def onEventDeco(self):
-#             pass
-#         return onEventDeco
+class LevelScene(Scene):
+    """
+    레벨을 관리하는 씬 객체입니다.
+    :param string terrainStr:
+    :param list((dict, set)) palette:
+    :param list objects:
+    """
+    def __init__(self, levelNo, terrainStr, palette, objects, startingPoint=(80, 80),  gridSize=(80, 80)):
+        t = terrainStr.split()
+        self.terrainList = [Tilemap(len(t[0]), len(t), gridSize)]
+        for p in palette :
+            mapStr = ""
+            for l in t :
+                for c in l:
+                    mapStr += c if (c in p[1]) or c == "\n" else "_"
+                mapStr += "\n"
+            self.terrainList.append(TerrainMap(mapStr, p[0], 0 if len(p)==2 else p[2], gridSize))
+
+        self.objects = objects
+        self.startingPoint = startingPoint
+        super().__init__("level" + str(levelNo), self.onStart(), self.onUpdate(), self.onEvent())
+
+    def onStart(self):
+        def onStartDeco(self):
+            pass
+        return onStartDeco
+
+    def onUpdate(self):
+        def onUpdateDeco(self):
+            self.surface.fill((0, 0, 0))
+            for terr in self.terrainList :
+                self.surface.blit(terr.getMapSprite(), self.startingPoint)
+            pass
+        return onUpdateDeco
+
+    def onEvent(self):
+        def onEventDeco(self, event):
+            pass
+        return onEventDeco
 
 def makeLine(sentence, color, size, position):
     """
