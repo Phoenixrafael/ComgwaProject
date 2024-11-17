@@ -152,8 +152,16 @@ def makeLine(sentence, color, size, position):
     :param string sentence: 얘는 말할 대사를 의미하는듯 하구나.
     :param color: 대사의 색을 의미하는듯 하구나.
     :param int size: 대사의 크기를 의미하는듯 하구나.
-    :param (int, int) position: 대사를 표시할 위치를 의마하는듯 하구나.
+    :param position: 대사를 표시할 위치를 의마하는듯 하구나.
     """
+    if position == "person":
+        position = (309, 521)
+    elif position == "oneline":
+        position = (640, 620)
+    elif position == "twoline1":
+        position = (640, 600)
+    elif position == "twoline2":
+        position = (640, 650)
     font_size = pygame.font.Font(None, size)
     return [font_size.render(sentence, True, color), position]
 

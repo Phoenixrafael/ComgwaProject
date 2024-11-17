@@ -15,15 +15,17 @@ white = (255, 255, 255)
 magenta = (255, 0, 255)
 red = (255, 0, 0)
 
-person1 = comgwa.makeLine("Stanley", black, 50, (309, 521))
+person1 = comgwa.makeLine("Stanley", black, 50, "person")
+person2 = comgwa.makeLine("Zero", black, 50, "person")
+person3 = comgwa.makeLine("Warden", black, 50, "person")
 
-line1 = comgwa.makeLine("Hello!", black, 50, (640, 610))
-line2 = comgwa.makeLine("Hi!", black, 50, (640, 590))
-line3 = comgwa.makeLine("I'm hungry.", magenta, 60, (640, 640))
-line4 = comgwa.makeLine("Wow!", black, 50, (640, 610))
-line5 = comgwa.makeLine("Thank you for your efforts, Sieul!", red, 100, (640, 610))
+line1 = comgwa.makeLine("Hello!", black, 50, "oneline")
+line2 = comgwa.makeLine("Hi!", black, 50, "twoline1")
+line3 = comgwa.makeLine("I'm hungry.", magenta, 60, "twoline2")
+line4 = comgwa.makeLine("Wow!", black, 50, "oneline")
+line5 = comgwa.makeLine("Thank you for your efforts, Sieul!", red, 70, "oneline")
 
-lines = [[person1, line1], [line2, line3], [line4], [line5]]
+lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
 backgrounds = [background_image] * 4
 
 running = 1
