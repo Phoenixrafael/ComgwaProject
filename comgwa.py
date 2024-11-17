@@ -71,11 +71,14 @@ class SceneManager():
         self.scenes[0].run()
 
 class CutScene(Scene):
-    def __init__(self, name, background, lines, displaySize=(1280, 720)):
+    def __init__(self, name, lineback, backgrounds, lines, displaySize=(1280, 720)):
         self.name = name
         self.surface = pygame.display.set_mode(displaySize)
-        self.background = background
-        self.surface.blit(background, (0, 0))
+        self.lineback = lineback
+        assert backgrounds, "배경이 없음"
+        assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
+        self.background = backgrounds #배경 목록
+        self.surface.blit(backgrounds[0], (0, 0))
         self.lines = lines # 대사 목록, 시용법은 cutscenetest.py 참고
         self.lineindex = 0
         pygame.display.flip()
@@ -92,7 +95,8 @@ class CutScene(Scene):
                     if self.lineindex == len(self.lines):
                         end = 1; break
                     self.surface.fill((0, 0, 0))
-                    self.surface.blit(self.background, (0, 0))
+                    self.surface.blit(self.background[self.lineindex], (0, 0))
+                    self.surface.blit(self.lineback, (160, 470))
                     for text_info in self.lines[self.lineindex]:
                         text = text_info[0]
                         text_rect = text.get_rect(center = text_info[1])

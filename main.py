@@ -20,6 +20,9 @@ dirtTerrain = comgwa.getTerrainDict(dirtTilemap)
 wetDirtTerrain = comgwa.getTerrainDict(wetDirtTilemap)
 iceTerrain = comgwa.getTerrainDict(iceTilemap)
 
+lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
+lineback = pygame.transform.scale(lineback, (1000, 250))
+
 palette = [(dirtTerrain, {'O', 'W', 'I'}, 0), (wetDirtTerrain, {'W'}), (iceTerrain, {'I'})]
 
 '''
