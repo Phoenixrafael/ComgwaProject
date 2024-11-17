@@ -48,11 +48,12 @@ def testUpdate(self) :
         ____oooo__
         __________
         __________
-        __________
+        ___o______
         __________
         """, wetDirtTerrain, 0, (80, 80)
     )
     self.surface.blit(wetmap.getMapSprite(), (0, 0))
+    comgwa.LevelScene()
 
 testScene = comgwa.Scene("testScene", None, testUpdate, None)
 scenes = [testScene]
