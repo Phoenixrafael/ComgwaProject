@@ -96,28 +96,48 @@ class CutScene(Scene):
                 elif event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE:
                     if self.lineindex == len(self.lines):
                         end = 1; break
-                    self.surface.fill((0, 0, 0))
-                    self.surface.blit(self.background[self.lineindex], (0, 0))
-                    self.surface.blit(self.lineback, (160, 470))
-                    for text_info in self.lines[self.lineindex]:
-                        text = text_info[0]
-                        if text_info[2] == 1:
-                            text_rect = text.get_rect(center = text_info[1])
+                    effect_texts, uneffect_texts = [], []
+                    for idx, text_info in enumerate(self.lines[self.lineindex]):
+                        if text_info[3] == 1:
+                            effect_texts.append((idx, text_info))
                         else:
-                            text_rect = text.get_rect(midleft = text_info[1])
-                        self.surface.blit(text, text_rect)
-                    pygame.display.flip()
+                            uneffect_texts.append((idx, text_info))
+                    final_time = tiktok()
+                    for idx, text_info in effect_texts:
+                        i = 1
+                        while i <= len(text_info[0]):
+                            if tiktok() - final_time > 0.03:
+                                text = text_info[0][:i]
+                                final_time = tiktok()
+                                self.surface.fill((0, 0, 0))
+                                self.surface.blit(self.background[self.lineindex], (0, 0))
+                                self.surface.blit(self.lineback, (160, 470))
+                                for uneffect_idx, uneffect_text_info in uneffect_texts:
+                                    render = uneffect_text_info[5].render(uneffect_text_info[0], True, uneffect_text_info[4])
+                                    if uneffect_text_info[2] == 1:
+                                        self.surface.blit(render, render.get_rect(center=uneffect_text_info[1]))
+                                    else:
+                                        self.surface.blit(render, render.get_rect(midleft=uneffect_text_info[1]))
+                                render = text_info[5].render(text, True, text_info[4])
+                                if text_info[2] == 1:
+                                    self.surface.blit(render, render.get_rect(center = text_info[1]))
+                                else:
+                                    self.surface.blit(render, render.get_rect(midleft = text_info[1]))
+                                pygame.display.flip()
+                                i += 1
+                        uneffect_texts.append((idx, text_info))
                     self.lineindex += 1
 
             if end: break
 
-def makeLine(sentence, color, size, position):
+def makeLine(sentence, color, size, position, effect):
     """
     대사 text 객체를 만드는 함수, lines에 넣어서 사용
     :param string sentence: 얘는 말할 대사를 의미하는듯 하구나.
     :param color: 대사의 색을 의미하는듯 하구나.
     :param int size: 대사의 크기를 의미하는듯 하구나.
     :param position: 대사를 표시할 위치를 의마하는듯 하구나.
+    :param effect: 1이면 순차적으로 텍스트 출력
     """
     type = 0
     if position == "person":
@@ -129,8 +149,7 @@ def makeLine(sentence, color, size, position):
         position = (230, 608)
     elif position == "twoline2":
         position = (230, 658)
-    font_size = pygame.font.Font(None, size)
-    return [font_size.render(sentence, True, color), position, type]
+    return [sentence, position, type, effect, color, pygame.font.Font(None, size)]
 
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """
