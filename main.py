@@ -46,8 +46,8 @@ def testUpdate(self) :
     """, palette, [
         comgwa.Object(holePalette, (1, 2)),
         comgwa.Object(holePalette, (2, 2)),
-        comgwa.Object(getPlayerPalette(stanleySpriteTilemap, (1, 2), "stanley"), (5, 4), (2, 0.7), True)
-    ], (100, 100))
+        comgwa.Object(getPlayerPalette(stanleySpriteTilemap, (1, 2), "stanley"), (5, 4), 2, True)
+    ], (100, 100), 0.7)
     self.surface.blit(level.getLevelSurface(comgwa.tiktok() - self.anchor), (0, 0))
 
 testScene = comgwa.Scene("testScene", testStart, testUpdate, None)

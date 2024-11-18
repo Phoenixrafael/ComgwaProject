@@ -205,7 +205,7 @@ def getPlayerPalette(playerTilemapSprite, state, playerName="stanley"):
         li.append((getSpriteFromTileMap(playerTilemapSprite, 0, dir), 0))
     elif(state[0] == 1) :
         for i in range(16) :
-            li.append((getSpriteFromTileMap(playerTilemapSprite, (i+1)%8, dir), 0.7/16 * (i+1)))
+            li.append((getSpriteFromTileMap(playerTilemapSprite, (i+1)%8, dir), 1/16 * (i+1)))
     return (playerName, li)
 
 class Tilemap():
@@ -297,7 +297,7 @@ class TerrainMap(Tilemap):
         return super().getMapSprite()
 
 class Level():
-    def __init__(self, terrainStr, palette, objects, gridSize=(80, 80)):
+    def __init__(self, terrainStr, palette, objects, gridSize=(80, 80), movingTime=0.7):
         t = terrainStr.split()
         self.terrainList = []
         for p in palette :
@@ -309,8 +309,10 @@ class Level():
             self.terrainList.append(TerrainMap(p[0], mapStr, p[1], 0 if len(p)==3 else p[3], gridSize))
         for object in objects :
             object.setParentMap(self.terrainList[0])
+            object.movingTime = movingTime
         self.objects = objects
         self.gridSize = gridSize
+        self.movingTime = movingTime
 
     def getLevelSurface(self, deltaTime):
         mergedTile = pygame.Surface((self.gridSize[0] * self.terrainList[0].columns, self.gridSize[1] * self.terrainList[0].rows)).convert_alpha()
@@ -328,10 +330,10 @@ class Object():
     :param string name: 이름 여따.
     :param palette: ("이름", [(스프라이트, 시간) 리스트]) 여따.
     :param (int, int) position: 위치 (열번호, 행번호) 여따. 왼쪽 위가 (0, 0)임.
-    :param (int, float) moving: (안움직이면0/위로움직이면1/왼쪽움직이면2/아래쪽움직이면3/오른쪽움직이면4, 움직이는시간초) 튜플.
+    :param int moving: 안움직이면0/위로움직이면1/왼쪽움직이면2/아래쪽움직이면3/오른쪽움직이면4
     :param bool vanish: 이새끼는 움직이고 나서 사라지나요?
     """
-    def __init__(self, palette, position, moving=(0, 0), vanish=False):
+    def __init__(self, palette, position, moving=0, vanish=False):
         self.name = palette[0]
         self.palette = palette
         self.position = position
@@ -340,6 +342,7 @@ class Object():
         self.gridSize = (0, 0)
         self.columns = 0
         self.rows = 0
+        self.movingTime = 0
 
     def setParentMap(self, parentMap):
         self.gridSize = parentMap.gridSize
@@ -352,20 +355,20 @@ class Object():
 
         sprite = None
         for p in self.palette[1] :
-            if(p[1] > deltaTime) :
+            if(p[1] * self.movingTime > deltaTime) :
                 sprite = p[0]
                 break
         if(sprite == None) : sprite = self.palette[1][-1][0]
 
-        deltaTime = min(self.moving[1], deltaTime)
-        r = 0 if (self.moving[1] == 0) else 1 - deltaTime / self.moving[1]
+        deltaTime = min(self.movingTime, deltaTime)
+        r = 0 if (self.movingTime == 0) else 1 - deltaTime / self.movingTime
         r = easer(r)
 
         curDeltaPos = (0, 0)
-        if(self.moving[0] == 1) : curDeltaPos = (0, -1)
-        if(self.moving[0] == 2) : curDeltaPos = (-1, 0)
-        if(self.moving[0] == 3) : curDeltaPos = (0, +1)
-        if(self.moving[0] == 4) : curDeltaPos = (+1, 0)
+        if(self.moving == 1) : curDeltaPos = (0, -1)
+        if(self.moving == 2) : curDeltaPos = (-1, 0)
+        if(self.moving == 3) : curDeltaPos = (0, +1)
+        if(self.moving == 4) : curDeltaPos = (+1, 0)
 
         surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
                      (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
