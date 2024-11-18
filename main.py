@@ -48,7 +48,7 @@ def testUpdate(self) :
     ________
     _FFFFFF_
     _FOOOOF_
-    _FOOOOF_
+    _OOOOOF_
     _FOOOOF_
     _FOOOOF_
     _FFFFFF_
@@ -58,7 +58,7 @@ def testUpdate(self) :
         comgwa.Object(dirtPalette, (4, 3)),
         comgwa.Object(getPlayerPalette(zeroSpriteTilemap, (1, 2), "zero"), (5, 4), 2, True),
         comgwa.Object(getPlayerPalette(stanleySpriteTilemap, (2, 4), "stanley"), (5, 2), 0, True)
-    ], (100, 100), 0.7)
+    ], (80, 80), 0.7)
     self.surface.blit(level.getLevelSurface(comgwa.tiktok() - self.anchor), (0, 0))
 
 testScene = comgwa.Scene("testScene", testStart, testUpdate, None)
