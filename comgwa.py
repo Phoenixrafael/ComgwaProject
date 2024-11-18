@@ -133,11 +133,11 @@ class CutScene(Scene):
 def makeLine(sentence, color, size, position, effect):
     """
     대사 text 객체를 만드는 함수, lines에 넣어서 사용
-    :param string sentence: 얘는 말할 대사를 의미하는듯 하구나.
-    :param color: 대사의 색을 의미하는듯 하구나.
-    :param int size: 대사의 크기를 의미하는듯 하구나.
-    :param position: 대사를 표시할 위치를 의마하는듯 하구나.
-    :param effect: 1이면 순차적으로 텍스트 출력
+    :param string sentence: 대사 문장
+    :param color: 대사의 색
+    :param int size: 대사 크기
+    :param position: 대사 표시 위치
+    :param int effect: 1이면 한 글자씩 텍스르를 출력, 0이면 한꺼번에
     """
     type = 0
     if position == "person":
@@ -149,7 +149,7 @@ def makeLine(sentence, color, size, position, effect):
         position = (230, 608)
     elif position == "twoline2":
         position = (230, 658)
-    return [sentence, position, type, effect, color, pygame.font.Font(None, size)]
+    return [sentence, position, type, effect, color, pygame.font.Font("asset/font/Galmuri11.ttf", size)]
 
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """
