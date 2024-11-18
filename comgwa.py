@@ -1,6 +1,8 @@
 import pygame, pygame.event, pygame.locals
 import sys, math, inspect
 
+tiktok = lambda : pygame.time.get_ticks() / 1000
+easer = lambda x : math.atan(5*(x-0.5))/(2*math.atan(5*0.5))+0.5
 
 class Scene():
     """
@@ -109,46 +111,6 @@ class CutScene(Scene):
 
             if end: break
 
-class LevelScene(Scene):
-    """
-    레벨을 관리하는 씬 객체입니다.
-    :param string terrainStr:
-    :param list((dict, set)) palette:
-    :param list objects:
-    """
-    def __init__(self, levelNo, terrainStr, palette, objects, startingPoint=(80, 80),  gridSize=(80, 80)):
-        t = terrainStr.split()
-        self.terrainList = [Tilemap(len(t[0]), len(t), gridSize)]
-        for p in palette :
-            mapStr = ""
-            for l in t :
-                for c in l:
-                    mapStr += c if (c in p[1]) or c == "\n" else "_"
-                mapStr += "\n"
-            self.terrainList.append(TerrainMap(mapStr, p[0], 0 if len(p)==2 else p[2], gridSize))
-
-        self.objects = objects
-        self.startingPoint = startingPoint
-        super().__init__("level" + str(levelNo), self.onStart(), self.onUpdate(), self.onEvent())
-
-    def onStart(self):
-        def onStartDeco(self):
-            pass
-        return onStartDeco
-
-    def onUpdate(self):
-        def onUpdateDeco(self):
-            self.surface.fill((0, 0, 0))
-            for terr in self.terrainList :
-                self.surface.blit(terr.getMapSprite(), self.startingPoint)
-            pass
-        return onUpdateDeco
-
-    def onEvent(self):
-        def onEventDeco(self, event):
-            pass
-        return onEventDeco
-
 def makeLine(sentence, color, size, position):
     """
     대사 text 객체를 만드는 함수, lines에 넣어서 사용
@@ -234,7 +196,8 @@ class Tilemap():
     :param int columns: 열의 개수를 의미합니다.
     :param int rows: 열의 개수를 의미합니다.
     """
-    def __init__(self, columns, rows, gridSize=(80, 80)) :
+    def __init__(self, name, columns, rows, gridSize=(80, 80)) :
+        self.name = name
         self.columns = columns
         self.rows = rows
         self.spriteList = [[[] for i in range(rows)] for j in range(columns)]
@@ -269,11 +232,11 @@ class TerrainMap(Tilemap):
     :param int height: 얼마나 높게 띄울건지 정하는거일껄?
     :param (int, int) gridSize: 한 칸이 어느정도 사이즈로 표시될지일껄?
     """
-    def __init__(self, mapStr, terrainDict, height=1, gridSize=(80, 80)):
+    def __init__(self, name, mapStr, terrainDict, height=1, gridSize=(80, 80)):
         self.updateMap(mapStr)
         self.terrainDict = terrainDict
         self.height = height
-        super().__init__(len(self.bitArray[0]), len(self.bitArray), gridSize)
+        super().__init__(name, len(self.bitArray[0]), len(self.bitArray), gridSize)
 
     def updateMap(self, mapStr):
         lines = [i for i in list(mapStr.split()) if i != ""]
@@ -314,3 +277,68 @@ class TerrainMap(Tilemap):
                 self.addSprite(j, i, self.terrainDict[(0,)])
                 self.placeSprite(i, j)
         return super().getMapSprite()
+
+class Level():
+    def __init__(self, terrainStr, palette, objects, gridSize=(80, 80)):
+        t = terrainStr.split()
+        self.terrainList = []
+        for p in palette :
+            mapStr = ""
+            for l in t :
+                for c in l:
+                    mapStr += c if (c in p[2]) or c == "\n" else "_"
+                mapStr += "\n"
+            self.terrainList.append(TerrainMap(p[0], mapStr, p[1], 0 if len(p)==3 else p[3], gridSize))
+        for object in objects :
+            object.setParentMap(self.terrainList[0])
+        self.objects = objects
+        self.gridSize = gridSize
+
+    def getLevelSurface(self, deltaTime):
+        mergedTile = pygame.Surface((self.gridSize[0] * self.terrainList[0].columns, self.gridSize[1] * self.terrainList[0].rows)).convert_alpha()
+        mergedTile.fill((0, 0, 0, 0))
+        mergedTile.fill((0, 0, 0))
+        for terr in self.terrainList:
+            mergedTile.blit(terr.getMapSprite(), (0, 0))
+        for obj in self.objects :
+            mergedTile.blit(obj.getObjectSprite(deltaTime), (0, 0))
+        return mergedTile
+
+class Object():
+    """
+    오브젝트 어쩌고 클래스
+    :param string name: 이름 여따.
+    :param palette: ("이름", [(스프라이트, 시간) 리스트]) 여따.
+    :param (int, int) position: 위치 (열번호, 행번호) 여따. 왼쪽 위가 (0, 0)임.
+    :param (int, float) moving: (안움직이면0/위로움직이면1/왼쪽움직이면2/아래쪽움직이면3/오른쪽움직이면4, 움직이는시간초) 튜플.
+    :param bool vanish: 이새끼는 움직이고 나서 사라지나요?
+    """
+    def __init__(self, palette, position, moving=(0, 0), vanish=False):
+        self.name = palette[0]
+        self.palette = palette
+        self.position = position
+        self.moving = moving
+        self.vanish = vanish
+        self.gridSize = (0, 0)
+        self.columns = 0
+        self.rows = 0
+
+    def setParentMap(self, parentMap):
+        self.gridSize = parentMap.gridSize
+        self.columns = parentMap.columns
+        self.rows = parentMap.rows
+
+    def getObjectSprite(self, deltaTime=0):
+        surface = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows)).convert_alpha()
+        surface.fill((0, 0, 0, 0))
+        deltaTime = min(self.moving[1], deltaTime)
+        r = 0 if (self.moving[1] == 0) else 1 - deltaTime / self.moving[1]
+        r = easer(r)
+        curDeltaPos = (0, 0)
+        if(self.moving[0] == 1) : curDeltaPos = (0, -1)
+        if(self.moving[0] == 2) : curDeltaPos = (-1, 0)
+        if(self.moving[0] == 3) : curDeltaPos = (0, +1)
+        if(self.moving[0] == 4) : curDeltaPos = (+1, 0)
+        surface.blit(pygame.transform.scale(self.palette[1][0][0], self.gridSize).convert_alpha(),
+                     (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
+        return surface
