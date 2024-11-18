@@ -80,13 +80,16 @@ class CutScene(Scene):
         assert backgrounds, "배경이 없음"
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
         self.background = backgrounds #배경 목록
-        self.surface.blit(backgrounds[0], (0, 0))
         self.lines = lines # 대사 목록, 시용법은 cutscenetest.py 참고
         self.lineindex = 0
         pygame.display.flip()
 
     def run(self):
         end = 0
+        self.surface.fill((0, 0, 0))
+        for image, position in self.background[self.lineindex]:
+            self.surface.blit(image, position)
+        pygame.display.flip()
         while True:
             pygame.display.update()
             for event in pygame.event.get():
@@ -110,7 +113,8 @@ class CutScene(Scene):
                                 text = text_info[0][:i]
                                 final_time = tiktok()
                                 self.surface.fill((0, 0, 0))
-                                self.surface.blit(self.background[self.lineindex], (0, 0))
+                                for image, position in self.background[self.lineindex]:
+                                    self.surface.blit(image, position)
                                 self.surface.blit(self.lineback, (160, 470))
                                 for uneffect_idx, uneffect_text_info in uneffect_texts:
                                     render = uneffect_text_info[5].render(uneffect_text_info[0], True, uneffect_text_info[4])

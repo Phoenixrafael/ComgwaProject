@@ -25,8 +25,11 @@ line3 = comgwa.makeLine("I'm hungry.", magenta, 40, "twoline2", 1)
 line4 = comgwa.makeLine("Wow!", black, 40, "oneline", 1)
 line5 = comgwa.makeLine("Thanks for your efforts, Sieul!", red, 50, "oneline", 1)
 
+
 lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
-backgrounds = [background_image] * 4
+backgrounds = [[] for _ in range(len(lines))]
+for i in range(len(lines)):
+    backgrounds[i].append([background_image, (0, 0)])
 
 running = 1
 
