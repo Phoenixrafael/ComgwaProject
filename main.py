@@ -48,7 +48,7 @@ def testUpdate(self) :
     ________
     _FFFFFF_
     _FOOOOF_
-    _OOOOOF_
+    ___OOOF_
     _FOOOOF_
     _FOOOOF_
     _FFFFFF_

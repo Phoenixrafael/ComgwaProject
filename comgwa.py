@@ -195,9 +195,9 @@ def getPlayerPalette(playerTilemapSprite, state, playerName="stanley"):
     """
     대충 머 그거 하는 함수야
     :param playerTilemapSprite: 플레이어의 타일맵을 입력하시오.
-    :param (int, int) type: (걍멈춰있으면0/움직이는중이면1/땅파는중이면2, 향하는방향)
-    :param playerName: 마이 네임 이즈 스탠리 나이스 투 미츄
-    :return:
+    :param (int, int) state: (걍멈춰있으면0/움직이는중이면1/땅파는중이면2, 향하는방향)
+    :param string playerName: 마이 네임 이즈 스탠리 나이스 투 미츄
+    :return: 플레이어 팔레트를 리턴할껄?
     """
     dir = [None, 0, 2, 1, 3][state[1]]
     li = []
