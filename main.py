@@ -1,6 +1,6 @@
 import pygame, pygame.event, pygame.locals
 import comgwa
-from comgwa import getSpriteFromTileMap
+from comgwa import getSpriteFromTileMap, getPlayerPalette
 
 '''
 게임에 필요한 파일(Asset) 및 불러오기 메서드 정의
@@ -46,7 +46,7 @@ def testUpdate(self) :
     """, palette, [
         comgwa.Object(holePalette, (1, 2)),
         comgwa.Object(holePalette, (2, 2)),
-        comgwa.Object(dirtPalette, (4, 5), (1, 0.7), True)
+        comgwa.Object(getPlayerPalette(stanleySpriteTilemap, (1, 2), "stanley"), (5, 4), (2, 0.7), True)
     ], (100, 100))
     self.surface.blit(level.getLevelSurface(comgwa.tiktok() - self.anchor), (0, 0))
 

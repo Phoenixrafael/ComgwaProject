@@ -190,6 +190,24 @@ def getTerrainDict(terrainTilemapSprite) :
     terrainDict[(4, 1, 1)] = getSpriteFromTileMap(terrain, 5, 1)
     return terrainDict
 
+
+def getPlayerPalette(playerTilemapSprite, state, playerName="stanley"):
+    """
+    대충 머 그거 하는 함수야
+    :param playerTilemapSprite: 플레이어의 타일맵을 입력하시오.
+    :param (int, int) type: (걍멈춰있으면0/움직이는중이면1/땅파는중이면2, 향하는방향)
+    :param playerName: 마이 네임 이즈 스탠리 나이스 투 미츄
+    :return:
+    """
+    dir = [None, 0, 2, 1, 3][state[1]]
+    li = []
+    if(state[0] == 0) :
+        li.append((getSpriteFromTileMap(playerTilemapSprite, 0, dir), 0))
+    elif(state[0] == 1) :
+        for i in range(16) :
+            li.append((getSpriteFromTileMap(playerTilemapSprite, (i+1)%8, dir), 0.7/16 * (i+1)))
+    return (playerName, li)
+
 class Tilemap():
     """
     게임의 타일맵을 관리하는 클래스입니다.
@@ -301,7 +319,7 @@ class Level():
         for terr in self.terrainList:
             mergedTile.blit(terr.getMapSprite(), (0, 0))
         for obj in self.objects :
-            mergedTile.blit(obj.getObjectSprite(deltaTime), (0, 0))
+            mergedTile.blit(obj.getObjectSprite(deltaTime), (0, -self.gridSize[1]*0.33) if obj.name in ["stanley", "zero"] else (0, 0))
         return mergedTile
 
 class Object():
@@ -331,14 +349,24 @@ class Object():
     def getObjectSprite(self, deltaTime=0):
         surface = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows)).convert_alpha()
         surface.fill((0, 0, 0, 0))
+
+        sprite = None
+        for p in self.palette[1] :
+            if(p[1] > deltaTime) :
+                sprite = p[0]
+                break
+        if(sprite == None) : sprite = self.palette[1][-1][0]
+
         deltaTime = min(self.moving[1], deltaTime)
         r = 0 if (self.moving[1] == 0) else 1 - deltaTime / self.moving[1]
         r = easer(r)
+
         curDeltaPos = (0, 0)
         if(self.moving[0] == 1) : curDeltaPos = (0, -1)
         if(self.moving[0] == 2) : curDeltaPos = (-1, 0)
         if(self.moving[0] == 3) : curDeltaPos = (0, +1)
         if(self.moving[0] == 4) : curDeltaPos = (+1, 0)
-        surface.blit(pygame.transform.scale(self.palette[1][0][0], self.gridSize).convert_alpha(),
+
+        surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
                      (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
         return surface
