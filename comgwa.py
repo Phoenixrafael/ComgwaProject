@@ -206,6 +206,10 @@ def getPlayerPalette(playerTilemapSprite, state, playerName="stanley"):
     elif(state[0] == 1) :
         for i in range(16) :
             li.append((getSpriteFromTileMap(playerTilemapSprite, (i+1)%8, dir), 1/16 * (i+1)))
+    elif(state[0] == 2) :
+        for i in range(5) :
+            li.append((getSpriteFromTileMap(playerTilemapSprite, i, dir+41), 1/5 * (i+1)))
+        li.append((getSpriteFromTileMap(playerTilemapSprite, 0, dir), 1))
     return (playerName, li)
 
 class Tilemap():
@@ -319,7 +323,7 @@ class Level():
         mergedTile.fill((0, 0, 0, 0))
         mergedTile.fill((0, 0, 0))
         for terr in self.terrainList:
-            mergedTile.blit(terr.getMapSprite(), (0, 0))
+            mergedTile.blit(terr.getMapSprite(), (0, -self.gridSize[1]*0.33) if terr.name in ["fence"] else (0, 0))
         for obj in self.objects :
             mergedTile.blit(obj.getObjectSprite(deltaTime), (0, -self.gridSize[1]*0.33) if obj.name in ["stanley", "zero"] else (0, 0))
         return mergedTile
