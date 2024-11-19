@@ -1,8 +1,57 @@
 import pygame, pygame.event, pygame.locals
-import sys, math, inspect, copy
+import sys, math, inspect
 
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : math.atan(5*(x-0.5))/(2*math.atan(5*0.5))+0.5
+
+def smartCopy(obj, visited=None):
+    """
+    chatGPT를 사용하여 구현한 deepcopy의 개선 버전입니다.
+    :param obj: 복사할 오브젝트를 뜻합니다.
+    :param visited: 해당 오브젝트를 이미 복사했는지의 여부를 체크합니다.
+    :return:
+    """
+    if visited is None:
+        visited = {}
+
+    if id(obj) in visited:
+        return visited[id(obj)]
+
+    if isinstance(obj, list):
+        copy_list = []
+        visited[id(obj)] = copy_list
+        for item in obj:
+            copy_list.append(smartCopy(item, visited))
+        return copy_list
+
+    if isinstance(obj, dict):
+        copy_dict = {}
+        visited[id(obj)] = copy_dict
+        for key, value in obj.items():
+            copy_dict[smartCopy(key, visited)] = smartCopy(value, visited)
+        return copy_dict
+
+    if isinstance(obj, tuple):
+        copy_tuple = tuple(smartCopy(item, visited) for item in obj)
+        visited[id(obj)] = copy_tuple
+        return copy_tuple
+
+    if isinstance(obj, set):
+        copy_set = set()
+        visited[id(obj)] = copy_set
+        for item in obj:
+            copy_set.add(smartCopy(item, visited))
+        return copy_set
+
+    if hasattr(obj, "__dict__"):
+        copy_obj = obj.__class__.__new__(obj.__class__)
+        visited[id(obj)] = copy_obj
+        for key, value in obj.__dict__.items():
+            setattr(copy_obj, key, smartCopy(value, visited))
+        return copy_obj
+
+    # 복사할 수 없는 경우 그냥 리턴
+    return obj
 
 class Scene():
     """
@@ -323,7 +372,6 @@ class TerrainMap(Tilemap):
                 self.placeSprite(i, j)
         return super().getMapSprite()
 
-
 class Object():
     """
     오브젝트 어쩌고 클래스
@@ -455,7 +503,7 @@ class Level():
         return False
 
     def getNextLevel(self, inp):
-        nextLevel = self
+        nextLevel = smartCopy(self)
         if(inp != 5) :
             deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][inp]
             for i,obj in enumerate(nextLevel.objects) :
@@ -473,6 +521,7 @@ class Level():
 class LevelScene(Scene):
     def __init__(self, levelName, initialLevel):
         self.levelList = []
+        self.levelQueue = []
         self.anchor = 0
         def onStart_deco(initLevel) :
             def onStart(self):
@@ -491,6 +540,11 @@ class LevelScene(Scene):
             sprite = self.levelList[-1].getLevelSurface(tiktok() - self.anchor)
             self.surface.blit(sprite, (self.surface.get_size()[0]/2 - sprite.get_size()[0]/2
                                        , self.surface.get_size()[1]/2 - sprite.get_size()[1]/2))
+            if(len(self.levelQueue) != 0) :
+                if (tiktok() - self.anchor > self.levelList[-1].movingTime) :
+                    self.levelList.append(self.levelQueue[0])
+                    self.anchor = tiktok()
+                    self.levelQueue = self.levelQueue[1:]
             pass
 
         def onEvent(self, event):
@@ -510,10 +564,15 @@ class LevelScene(Scene):
                 elif(event.key in [pygame.K_SPACE]) :
                     inp = 5
                 elif(event.key in [pygame.K_z]) :
-                    self.levelList.pop()
+                    if (tiktok() - self.anchor > self.levelList[-1].movingTime and len(self.levelList) > 1):
+                        self.levelList.pop()
             if(inp == 0) : return
-            nextLevel = self.levelList[-1].getNextLevel(inp)
+            nextLevel = (self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0]).getNextLevel(inp)
             if(nextLevel != None) :
-                self.levelList.append(nextLevel)
-                self.anchor = tiktok()
+                if(tiktok() - self.anchor > self.levelList[-1].movingTime) :
+                    self.levelList.append(nextLevel)
+                    self.anchor = tiktok()
+                else :
+                    if(len(self.levelQueue) <= 1) :
+                        self.levelQueue.append(nextLevel)
         super().__init__(levelName, onStart_deco(initialLevel), onUpdate, onEvent)

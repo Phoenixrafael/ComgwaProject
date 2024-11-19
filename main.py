@@ -44,19 +44,21 @@ zeroPalette = ("stanley", zeroSpriteTilemap)
 '''
 
 testScene = comgwa.LevelScene("testLevel", comgwa.Level("""
-    ________
-    _OOOOOF_
-    ___OOOF_
-    ___OOOF_
-    _FOOOOF_
-    _FOOOOF_
-    _FFFFFF_
-    ________
+    __________
+    _OOOOOOOO_
+    _OOOOOOOO_
+    _OOOOOOOO_
+    _OOOOOOOO_
+    _OOFFFFFF_
+    _OOOOOOOO_
+    _OOOOOOOO_
+    _OOOOOOOO_
+    __________
     """, palette, [
         comgwa.Object(holePalette, (3, 2)),
         comgwa.Object(dirtPalette, (4, 3)),
         comgwa.Player(zeroPalette, (0, 1), (3, 3))
-    ], (80, 80), 0.5))
+    ], (60, 60), 0.3))
 scenes = [testScene]
 manager = comgwa.SceneManager(scenes)
 manager.run()
