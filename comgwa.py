@@ -497,7 +497,6 @@ class LevelScene(Scene):
             """
             :param LevelScene self:
             """
-            nextLevel = None
             inp = 0
             if(event.type == pygame.KEYDOWN) :
                 if(event.key in [pygame.K_UP, pygame.K_w]) :
@@ -510,6 +509,8 @@ class LevelScene(Scene):
                     inp = 4
                 elif(event.key in [pygame.K_SPACE]) :
                     inp = 5
+                elif(event.key in [pygame.K_z]) :
+                    self.levelList.pop()
             if(inp == 0) : return
             nextLevel = self.levelList[-1].getNextLevel(inp)
             if(nextLevel != None) :
