@@ -3,6 +3,7 @@ import sys, math, inspect
 
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : math.atan(5*(x-0.5))/(2*math.atan(5*0.5))+0.5
+easein = lambda x : x * (2-x)
 
 def smartCopy(obj, visited=None):
     """
@@ -418,9 +419,9 @@ class Object():
         if(self.moving == 3) : curDeltaPos = (0, +1)
         if(self.moving == 4) : curDeltaPos = (+1, 0)
 
-        if(not (self.vanish and deltaTime == self.movingTime)) :
-            surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
-                         (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
+        surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
+                     (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
+        if(self.vanish) : surface.fill((255, 255, 255, 255 * easein(r)), special_flags=pygame.BLEND_RGBA_MULT)
         return surface
 
 class Player(Object):
@@ -528,7 +529,7 @@ class Level():
                     return False
             else :
                 if(not terr.bitArray[rowNo][columnNo]) :
-                    return True
+                    return False
         return True
 
 class LevelScene(Scene):
@@ -646,4 +647,9 @@ class LevelScene(Scene):
                         and obj1.position == obj2.position):
                     obj1.vanish = True
                     obj2.vanish = True
+                if (obj1.name == "dirtPile" and nextLevel.isEnd(*obj1.position)) :
+                    if(nextLevel.isEnd(*obj1.position) == 2):
+                        obj1.vanish = True
+                    else:
+                        pass
         return nextLevel
