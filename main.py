@@ -3,7 +3,7 @@ import comgwa
 from comgwa import getSpriteFromTileMap, getPlayerPalette
 
 '''
-게임에 필요한 파일(Asset) 및 불러오기 메서드 정의
+게임에 필요한 파일(Asset) 불러오기
 '''
 
 pygame.init()
@@ -36,18 +36,17 @@ palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F'}, 1),
 dirtPalette = ("dirtPile", [(dirtPileSprite, 0)])
 holePalette = ("hole", [(holeSprite, 0)])
 
+stanleyPalette = ("stanley", stanleySpriteTilemap)
+zeroPalette = ("stanley", zeroSpriteTilemap)
+
 '''
 테스트용 코드
 '''
 
-def testStart(self) :
-    self.anchor = comgwa.tiktok()
-
-def testUpdate(self) :
-    level = comgwa.Level("""
+testScene = comgwa.LevelScene("testLevel", comgwa.Level("""
     ________
-    _FFFFFF_
-    _FOOOOF_
+    _OOOOOF_
+    ___OOOF_
     ___OOOF_
     _FOOOOF_
     _FOOOOF_
@@ -56,12 +55,8 @@ def testUpdate(self) :
     """, palette, [
         comgwa.Object(holePalette, (3, 2)),
         comgwa.Object(dirtPalette, (4, 3)),
-        comgwa.Object(getPlayerPalette(zeroSpriteTilemap, (1, 2), "zero"), (5, 4), 2, True),
-        comgwa.Object(getPlayerPalette(stanleySpriteTilemap, (2, 4), "stanley"), (5, 2), 0, True)
-    ], (80, 80), 0.7)
-    self.surface.blit(level.getLevelSurface(comgwa.tiktok() - self.anchor), (0, 0))
-
-testScene = comgwa.Scene("testScene", testStart, testUpdate, None)
+        comgwa.Player(zeroPalette, (0, 1), (3, 3))
+    ], (80, 80), 0.5))
 scenes = [testScene]
 manager = comgwa.SceneManager(scenes)
 manager.run()

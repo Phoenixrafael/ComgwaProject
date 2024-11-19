@@ -1,5 +1,5 @@
 import pygame, pygame.event, pygame.locals
-import sys, math, inspect
+import sys, math, inspect, copy
 
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : math.atan(5*(x-0.5))/(2*math.atan(5*0.5))+0.5
@@ -323,33 +323,6 @@ class TerrainMap(Tilemap):
                 self.placeSprite(i, j)
         return super().getMapSprite()
 
-class Level():
-    def __init__(self, terrainStr, palette, objects, gridSize=(80, 80), movingTime=0.7):
-        t = terrainStr.split()
-        self.terrainList = []
-        for p in palette :
-            mapStr = ""
-            for l in t :
-                for c in l:
-                    mapStr += c if (c in p[2]) or c == "\n" else "_"
-                mapStr += "\n"
-            self.terrainList.append(TerrainMap(p[0], mapStr, p[1], 0 if len(p)==3 else p[3], gridSize))
-        for object in objects :
-            object.setParentMap(self.terrainList[0])
-            object.movingTime = movingTime
-        self.objects = objects
-        self.gridSize = gridSize
-        self.movingTime = movingTime
-
-    def getLevelSurface(self, deltaTime):
-        mergedTile = pygame.Surface((self.gridSize[0] * self.terrainList[0].columns, self.gridSize[1] * self.terrainList[0].rows)).convert_alpha()
-        mergedTile.fill((0, 0, 0, 0))
-        mergedTile.fill((0, 0, 0))
-        for terr in self.terrainList:
-            mergedTile.blit(terr.getMapSprite(), (0, -self.gridSize[1]*0.33) if terr.name in ["fence"] else (0, 0))
-        for obj in self.objects :
-            mergedTile.blit(obj.getObjectSprite(deltaTime), (0, -self.gridSize[1]*0.33) if obj.name in ["stanley", "zero"] else (0, 0))
-        return mergedTile
 
 class Object():
     """
@@ -400,3 +373,146 @@ class Object():
         surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
                      (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
         return surface
+
+class Player(Object):
+    """
+    플레이어 오브젝트야.
+    :param playerPalette: (이름, 스프라이트)
+    """
+    def __init__(self, playerPalette, playerState, position) :
+        self.playerPalette = playerPalette
+        self.playerState = playerState
+        super().__init__(getPlayerPalette(playerPalette[1], playerState, playerPalette[0]), position, (playerState[0] == 1), False)
+
+    def updateState(self, playerState, position) :
+        self.playerState = playerState
+        self.palette = getPlayerPalette(self.playerPalette[1], playerState, self.playerPalette[0])
+        self.position = position
+        self.moving = self.playerState[1] if (playerState[0] == 1) else 0
+
+class Level():
+    def __init__(self, terrainStr, palette, objects, gridSize=(80, 80), movingTime=0.7):
+        t = terrainStr.split()
+        self.terrainList = []
+        for p in palette :
+            mapStr = ""
+            for l in t :
+                for c in l:
+                    mapStr += c if (c in p[2]) or c == "\n" else "_"
+                mapStr += "\n"
+            self.terrainList.append(TerrainMap(p[0], mapStr, p[1], 0 if len(p)==3 else p[3], gridSize))
+        for object in objects :
+            object.setParentMap(self.terrainList[0])
+            object.movingTime = movingTime
+        self.objects = objects
+        self.gridSize = gridSize
+        self.movingTime = movingTime
+
+    def getLevelSurface(self, deltaTime):
+        mergedTile = pygame.Surface((self.gridSize[0] * self.terrainList[0].columns, self.gridSize[1] * self.terrainList[0].rows)).convert_alpha()
+        mergedTile.fill((0, 0, 0, 0))
+        mergedTile.fill((0, 0, 0))
+        for terr in self.terrainList:
+            mergedTile.blit(terr.getMapSprite(), (0, -self.gridSize[1]*0.33) if terr.name in ["fence"] else (0, 0))
+        for obj in self.objects :
+            mergedTile.blit(obj.getObjectSprite(deltaTime), (0, -self.gridSize[1]*0.33) if obj.name in ["stanley", "zero"] else (0, 0))
+        return mergedTile
+
+    def isWall(self, columnNo, rowNo):
+        if( (not (0 <= columnNo < self.terrainList[0].columns))
+                or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
+            return False
+        for terr in self.terrainList:
+            if(terr.name in ["fence"]) :
+                if(terr.bitArray[rowNo][columnNo]) :
+                    return True
+        return False
+
+    def isEnd(self, columnNo, rowNo):
+        if( (not (0 <= columnNo < self.terrainList[0].columns))
+                or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
+            return False
+        void = True
+        isTall = True
+        for terr in self.terrainList:
+            if(terr.name in ["dirt"]) :
+                if(terr.height == 0) : isTall = False
+                if(terr.bitArray[rowNo][columnNo]) :
+                    void = False
+        if(void) :
+            return 2 if isTall else 1
+        else :
+            return 0
+
+    def isHole(self, columnNo, rowNo):
+        if( (not (0 <= columnNo < self.terrainList[0].columns))
+                or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
+            return False
+        for obj in self.objects :
+            if(obj.name == "hole") :
+                if(obj.position == (columnNo, rowNo)) :
+                    return True
+        return False
+
+    def getNextLevel(self, inp):
+        nextLevel = self
+        if(inp != 5) :
+            deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][inp]
+            for i,obj in enumerate(nextLevel.objects) :
+                if(obj.name in ["stanley", "zero"]) :
+                    newPosition = (obj.position[0]+deltaPos[0], obj.position[1]+deltaPos[1])
+                    if(not(nextLevel.isWall(newPosition[0], newPosition[1]) or
+                    nextLevel.isEnd(newPosition[0], newPosition[1]) or
+                    nextLevel.isHole(newPosition[0], newPosition[1]))) :
+                        nextLevel.objects[i].updateState((1, (1+inp)%4+1), newPosition)
+                        return nextLevel
+            return None
+        else :
+            pass
+
+class LevelScene(Scene):
+    def __init__(self, levelName, initialLevel):
+        self.levelList = []
+        self.anchor = 0
+        def onStart_deco(initLevel) :
+            def onStart(self):
+                """
+                :param LevelScene self:
+                """
+                self.levelList = [initLevel]
+                self.anchor = tiktok()
+
+            return onStart
+
+        def onUpdate(self):
+            """
+            :param LevelScene self:
+            """
+            sprite = self.levelList[-1].getLevelSurface(tiktok() - self.anchor)
+            self.surface.blit(sprite, (self.surface.get_size()[0]/2 - sprite.get_size()[0]/2
+                                       , self.surface.get_size()[1]/2 - sprite.get_size()[1]/2))
+            pass
+
+        def onEvent(self, event):
+            """
+            :param LevelScene self:
+            """
+            nextLevel = None
+            inp = 0
+            if(event.type == pygame.KEYDOWN) :
+                if(event.key in [pygame.K_UP, pygame.K_w]) :
+                    inp = 1
+                elif(event.key in [pygame.K_LEFT, pygame.K_a]) :
+                    inp = 2
+                elif(event.key in [pygame.K_DOWN, pygame.K_s]) :
+                    inp = 3
+                elif(event.key in [pygame.K_RIGHT, pygame.K_d]) :
+                    inp = 4
+                elif(event.key in [pygame.K_SPACE]) :
+                    inp = 5
+            if(inp == 0) : return
+            nextLevel = self.levelList[-1].getNextLevel(inp)
+            if(nextLevel != None) :
+                self.levelList.append(nextLevel)
+                self.anchor = tiktok()
+        super().__init__(levelName, onStart_deco(initialLevel), onUpdate, onEvent)
