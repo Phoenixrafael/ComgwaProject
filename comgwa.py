@@ -457,6 +457,11 @@ class Level():
         self.gridSize = gridSize
         self.movingTime = movingTime
 
+    def addObject(self, object):
+        object.setParentMap(self.terrainList[0])
+        object.movingTime = self.movingTime
+        self.objects.append(object)
+
     def getLevelSurface(self, deltaTime):
         mergedTile = pygame.Surface((self.gridSize[0] * self.terrainList[0].columns, self.gridSize[1] * self.terrainList[0].rows)).convert_alpha()
         mergedTile.fill((0, 0, 0, 0))
@@ -513,59 +518,33 @@ class Level():
                     return obj
         return None
 
-    def getNextLevel(self, inp):
-        nextLevel = smartCopy(self)
-        i = 0
-        for _ in range(len(nextLevel.objects)) :
-            if(nextLevel.objects[i].vanish) :
-                nextLevel.objects.remove(nextLevel.objects[i])
-                i -= 1
-            if(nextLevel.objects[i].name == "dirtPile" and nextLevel.objects[i].moving != 0) :
-                nextLevel.objects[i].moving = 0
-            i += 1
-        if(inp != 5) :
-            deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][inp]
-            for i,obj in enumerate(nextLevel.objects) :
-                if(obj.name in ["stanley", "zero"]) :
-                    newPosition = (obj.position[0]+deltaPos[0], obj.position[1]+deltaPos[1])
-
-                    if(not(nextLevel.isWall(*newPosition) or
-                    nextLevel.isEnd(*newPosition) or
-                    nextLevel.isHole(*newPosition))) :
-                        getDirtPile = nextLevel.getDirtPile(newPosition[0], newPosition[1])
-                        if(getDirtPile != None) :
-                            if(not(nextLevel.isWall(obj.position[0]+deltaPos[0]*2, obj.position[1]+deltaPos[1]*2))) :
-                                getDirtPile.position = (obj.position[0]+deltaPos[0]*2, obj.position[1]+deltaPos[1]*2)
-                                getDirtPile.moving = (1+inp)%4+1
-                                nextLevel.objects[i].updateState((1, (1+inp)%4+1), newPosition)
-                            else : return None
-                        else:
-                            nextLevel.objects[i].updateState((1, (1+inp)%4+1), newPosition)
-
-                        for obj1 in nextLevel.objects :
-                            for obj2 in nextLevel.objects :
-                                if(obj1.name == "dirtPile" and obj2.name == "hole"
-                                and obj1.position == obj2.position) :
-                                    obj1.vanish = True
-                                    obj2.vanish = True
-
-                        return nextLevel
-                    else : return None
-            return None
-        else :
-            pass
+    def isDiggable(self, columnNo, rowNo):
+        if( (not (0 <= columnNo < self.terrainList[0].columns))
+                or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
+            return False
+        for terr in self.terrainList:
+            if(terr.name not in ["dirt"]) :
+                if(terr.bitArray[rowNo][columnNo]) :
+                    return False
+            else :
+                if(not terr.bitArray[rowNo][columnNo]) :
+                    return True
+        return True
 
 class LevelScene(Scene):
-    def __init__(self, levelName, initialLevel):
+    def __init__(self, levelName, initialLevel, holePalette, dirtPalette):
         self.levelList = []
         self.levelQueue = []
         self.anchor = 0
+        self.holePalette = holePalette
+        self.dirtPalette = dirtPalette
         def onStart_deco(initLevel) :
             def onStart(self):
                 """
                 :param LevelScene self:
                 """
                 self.levelList = [initLevel]
+
                 self.anchor = tiktok()
 
             return onStart
@@ -604,7 +583,7 @@ class LevelScene(Scene):
                     if (tiktok() - self.anchor > self.levelList[-1].movingTime and len(self.levelList) > 1):
                         self.levelList.pop()
             if(inp == 0) : return
-            nextLevel = (self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0]).getNextLevel(inp)
+            nextLevel = self.getNextLevel(self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0], inp)
             if(nextLevel != None) :
                 if(tiktok() - self.anchor > self.levelList[-1].movingTime) :
                     self.levelList.append(nextLevel)
@@ -613,3 +592,58 @@ class LevelScene(Scene):
                     if(len(self.levelQueue) <= 1) :
                         self.levelQueue.append(nextLevel)
         super().__init__(levelName, onStart_deco(initialLevel), onUpdate, onEvent)
+
+    def getNextLevel(self, level, inp):
+        nextLevel = smartCopy(level)
+        i = 0
+        for _ in range(len(nextLevel.objects)) :
+            if(nextLevel.objects[i].vanish) :
+                nextLevel.objects.remove(nextLevel.objects[i])
+                i -= 1
+            if(nextLevel.objects[i].name == "dirtPile" and nextLevel.objects[i].moving != 0) :
+                nextLevel.objects[i].moving = 0
+            i += 1
+        if(inp != 5) :
+            deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][inp]
+            player = None
+            for obj in nextLevel.objects :
+                if(obj.name in ["stanley", "zero"]) :
+                    player = obj
+                    break
+            newPosition = (player.position[0]+deltaPos[0], player.position[1]+deltaPos[1])
+
+            if(not(nextLevel.isWall(*newPosition) or nextLevel.isEnd(*newPosition) or nextLevel.isHole(*newPosition))) :
+                getDirtPile = nextLevel.getDirtPile(newPosition[0], newPosition[1])
+                if(getDirtPile != None) :
+                    if(not(nextLevel.isWall(player.position[0]+deltaPos[0]*2, player.position[1]+deltaPos[1]*2))) :
+                        getDirtPile.position = (player.position[0]+deltaPos[0]*2, player.position[1]+deltaPos[1]*2)
+                        getDirtPile.moving = (1+inp)%4+1
+                        player.updateState((1, (1+inp)%4+1), newPosition)
+                    else : return None
+                else:
+                    player.updateState((1, (1+inp)%4+1), newPosition)
+            else : return None
+        else :
+            player = None
+            for obj in nextLevel.objects :
+                if(obj.name in ["stanley", "zero"]) :
+                    player = obj
+                    break
+
+            deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][(1+player.playerState[1])%4+1]
+            digPosition = (player.position[0]+deltaPos[0], player.position[1]+deltaPos[1])
+            dirtPosition = (player.position[0]+deltaPos[0]*2, player.position[1]+deltaPos[1]*2)
+            if(nextLevel.isDiggable(*digPosition) and (not nextLevel.isHole(*digPosition)) and (not nextLevel.isWall(*dirtPosition))) :
+                player.updateState((2, player.playerState[1]), player.position)
+                nextLevel.addObject(Object(self.holePalette, digPosition))
+                nextLevel.addObject(Object(self.dirtPalette, dirtPosition, player.playerState[1]))
+            else :
+                return None
+
+        for obj1 in nextLevel.objects:
+            for obj2 in nextLevel.objects:
+                if (obj1.name == "dirtPile" and obj2.name == "hole"
+                        and obj1.position == obj2.position):
+                    obj1.vanish = True
+                    obj2.vanish = True
+        return nextLevel

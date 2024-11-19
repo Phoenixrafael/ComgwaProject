@@ -43,22 +43,22 @@ zeroPalette = ("stanley", zeroSpriteTilemap)
 테스트용 코드
 '''
 
+pygame.key.set_repeat(500, 500)
+
 testScene = comgwa.LevelScene("testLevel", comgwa.Level("""
     __________
-    _OOOOOOOO_
-    _OOOOOOOO_
+    _OOOOO____
+    _OOOOOOO__
     _OOOOOOOO_
     _OOOOOOOO_
     _OOFFFFFF_
     _OOOOOOOO_
-    _OOOOOOOO_
-    _OOOOOOOO_
+    _OO_______
+    _OOOO_____
     __________
     """, palette, [
-        comgwa.Object(holePalette, (3, 2)),
-        comgwa.Object(dirtPalette, (4, 3)),
         comgwa.Player(zeroPalette, (0, 1), (3, 3))
-    ], (60, 60), 0.3))
+    ], (60, 60), 0.3), holePalette, dirtPalette)
 scenes = [testScene]
 manager = comgwa.SceneManager(scenes)
 manager.run()
