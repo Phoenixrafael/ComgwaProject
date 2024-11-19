@@ -418,8 +418,9 @@ class Object():
         if(self.moving == 3) : curDeltaPos = (0, +1)
         if(self.moving == 4) : curDeltaPos = (+1, 0)
 
-        surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
-                     (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
+        if(not (self.vanish and deltaTime == self.movingTime)) :
+            surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
+                         (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
         return surface
 
 class Player(Object):
@@ -493,27 +494,63 @@ class Level():
             return 0
 
     def isHole(self, columnNo, rowNo):
+        if ((not (0 <= columnNo < self.terrainList[0].columns))
+                or (not (0 <= rowNo < self.terrainList[0].rows))):
+            return False
+        for obj in self.objects:
+            if (obj.name == "hole"):
+                if (obj.position == (columnNo, rowNo)):
+                    return True
+        return False
+
+    def getDirtPile(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
             return False
         for obj in self.objects :
-            if(obj.name == "hole") :
+            if(obj.name == "dirtPile") :
                 if(obj.position == (columnNo, rowNo)) :
-                    return True
-        return False
+                    return obj
+        return None
 
     def getNextLevel(self, inp):
         nextLevel = smartCopy(self)
+        i = 0
+        for _ in range(len(nextLevel.objects)) :
+            if(nextLevel.objects[i].vanish) :
+                nextLevel.objects.remove(nextLevel.objects[i])
+                i -= 1
+            if(nextLevel.objects[i].name == "dirtPile" and nextLevel.objects[i].moving != 0) :
+                nextLevel.objects[i].moving = 0
+            i += 1
         if(inp != 5) :
             deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][inp]
             for i,obj in enumerate(nextLevel.objects) :
                 if(obj.name in ["stanley", "zero"]) :
                     newPosition = (obj.position[0]+deltaPos[0], obj.position[1]+deltaPos[1])
-                    if(not(nextLevel.isWall(newPosition[0], newPosition[1]) or
-                    nextLevel.isEnd(newPosition[0], newPosition[1]) or
-                    nextLevel.isHole(newPosition[0], newPosition[1]))) :
-                        nextLevel.objects[i].updateState((1, (1+inp)%4+1), newPosition)
+
+                    if(not(nextLevel.isWall(*newPosition) or
+                    nextLevel.isEnd(*newPosition) or
+                    nextLevel.isHole(*newPosition))) :
+                        getDirtPile = nextLevel.getDirtPile(newPosition[0], newPosition[1])
+                        if(getDirtPile != None) :
+                            if(not(nextLevel.isWall(obj.position[0]+deltaPos[0]*2, obj.position[1]+deltaPos[1]*2))) :
+                                getDirtPile.position = (obj.position[0]+deltaPos[0]*2, obj.position[1]+deltaPos[1]*2)
+                                getDirtPile.moving = (1+inp)%4+1
+                                nextLevel.objects[i].updateState((1, (1+inp)%4+1), newPosition)
+                            else : return None
+                        else:
+                            nextLevel.objects[i].updateState((1, (1+inp)%4+1), newPosition)
+
+                        for obj1 in nextLevel.objects :
+                            for obj2 in nextLevel.objects :
+                                if(obj1.name == "dirtPile" and obj2.name == "hole"
+                                and obj1.position == obj2.position) :
+                                    obj1.vanish = True
+                                    obj2.vanish = True
+
                         return nextLevel
+                    else : return None
             return None
         else :
             pass
