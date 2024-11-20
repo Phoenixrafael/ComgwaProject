@@ -29,7 +29,7 @@ fenceTerrain = comgwa.getTerrainDict(fenceTilemap)
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
 
-palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F'}, 1),
+palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
            ("ice", iceTerrain, {'I'}),
            ("fence", fenceTerrain, {'F'})]
@@ -57,7 +57,7 @@ testScene = comgwa.LevelScene("testLevel", comgwa.Level("""
     _OOOO_____
     __________
     """, palette, [
-        comgwa.Player(zeroPalette, (0, 1), (3, 3))
+        comgwa.Player(stanleyPalette, (0, 1), (3, 3))
     ], (60, 60), 0.3), holePalette, dirtPalette)
 scenes = [testScene]
 manager = comgwa.SceneManager(scenes)

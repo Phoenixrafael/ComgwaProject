@@ -648,8 +648,9 @@ class LevelScene(Scene):
                     obj1.vanish = True
                     obj2.vanish = True
                 if (obj1.name == "dirtPile" and nextLevel.isEnd(*obj1.position)) :
-                    if(nextLevel.isEnd(*obj1.position) == 2):
-                        obj1.vanish = True
-                    else:
-                        pass
+                    obj1.vanish = True
+                    if(nextLevel.isEnd(*obj1.position) == 1):
+                        for terr in nextLevel.terrainList:
+                            if(terr.name == "dirt") :
+                                terr.bitArray[obj1.position[1]][obj1.position[0]] = True
         return nextLevel
