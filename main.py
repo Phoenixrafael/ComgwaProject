@@ -73,12 +73,13 @@ levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
 
 levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
     ________
-    ___OGOO_
+    ___OOO__
+    __OOGOO_
     _____OO_
-    ______O_
+    _____OO_
     ________
     _OOOOOO_
-    _OOOO_O_
+    _GOOO_O_
     __OO__O_
     ________
     """, palette, [
