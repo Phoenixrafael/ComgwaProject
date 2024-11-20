@@ -512,7 +512,7 @@ class Level():
     def getDirtPile(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
-            return False
+            return None
         for obj in self.objects :
             if(obj.name == "dirtPile") :
                 if(obj.position == (columnNo, rowNo)) :
@@ -612,12 +612,13 @@ class LevelScene(Scene):
                     player = obj
                     break
             newPosition = (player.position[0]+deltaPos[0], player.position[1]+deltaPos[1])
+            dirtPosition = (player.position[0]+deltaPos[0]*2, player.position[1]+deltaPos[1]*2)
 
             if(not(nextLevel.isWall(*newPosition) or nextLevel.isEnd(*newPosition) or nextLevel.isHole(*newPosition))) :
                 getDirtPile = nextLevel.getDirtPile(newPosition[0], newPosition[1])
                 if(getDirtPile != None) :
-                    if(not(nextLevel.isWall(player.position[0]+deltaPos[0]*2, player.position[1]+deltaPos[1]*2))) :
-                        getDirtPile.position = (player.position[0]+deltaPos[0]*2, player.position[1]+deltaPos[1]*2)
+                    if(not(nextLevel.isWall(*dirtPosition) or nextLevel.getDirtPile(*dirtPosition) != None)) :
+                        getDirtPile.position = dirtPosition
                         getDirtPile.moving = (1+inp)%4+1
                         player.updateState((1, (1+inp)%4+1), newPosition)
                     else : return None
