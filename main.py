@@ -30,6 +30,7 @@ goalTerrain = comgwa.getTerrainDict(goalTilemap)
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
 
+#배경 이미지
 mountain = pygame.image.load("asset/sprite/background/bigThumb.png")
 bus = pygame.image.load("asset/sprite/background/bus.png")
 camp1 = pygame.image.load("asset/sprite/background/camp1.png")
@@ -45,6 +46,33 @@ camp2 = comgwa.makeImage(pygame.transform.scale(camp2, (1280, 720)), 0)
 camp3 = comgwa.makeImage(pygame.transform.scale(camp3, (1280, 720)), 0)
 lawcourt = comgwa.makeImage(pygame.transform.scale(lawcourt, (1280, 720)), 0)
 town = comgwa.makeImage(pygame.transform.scale(town, (1280, 720)), 0)
+
+# 인물 이미지
+stanley_normal = pygame.image.load("asset/sprite/cutscene/character/stanley-normal.png")
+stanley_sad = pygame.image.load("asset/sprite/cutscene/character/stanley-sad.png")
+stanley_happy = pygame.image.load("asset/sprite/cutscene/character/stanley-happy.png")
+stanley_angry = pygame.image.load("asset/sprite/cutscene/character/stanley-angry.png")
+zero_normal = pygame.image.load("asset/sprite/cutscene/character/zero-normal.png")
+zero_sad = pygame.image.load("asset/sprite/cutscene/character/zero-sad.png")
+zero_happy = pygame.image.load("asset/sprite/cutscene/character/zero-happy.png")
+zero_angry = pygame.image.load("asset/sprite/cutscene/character/zero-angry.png")
+
+stanley_normal_left = comgwa.makeImage(pygame.transform.scale(stanley_normal, (100, 100)), 1)
+stanley_normal_right = comgwa.makeImage(pygame.transform.scale(stanley_normal, (100, 100)), 2)
+stanley_sad_left = comgwa.makeImage(pygame.transform.scale(stanley_sad, (100, 100)), 1)
+stanley_sad_right = comgwa.makeImage(pygame.transform.scale(stanley_sad, (100, 100)), 2)
+stanley_happy_left = comgwa.makeImage(pygame.transform.scale(stanley_happy, (100, 100)), 1)
+stanley_happy_right = comgwa.makeImage(pygame.transform.scale(stanley_happy, (100, 100)), 2)
+stanley_angry_left = comgwa.makeImage(pygame.transform.scale(stanley_angry, (100, 100)), 1)
+stanley_angry_right = comgwa.makeImage(pygame.transform.scale(stanley_angry, (100, 100)), 2)
+zero_normal_left = comgwa.makeImage(pygame.transform.scale(zero_normal, (100, 100)), 1)
+zero_normal_right = comgwa.makeImage(pygame.transform.scale(zero_normal, (100, 100)), 2)
+zero_sad_left = comgwa.makeImage(pygame.transform.scale(zero_sad, (100, 100)), 1)
+zero_sad_right = comgwa.makeImage(pygame.transform.scale(zero_sad, (100, 100)), 2)
+zero_happy_left = comgwa.makeImage(pygame.transform.scale(zero_happy, (100, 100)), 1)
+zero_happy_right = comgwa.makeImage(pygame.transform.scale(zero_happy, (100, 100)), 2)
+zero_angry_left = comgwa.makeImage(pygame.transform.scale(zero_angry, (100, 100)), 1)
+zero_angry_right = comgwa.makeImage(pygame.transform.scale(zero_angry, (100, 100)), 2)
 
 ''' cutscene 만들기 '''
 
@@ -67,7 +95,7 @@ line5 = comgwa.makeLine("Thanks for your efforts, Sieul!", red, 50, "oneline", 1
 
 lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
 
-backgrounds = [[town], [town], [camp1], [camp2]]
+backgrounds = [[town, stanley_normal], [town], [camp1], [camp2]]
 
 cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines, "level03")
 
