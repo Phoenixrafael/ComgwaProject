@@ -20,6 +20,7 @@ fenceTilemap = pygame.image.load("asset//sprite//terrain//terrain_fence.png").co
 
 dirtPileSprite = pygame.image.load("asset//sprite//object//object_dirt.png").convert_alpha()
 holeSprite = pygame.image.load("asset//sprite//object//object_hole.png").convert_alpha()
+goalSprite = pygame.image.load("asset//sprite//object//object_goal.png").convert_alpha()
 
 dirtTerrain = comgwa.getTerrainDict(dirtTilemap)
 wetDirtTerrain = comgwa.getTerrainDict(wetDirtTilemap)
@@ -49,7 +50,7 @@ testScene = comgwa.LevelScene("testLevel", comgwa.Level("""
     __________
     _OOOOO____
     _OOOOOOO__
-    _OOOOOOOO_
+    _OOOWWWOO_
     _OOOOOOOO_
     _OOFFFFFF_
     _OOOOOOOO_
