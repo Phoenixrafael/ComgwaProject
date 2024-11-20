@@ -43,58 +43,53 @@ stanleyPalette = ("stanley", stanleySpriteTilemap)
 zeroPalette = ("stanley", zeroSpriteTilemap)
 
 '''
+레벨 리스트
+'''
+
+levelList = []
+
+levelList.append(comgwa.LevelScene("level01", comgwa.Level("""
+    _______
+    _____O_
+    _____G_
+    _____O_
+    _OGOOO_
+    _______
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 2), (1, 4))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level02"))
+
+levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
+    _______
+    _OGOOO_
+    _______
+    _OOOOO_
+    _OOOGO_
+    _OOOOO_
+    _______
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (3, 3))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level03"))
+
+levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
+    ________
+    ___OGOO_
+    _____OO_
+    ______O_
+    ________
+    _OOOOOO_
+    _OOOO_O_
+    __OO__O_
+    ________
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (3, 6))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level04"))
+
+'''
 테스트용 코드
 '''
 
 pygame.key.set_repeat(500, 500)
 
-testScene = comgwa.LevelScene("testLevel", comgwa.Level("""
-    __________
-    _OOOOO____
-    _OOOOOOO__
-    _OOOWWWOO_
-    _OOOOOOGO_
-    _OOFFFFFF_
-    _OOOOOOOO_
-    _OO_______
-    _OOOO_____
-    __________
-    """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (3, 3))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "testCutScene")
-
-background_image = pygame.image.load("asset//sprite//background//bigThumb.png")
-background_image = pygame.transform.scale(background_image, (1280, 720))
-lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
-lineback = pygame.transform.scale(lineback, (1000, 250))
-
-screen = pygame.display.set_mode((1280, 720))
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-magenta = (255, 0, 255)
-red = (255, 0, 0)
-
-person1 = comgwa.makeLine("Stanley", black, 35, "person", 0)
-person2 = comgwa.makeLine("Zero", black, 35, "person", 0)
-person3 = comgwa.makeLine("Warden", black, 35, "person", 0)
-
-line1 = comgwa.makeLine("Hello!", black, 40, "oneline", 1)
-line2 = comgwa.makeLine("안녕?", black, 40, "twoline1", 1)
-line3 = comgwa.makeLine("I'm hungry.", magenta, 40, "twoline2", 1)
-line4 = comgwa.makeLine("Wow!", black, 40, "oneline", 1)
-line5 = comgwa.makeLine("Thanks for your efforts, Sieul!", red, 50, "oneline", 1)
-
-
-lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
-backgrounds = [[] for _ in range(len(lines))]
-for i in range(len(lines)):
-    backgrounds[i].append([background_image, (0, 0)])
-
-running = 1
-
-testCutScene = comgwa.CutScene("testCutScene", lineback, backgrounds, lines)
-
-scenes = [testScene, testCutScene]
-manager = comgwa.SceneManager(scenes)
+manager = comgwa.SceneManager(levelList)
 manager.run()
