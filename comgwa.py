@@ -89,6 +89,7 @@ class Scene():
         self.stop = False
         self.onStart(self)
         while True:
+            self.surface.fill((0, 0, 0))
             self.stop = self.stop or self.onUpdate(self)
             pygame.display.update()
             for event in pygame.event.get():
@@ -130,7 +131,7 @@ class CutScene(Scene):
         assert backgrounds, "배경이 없음"
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
         self.background = backgrounds #배경 목록
-        self.lines = lines # 대사 목록, 시용법은 cutscenetest.py 참고
+        self.lines = lines
         self.lineindex = 0
         pygame.display.flip()
 
@@ -524,21 +525,35 @@ class Level():
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
             return False
         for terr in self.terrainList:
-            if(terr.name not in ["dirt"]) :
+            if(terr.name not in ["dirt", "goal"]) :
                 if(terr.bitArray[rowNo][columnNo]) :
                     return False
-            else :
+            elif(terr.name == "dirt") :
                 if(not terr.bitArray[rowNo][columnNo]) :
                     return False
         return True
 
+    def isWin(self):
+        goalTerrain = None
+        for terr in self.terrainList:
+            if(terr.name == "goal") : goalTerrain = terr
+        for obj in self.objects:
+            if(obj.name == "hole") :
+                if(goalTerrain.bitArray[obj.position[1]][obj.position[0]]) :
+                    return True
+        return False
+
+
 class LevelScene(Scene):
-    def __init__(self, levelName, initialLevel, holePalette, dirtPalette):
+    def __init__(self, levelName, initialLevel, holePalette, dirtPalette, nextSceneName):
         self.levelList = []
         self.levelQueue = []
         self.anchor = 0
+        self.winAnchor = 0
         self.holePalette = holePalette
         self.dirtPalette = dirtPalette
+        self.win = False
+        self.levelClearSprite = pygame.image.load("asset//sprite//level_clear.png")
         def onStart_deco(initLevel) :
             def onStart(self):
                 """
@@ -562,12 +577,25 @@ class LevelScene(Scene):
                     self.levelList.append(self.levelQueue[0])
                     self.anchor = tiktok()
                     self.levelQueue = self.levelQueue[1:]
-            pass
+            if(self.levelList[-1].isWin() and self.animationOver() and not self.win) :
+                self.win = True
+                self.winAnchor = tiktok()
+            if(self.win) :
+                alphaSprite = pygame.Surface((1280, 720)).convert_alpha()
+                alphaSprite.fill((0, 0, 0, 0))
+                alphaSprite.blit(self.levelClearSprite, (0, 0))
+                alphaSprite.fill((255, 255, 255, 255 * easein(min((tiktok() - self.winAnchor) / 0.5, 1))), special_flags=pygame.BLEND_RGBA_MULT)
+                self.surface.blit(alphaSprite, (0, 0))
 
         def onEvent(self, event):
             """
             :param LevelScene self:
             """
+            if(self.win) :
+                if (event.type == pygame.KEYDOWN):
+                    if (event.key == pygame.K_SPACE):
+                        self.manager.loadScene(self, nextSceneName)
+                return
             inp = 0
             if(event.type == pygame.KEYDOWN) :
                 if(event.key in [pygame.K_UP, pygame.K_w]) :
@@ -581,18 +609,21 @@ class LevelScene(Scene):
                 elif(event.key in [pygame.K_SPACE]) :
                     inp = 5
                 elif(event.key in [pygame.K_z]) :
-                    if (tiktok() - self.anchor > self.levelList[-1].movingTime and len(self.levelList) > 1):
+                    if (self.animationOver() and len(self.levelList) > 1):
                         self.levelList.pop()
             if(inp == 0) : return
             nextLevel = self.getNextLevel(self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0], inp)
             if(nextLevel != None) :
-                if(tiktok() - self.anchor > self.levelList[-1].movingTime) :
+                if(self.animationOver()) :
                     self.levelList.append(nextLevel)
                     self.anchor = tiktok()
                 else :
                     if(len(self.levelQueue) <= 1) :
                         self.levelQueue.append(nextLevel)
         super().__init__(levelName, onStart_deco(initialLevel), onUpdate, onEvent)
+
+    def animationOver(self):
+        return tiktok() - self.anchor > self.levelList[-1].movingTime
 
     def getNextLevel(self, level, inp):
         nextLevel = smartCopy(level)

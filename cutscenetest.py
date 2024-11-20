@@ -3,7 +3,7 @@ import comgwa
 import sys
 pygame.init()
 
-background_image = pygame.image.load("asset/sprite/terrain/water_and_island_tiles.png")
+background_image = pygame.image.load("asset//sprite//background//bigThumb.png")
 background_image = pygame.transform.scale(background_image, (1280, 720))
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
