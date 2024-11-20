@@ -634,7 +634,8 @@ class LevelScene(Scene):
             deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][(1+player.playerState[1])%4+1]
             digPosition = (player.position[0]+deltaPos[0], player.position[1]+deltaPos[1])
             dirtPosition = (player.position[0]+deltaPos[0]*2, player.position[1]+deltaPos[1]*2)
-            if(nextLevel.isDiggable(*digPosition) and (not nextLevel.isHole(*digPosition)) and (not nextLevel.isWall(*dirtPosition))) :
+            if(nextLevel.isDiggable(*digPosition) and (not nextLevel.isHole(*digPosition))
+                    and (not nextLevel.isWall(*dirtPosition) and (nextLevel.getDirtPile(*dirtPosition) == None))) :
                 player.updateState((2, player.playerState[1]), player.position)
                 nextLevel.addObject(Object(self.holePalette, digPosition))
                 nextLevel.addObject(Object(self.dirtPalette, dirtPosition, player.playerState[1]))
