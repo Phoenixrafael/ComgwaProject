@@ -131,7 +131,7 @@ class CutScene(Scene):
         self.lineback = lineback
         assert backgrounds, "배경이 없음"
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
-        self.background = backgrounds + [[backgrounds[-1]]] #배경 목록
+        self.background = backgrounds + [[backgrounds[-1][0]]] #배경 목록
         self.lines = lines + [[]]
         self.lineindex = 0
         self.nextscene = nextSceneName
@@ -141,7 +141,8 @@ class CutScene(Scene):
         end = 0
         self.surface.fill((0, 0, 0))
         for image, position in self.background[self.lineindex]:
-            self.surface.blit(image, position)
+            if position == (0, 0):
+                self.surface.blit(image, position)
         pygame.display.flip()
         while True:
             pygame.display.update()
@@ -216,9 +217,9 @@ def makeImage(image, type):
     if type == 0:
         return [image, (0, 0)]
     if type == 1:
-        return [pygame.transform.flip(image, True, False), (150, 150)]
+        return [pygame.transform.flip(image, True, False), (170, 100)]
     if type == 2:
-        return [image, (1000, 150)]
+        return [image, (710, 100)]
 
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """
