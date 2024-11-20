@@ -88,6 +88,7 @@ class Scene():
     def run(self):
         self.stop = False
         self.onStart(self)
+        pygame.event.clear()
         while True:
             self.surface.fill((0, 0, 0))
             self.stop = self.stop or self.onUpdate(self)
@@ -107,7 +108,7 @@ class SceneManager():
     :param list[Scene] scenes: 관리할 Scene 객체의 리스트입니다.
     """
     def __init__(self, scenes):
-        assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재합니다;; 똥강아지야;"
+        #assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재합니다;; 똥강아지야;"
         for scene in scenes:
             scene.manager = self
         self.scenes = scenes
@@ -124,15 +125,16 @@ class SceneManager():
         self.scenes[0].run()
 
 class CutScene(Scene):
-    def __init__(self, name, lineback, backgrounds, lines, displaySize=(1280, 720)):
+    def __init__(self, name, lineback, backgrounds, lines, nextSceneName, displaySize=(1280, 720)):
         self.name = name
         self.surface = pygame.display.set_mode(displaySize)
         self.lineback = lineback
         assert backgrounds, "배경이 없음"
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
-        self.background = backgrounds #배경 목록
-        self.lines = lines
+        self.background = backgrounds + [[backgrounds[-1]]] #배경 목록
+        self.lines = lines + [[]]
         self.lineindex = 0
+        self.nextscene = nextSceneName
         pygame.display.flip()
 
     def run(self):
@@ -148,6 +150,7 @@ class CutScene(Scene):
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE:
+                    pygame.event.clear()
                     if self.lineindex == len(self.lines):
                         end = 1; break
                     effect_texts, uneffect_texts = [], []
@@ -183,7 +186,10 @@ class CutScene(Scene):
                         uneffect_texts.append((idx, text_info))
                     self.lineindex += 1
 
-            if end: break
+            if end:
+                self.manager.loadScene(self, self.nextscene)
+                pygame.event.clear()
+                break
 
 def makeLine(sentence, color, size, position, effect):
     """

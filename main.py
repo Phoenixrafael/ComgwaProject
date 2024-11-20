@@ -9,7 +9,6 @@ from comgwa import getSpriteFromTileMap, getPlayerPalette
 pygame.init()
 pygame.display.set_mode((1280, 720))
 
-
 stanleySpriteTilemap = pygame.image.load("asset//sprite//character//stanley.png").convert_alpha()
 zeroSpriteTilemap = pygame.image.load("asset//sprite//character//zero.png").convert_alpha()
 
@@ -30,6 +29,36 @@ goalTerrain = comgwa.getTerrainDict(goalTilemap)
 
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
+
+''' cutscene 만들기 '''
+background_image = pygame.image.load("asset//sprite//background//bigThumb.png")
+background_image = pygame.transform.scale(background_image, (1280, 720))
+
+screen = pygame.display.set_mode((1280, 720))
+
+black = (0, 0, 0)
+white = (255, 255, 255)
+magenta = (255, 0, 255)
+red = (255, 0, 0)
+
+person1 = comgwa.makeLine("Stanley", black, 35, "person", 0)
+person2 = comgwa.makeLine("Zero", black, 35, "person", 0)
+person3 = comgwa.makeLine("Warden", black, 35, "person", 0)
+
+line1 = comgwa.makeLine("Hello!", black, 40, "oneline", 1)
+line2 = comgwa.makeLine("안녕?", black, 40, "twoline1", 1)
+line3 = comgwa.makeLine("I'm hungry.", magenta, 40, "twoline2", 1)
+line4 = comgwa.makeLine("Wow!", black, 40, "oneline", 1)
+line5 = comgwa.makeLine("Thanks for your efforts, Sieul!", red, 50, "oneline", 1)
+
+
+lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
+backgrounds = [[] for _ in range(len(lines))]
+for i in range(len(lines)):
+    backgrounds[i].append([background_image, (0, 0)])
+
+cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines, "level03")
+
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
@@ -69,7 +98,7 @@ levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 3))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level03"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "new_scene"))
 
 levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
     ________
@@ -92,5 +121,7 @@ levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
 
 pygame.key.set_repeat(500, 500)
 
-manager = comgwa.SceneManager(levelList)
+scenes = levelList + [cutscene1]
+
+manager = comgwa.SceneManager(scenes)
 manager.run()

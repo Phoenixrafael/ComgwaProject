@@ -33,7 +33,7 @@ for i in range(len(lines)):
 
 running = 1
 
-cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines)
+cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines, "no")
 cutscene1.run()
 pygame.quit()
 sys.exit()
