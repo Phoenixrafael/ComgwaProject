@@ -537,11 +537,12 @@ class Level():
         goalTerrain = None
         for terr in self.terrainList:
             if(terr.name == "goal") : goalTerrain = terr
-        for obj in self.objects:
-            if(obj.name == "hole") :
-                if(goalTerrain.bitArray[obj.position[1]][obj.position[0]]) :
-                    return True
-        return False
+        for i in range(len(goalTerrain.bitArray)) :
+            for j in range(len(goalTerrain.bitArray[0])) :
+                if(goalTerrain.bitArray[i][j]) :
+                    if(not self.isHole(j, i)) :
+                        return False
+        return True
 
 
 class LevelScene(Scene):
