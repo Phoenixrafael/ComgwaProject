@@ -30,9 +30,23 @@ goalTerrain = comgwa.getTerrainDict(goalTilemap)
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
 
+mountain = pygame.image.load("asset/sprite/background/bigThumb.png")
+bus = pygame.image.load("asset/sprite/background/bus.png")
+camp1 = pygame.image.load("asset/sprite/background/camp1.png")
+camp2 = pygame.image.load("asset/sprite/background/camp2.png")
+camp3 = pygame.image.load("asset/sprite/background/camp3.png")
+lawcourt = pygame.image.load("asset/sprite/background/lawCourt.png")
+town = pygame.image.load("asset/sprite/background/town.png")
+
+mountain = pygame.transform.scale(mountain, (1280, 720))
+bus = pygame.transform.scale(bus, (1280, 720))
+camp1 = pygame.transform.scale(camp1, (1280, 720))
+camp2 = pygame.transform.scale(camp2, (1280, 720))
+camp3 = pygame.transform.scale(camp3, (1280, 720))
+lawcourt = pygame.transform.scale(lawcourt, (1280, 720))
+town = pygame.transform.scale(town, (1280, 720))
+
 ''' cutscene 만들기 '''
-background_image = pygame.image.load("asset//sprite//background//bigThumb.png")
-background_image = pygame.transform.scale(background_image, (1280, 720))
 
 screen = pygame.display.set_mode((1280, 720))
 
@@ -53,9 +67,7 @@ line5 = comgwa.makeLine("Thanks for your efforts, Sieul!", red, 50, "oneline", 1
 
 
 lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
-backgrounds = [[] for _ in range(len(lines))]
-for i in range(len(lines)):
-    backgrounds[i].append([background_image, (0, 0)])
+backgrounds = [[[town, (0, 0)]], [[town, (0, 0)]], [[camp1, (0, 0)]], [[camp2, (0, 0)]]]
 
 cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines, "level03")
 
