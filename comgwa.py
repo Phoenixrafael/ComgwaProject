@@ -216,7 +216,7 @@ def makeImage(image, type):
     if type == 0:
         return [image, (0, 0)]
     if type == 1:
-        return [image, (150, 150)]
+        return [pygame.transform.flip(image, True, False), (150, 150)]
     if type == 2:
         return [image, (1000, 150)]
 
