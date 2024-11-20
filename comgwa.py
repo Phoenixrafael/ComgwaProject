@@ -212,6 +212,14 @@ def makeLine(sentence, color, size, position, effect):
         position = (230, 658)
     return [sentence, position, type, effect, color, pygame.font.Font("asset/font/Galmuri11.ttf", size)]
 
+def makeImage(image, type):
+    if type == 0:
+        return [image, (0, 0)]
+    if type == 1:
+        return [image, (150, 150)]
+    if type == 2:
+        return [image, (1000, 150)]
+
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """
     타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
