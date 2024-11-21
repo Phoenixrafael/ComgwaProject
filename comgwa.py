@@ -284,8 +284,8 @@ def getPlayerPalette(playerTilemapSprite, state, playerName="stanley"):
     if(state[0] == 0) :
         li.append((getSpriteFromTileMap(playerTilemapSprite, 0, dir), 0))
     elif(state[0] == 1) :
-        for i in range(16) :
-            li.append((getSpriteFromTileMap(playerTilemapSprite, (i+1)%8, dir), 1/16 * (i+1)))
+        for i in range(8) :
+            li.append((getSpriteFromTileMap(playerTilemapSprite, (i+1)%8, dir), 1/8 * (i+1)))
     elif(state[0] == 2) :
         for i in range(5) :
             li.append((getSpriteFromTileMap(playerTilemapSprite, i, dir+41), 1/5 * (i+1)))
@@ -618,6 +618,9 @@ class LevelScene(Scene):
                 elif(event.key in [pygame.K_z]) :
                     if (self.animationOver() and len(self.levelList) > 1):
                         self.levelList.pop()
+                elif(event.key in [pygame.K_r]) :
+                    if (self.animationOver() and len(self.levelList) > 1):
+                        self.levelList = [self.levelList[0]]
             if(inp == 0) : return
             nextLevel = self.getNextLevel(self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0], inp)
             if(nextLevel != None) :
