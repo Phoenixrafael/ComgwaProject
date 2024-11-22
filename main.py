@@ -80,26 +80,26 @@ zero_angry_right = comgwa.makeImage(pygame.transform.scale(zero_angry, image_siz
 
 screen = pygame.display.set_mode((1280, 720))
 
-black = (0, 0, 0)
-white = (255, 255, 255)
-magenta = (255, 0, 255)
-red = (255, 0, 0)
+cutscene_text1 = '''
+black/40/Zero/
+헉...헉...
+일단 신발을 여기 두자..
+#
+black/40/Stanley/
+어? 이 신발 뭐지?
+#
+black/40/Stanley/
+주워 가면 아버지의 구두 냄새 제거 연구에
+도움이 되겠지? 주워 가야...
+#
+black/40/Police/
+Clyde Livingstone의 신발을 훔친 범인이다!"
+'''
 
-person1 = comgwa.makeLine("Stanley", black, 35, "person", 0)
-person2 = comgwa.makeLine("Zero", black, 35, "person", 0)
-person3 = comgwa.makeLine("Warden", black, 35, "person", 0)
-
-line1 = comgwa.makeLine("Hello!", black, 40, "oneline", 1)
-line2 = comgwa.makeLine("안녕?", black, 40, "twoline1", 1)
-line3 = comgwa.makeLine("I'm hungry.", magenta, 40, "twoline2", 1)
-line4 = comgwa.makeLine("Wow!", black, 40, "oneline", 1)
-line5 = comgwa.makeLine("Thanks for your efforts, Sieul!", red, 50, "oneline", 1)
-
-lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
-
+lines = comgwa.makeScript(cutscene_text1)
 backgrounds = [[town, stanley_happy_left], [town, stanley_angry_left], [camp1, zero_normal_left, stanley_angry_right], [camp2, stanley_angry_left]]
 
-cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines, "level04")
+cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines, "level03")
 
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
@@ -121,42 +121,28 @@ levelList = []
 
 levelList.append(comgwa.LevelScene("level01", comgwa.Level("""
     _______
-    _______
+    _____O_
     _____G_
     _____O_
     _OGOOO_
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 2), (1, 4))
-    ], (60, 60), 0.2), holePalette, dirtPalette, "level02"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level02"))
 
 levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
-    ______
-    _OGOO_
-    ______
-    _O____
-    _OOOO_
-    _OOOO_
-    ______
+    _______
+    _OGOOO_
+    _______
+    _OOOOO_
+    _OOOGO_
+    _OOOOO_
+    _______
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (4, 5))
+        comgwa.Player(stanleyPalette, (0, 1), (3, 3))
     ], (60, 60), 0.3), holePalette, dirtPalette, "new_scene"))
 
-levelList.append(comgwa.LevelScene("level05", comgwa.Level("""
-    ____________
-    __OOO_______
-    _OOOOO__OGO_
-    __OO________
-    ___OO_______
-    ___OO_______
-    ___OO_______
-    ___O________
-    ____________
-    """, palette, [
-        comgwa.Player(stanleyPalette, (0, 2), (1, 2))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level06"))
-
-levelList.append(comgwa.LevelScene("level06", comgwa.Level("""
+levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
     ________
     ___OOO__
     __OOGOO_
@@ -165,15 +151,14 @@ levelList.append(comgwa.LevelScene("level06", comgwa.Level("""
     ________
     _OOOOOO_
     _GOOO_O_
-    ______O_
+    __OO__O_
     ________
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (6, 8))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level07"))
+        comgwa.Player(stanleyPalette, (0, 1), (3, 6))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level04"))
 
-levelList.clear()
 
-levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
+levelList.append(comgwa.LevelScene("level04", comgwa.Level("""
     __OOO____
     OOO__O___
     OF_OOO___
@@ -183,7 +168,8 @@ levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
     G__OO_OOO
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level10"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level05"))
+
 '''
 테스트용 코드
 '''

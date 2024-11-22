@@ -10,21 +10,6 @@ lineback = pygame.transform.scale(lineback, (1000, 250))
 
 screen = pygame.display.set_mode((1280, 720))
 
-black = (0, 0, 0)
-white = (255, 255, 255)
-magenta = (255, 0, 255)
-red = (255, 0, 0)
-
-person1 = comgwa.makeLine("Stanley", black, 35, "person", 0)
-person2 = comgwa.makeLine("Zero", black, 35, "person", 0)
-person3 = comgwa.makeLine("Warden", black, 35, "person", 0)
-
-line1 = comgwa.makeLine("Hello!", black, 40, "oneline", 1)
-line2 = comgwa.makeLine("안녕?", black, 40, "twoline1", 1)
-line3 = comgwa.makeLine("I'm hungry.", magenta, 40, "twoline2", 1)
-line4 = comgwa.makeLine("Wow!", black, 40, "oneline", 1)
-line5 = comgwa.makeLine("Thanks for your efforts, Sieul!", red, 50, "oneline", 1)
-
 
 lines = [[person1, line1], [person2, line2, line3], [person1, line4], [person3, line5]]
 backgrounds = [[] for _ in range(len(lines))]

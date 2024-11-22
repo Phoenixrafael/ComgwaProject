@@ -4,6 +4,7 @@ import sys, math, inspect
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : math.atan(5*(x-0.5))/(2*math.atan(5*0.5))+0.5
 easein = lambda x : x * (2-x)
+colorDict = {'white': (255, 255, 255), 'black': (0, 0, 0), 'red': (255, 0, 0), 'green': (0, 255, 0), 'blue': (0, 0, 255)}
 
 def smartCopy(obj, visited=None):
     """
@@ -212,6 +213,24 @@ def makeLine(sentence, color, size, position, effect):
     elif position == "twoline2":
         position = (230, 658)
     return [sentence, position, type, effect, color, pygame.font.Font("asset/font/Galmuri11.ttf", size)]
+
+def makeScript(text):
+    text_scenes = text.split('#')
+    lines = [[] for _ in range(len(text_scenes))]
+    for idx in range(len(text_scenes)):
+        text_scenes[idx] = text_scenes[idx].strip()
+        infos = text_scenes[idx].split('/')
+        color = colorDict[infos[0]]
+        size = int(infos[1])
+        person = infos[2]
+        lines[idx].append(makeLine(person, colorDict['black'], 35, 'person', 0))
+        if '\n' in infos[3].strip():
+            lines[idx].append(makeLine(infos[3].strip().split('\n')[0], color, size, 'twoline1', 1))
+            lines[idx].append(makeLine(infos[3].strip().split('\n')[1], color, size, 'twoline2', 1))
+        else:
+            lines[idx].append(makeLine(infos[3].strip(), color, size, 'oneline', 1))
+    return lines
+
 
 def makeImage(image, type):
     if type == 0:
