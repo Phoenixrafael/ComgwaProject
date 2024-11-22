@@ -80,7 +80,17 @@ zero_angry_right = comgwa.makeImage(pygame.transform.scale(zero_angry, image_siz
 
 screen = pygame.display.set_mode((1280, 720))
 
-cutscene_text1 = '''
+
+
+cutscene1 = comgwa.CutScene("intro", lineback,
+[[town, zero_normal_left],
+            [town, stanley_normal_right],
+            [town, stanley_happy_right],
+            [town, stanley_angry_right],
+            [town, stanley_angry_right],
+            [town, stanley_angry_right],
+            [town, stanley_angry_right]],
+comgwa.makeScript('''
 black/40/Zero/
 헉...헉...
 일단 신발을 여기 두자..
@@ -93,13 +103,21 @@ black/40/Stanley/
 도움이 되겠지? 주워 가야...
 #
 black/40/Police/
-Clyde Livingstone의 신발을 훔친 범인이다!"
-'''
+Clyde Livingstone의 신발을 훔친 범인이다!
+#
+black/35/Police/
+당신은 묵비권을 행사할 수  있으며
+당신이 한 발언은 법정에서 불리하게 작용할 수 있습니다.
+#
+black/35/Police/
+당신은 변호인을 선임할 수 있으며,
+질문을 받을 때 변호인에게 대신 발언하게 할 수 있습니다.
+#
+black/35/Police/
+변호인을 선임하지 못할 경우, 국선변호안이 선임될 것입니다.
+이 권리가 있음을 인지했습니까?
 
-lines = comgwa.makeScript(cutscene_text1)
-backgrounds = [[town, stanley_happy_left], [town, stanley_angry_left], [camp1, zero_normal_left, stanley_angry_right], [camp2, stanley_angry_left]]
-
-cutscene1 = comgwa.CutScene("new_scene", lineback, backgrounds, lines, "level03")
+'''), "level03")
 
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
@@ -140,7 +158,7 @@ levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 3))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "new_scene"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "intro"))
 
 levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
     ________
