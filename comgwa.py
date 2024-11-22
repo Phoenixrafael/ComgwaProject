@@ -132,14 +132,14 @@ class CutScene(Scene):
         self.lineback = lineback
         assert backgrounds, "배경이 없음"
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
-        self.background = backgrounds + [[backgrounds[-1][0]]] #배경 목록
-        self.lines = lines + [[]]
+        self.background = backgrounds #배경 목록
+        self.lines = lines
         self.lineindex = 0
         self.nextscene = nextSceneName
         pygame.display.flip()
 
     def run(self):
-        # 디버깅에 chatGPT를 활용하였음.
+        # 디버깅에 ChatGPT를 활용하였음.
         end = 0
         self.surface.fill((0, 0, 0))
         for image, position in self.background[self.lineindex]:
@@ -147,24 +147,23 @@ class CutScene(Scene):
                 self.surface.blit(image, position)
         pygame.display.flip()
 
-        # Space 키 처리 상태 플래그
-        space_pressed = False
+        running = True
 
-        while True:
+        while running:
             pygame.display.update()
             for event in pygame.event.get():
-                if event.type == pygame.locals.QUIT:
+                if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
 
-                elif event.type == pygame.locals.KEYDOWN:
-                    if event.key == pygame.locals.K_SPACE and not space_pressed:
-                        space_pressed = True  # Space 키 입력 처리 플래그 설정
-                        pygame.event.clear()
-
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        # Space 키를 누를 때 처리
                         if self.lineindex == len(self.lines):
                             end = 1
+                            running = False
                             break
+
                         effect_texts, uneffect_texts = [], []
                         for idx, text_info in enumerate(self.lines[self.lineindex]):
                             if text_info[3] == 1:
@@ -185,33 +184,29 @@ class CutScene(Scene):
                                         uneffect_text_info[0], True, uneffect_text_info[4]
                                     )
                                     if uneffect_text_info[2] == 1:
-                                        self.surface.blit(
-                                            render, render.get_rect(center=uneffect_text_info[1])
-                                        )
+                                        self.surface.blit(render, render.get_rect(center=uneffect_text_info[1]))
                                     else:
-                                        self.surface.blit(
-                                            render, render.get_rect(midleft=uneffect_text_info[1])
-                                        )
+                                        self.surface.blit(render, render.get_rect(midleft=uneffect_text_info[1]))
                                 render = text_info[5].render(text, True, text_info[4])
                                 if text_info[2] == 1:
                                     self.surface.blit(render, render.get_rect(center=text_info[1]))
                                 else:
                                     self.surface.blit(render, render.get_rect(midleft=text_info[1]))
                                 pygame.display.flip()
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        pygame.quit()
+                                        sys.exit()
                                 pygame.time.delay(30)
                                 i += 1
                             uneffect_texts.append((idx, text_info))
 
-                        self.lineindex += 1
+                        self.lineindex += 1  # 다음 씬으로 이동
 
-                elif event.type == pygame.locals.KEYUP:
-                    if event.key == pygame.locals.K_SPACE:
-                        space_pressed = False  # Space 키 입력 플래그 해제
+                if end: break
 
-            if end:
-                self.manager.loadScene(self, self.nextscene)
-                pygame.event.clear()
-                break
+        self.manager.loadScene(self, self.nextscene)
+        pygame.event.clear()
 
 def makeLine(sentence, color, size, position, effect):
     """

@@ -59,6 +59,7 @@ zero_angry = pygame.image.load("asset/sprite/cutscene/character/zeroangry.png")
 
 image_size = (450, 450)
 
+# 인물 좌우반전 이미지 생성
 stanley_normal_left = comgwa.makeImage(pygame.transform.scale(stanley_normal, image_size), 1)
 stanley_normal_right = comgwa.makeImage(pygame.transform.scale(stanley_normal, image_size), 2)
 stanley_sad_left = comgwa.makeImage(pygame.transform.scale(stanley_sad, image_size), 1)
