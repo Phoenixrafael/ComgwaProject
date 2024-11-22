@@ -124,13 +124,29 @@ levelList.append(comgwa.LevelScene("level01", comgwa.Level("""
     _______
     _____G_
     _____O_
-    _OGOOO_
+    _OOGOO_
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 2), (1, 4))
     ], (60, 60), 0.2), holePalette, dirtPalette, "level02"))
 
 levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
+    _________
+    _OOOOOOO_
+    _O__OOOO_
+    _O__OOOO_
+    _G_____G_
+    _______O_
+    _OOOOOOO_
+    _________
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 2), (1, 6)),
+        comgwa.Object(dirtPalette, (3, 6)),
+        comgwa.Object(holePalette, (5, 6)),
+        comgwa.Object(holePalette, (3, 1)),
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level03"))
+
+levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
     ______
     _OGOO_
     ______
@@ -140,7 +156,17 @@ levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
     ______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (4, 5))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "new_scene"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level04"))
+
+levelList.append(comgwa.LevelScene("level04", comgwa.Level("""
+    ____________
+    ____________
+    _OOOOO_OOGO_
+    __OOO_______
+    ____________
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (4, 5))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level05"))
 
 levelList.append(comgwa.LevelScene("level05", comgwa.Level("""
     ____________
@@ -171,9 +197,50 @@ levelList.append(comgwa.LevelScene("level06", comgwa.Level("""
         comgwa.Player(stanleyPalette, (0, 1), (6, 8))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level07"))
 
+levelList.append(comgwa.LevelScene("level07", comgwa.Level("""
+    _______
+    _OO____
+    _OOFOO_
+    _OGGGF_
+    _OOOGO_
+    _OOOFO_
+    _OOOOO_
+    _______
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (1, 1))
+    ], (50, 50), 0.3), holePalette, dirtPalette, "level08"))
 levelList.clear()
+levelList.append(comgwa.LevelScene("level08", comgwa.Level("""
+    _________
+    _OOOO____
+    _OOOOOOO_
+    _OGOFOOO_
+    _OFFFGOO_
+    _____GO__
+    ____OOOO_
+    ____OOOO_
+    _________
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (7, 6))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level09"))
 
 levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
+    _____________
+    _FFFFFFFF__O_
+    _FOOOOOOF__O_
+    _FOFFFFOF__O_
+    _FOOOOOOF__O_
+    _FFFOOOO___O_
+    ___FFFOO___O_
+    _OOOOFOO___O_
+    _OFFOFFO___O_
+    _OOOOOOO___G_
+    ______OO___O_
+    _____________
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (6, 6))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level10"))
+levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
     __OOO____
     OOO__O___
     OF_OOO___
@@ -183,7 +250,7 @@ levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
     G__OO_OOO
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level10"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level11"))
 '''
 테스트용 코드
 '''

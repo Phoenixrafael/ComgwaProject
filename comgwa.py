@@ -2,7 +2,7 @@ import pygame, pygame.event, pygame.locals
 import sys, math, inspect
 
 tiktok = lambda : pygame.time.get_ticks() / 1000
-easer = lambda x : math.atan(5*(x-0.5))/(2*math.atan(5*0.5))+0.5
+easer = lambda x : x**2
 easein = lambda x : x * (2-x)
 
 def smartCopy(obj, visited=None):
@@ -279,7 +279,6 @@ def getTerrainDict(terrainTilemapSprite) :
     terrainDict[(4, 1, 1)] = getSpriteFromTileMap(terrain, 5, 1)
     return terrainDict
 
-
 def getPlayerPalette(playerTilemapSprite, state, playerName="stanley"):
     """
     대충 머 그거 하는 함수야
@@ -502,7 +501,7 @@ class Level():
     def isEnd(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
-            return False
+            return True
         void = True
         isTall = True
         for terr in self.terrainList:
@@ -520,7 +519,7 @@ class Level():
                 or (not (0 <= rowNo < self.terrainList[0].rows))):
             return False
         for obj in self.objects:
-            if (obj.name == "hole"):
+            if (obj.name == "hole" and not obj.vanish):
                 if (obj.position == (columnNo, rowNo)):
                     return True
         return False
@@ -558,7 +557,6 @@ class Level():
                     if(not self.isHole(j, i)) :
                         return False
         return True
-
 
 class LevelScene(Scene):
     def __init__(self, levelName, initialLevel, holePalette, dirtPalette, nextSceneName):
