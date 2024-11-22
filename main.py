@@ -48,14 +48,14 @@ lawcourt = comgwa.makeImage(pygame.transform.scale(lawcourt, (1280, 720)), 0)
 town = comgwa.makeImage(pygame.transform.scale(town, (1280, 720)), 0)
 
 # 인물 이미지
-stanley_normal = pygame.image.load("asset/sprite/cutscene/character/stanley-normal.png")
-stanley_sad = pygame.image.load("asset/sprite/cutscene/character/stanley-sad.png")
-stanley_happy = pygame.image.load("asset/sprite/cutscene/character/stanley-happy.png")
-stanley_angry = pygame.image.load("asset/sprite/cutscene/character/stanley-angry.png")
-zero_normal = pygame.image.load("asset/sprite/cutscene/character/zero-normal.png")
-zero_sad = pygame.image.load("asset/sprite/cutscene/character/zero-sad.png")
-zero_happy = pygame.image.load("asset/sprite/cutscene/character/zero-happy.png")
-zero_angry = pygame.image.load("asset/sprite/cutscene/character/zero-angry.png")
+stanley_normal = pygame.image.load("asset/sprite/cutscene/character/stanleynormal.png")
+stanley_sad = pygame.image.load("asset/sprite/cutscene/character/stanleysad.png")
+stanley_happy = pygame.image.load("asset/sprite/cutscene/character/stanleyhappy.png")
+stanley_angry = pygame.image.load("asset/sprite/cutscene/character/stanleyangry.png")
+zero_normal = pygame.image.load("asset/sprite/cutscene/character/zeronormal.png")
+zero_sad = pygame.image.load("asset/sprite/cutscene/character/zerosad.png")
+zero_happy = pygame.image.load("asset/sprite/cutscene/character/zerohappy.png")
+zero_angry = pygame.image.load("asset/sprite/cutscene/character/zeroangry.png")
 
 image_size = (450, 450)
 
@@ -105,15 +105,15 @@ black/40/Stanley/
 black/40/Police/
 Clyde Livingstone의 신발을 훔친 범인이다!
 #
-black/35/Police/
+black/32/Police/
 당신은 묵비권을 행사할 수  있으며
 당신이 한 발언은 법정에서 불리하게 작용할 수 있습니다.
 #
-black/35/Police/
+black/32/Police/
 당신은 변호인을 선임할 수 있으며,
 질문을 받을 때 변호인에게 대신 발언하게 할 수 있습니다.
 #
-black/35/Police/
+black/32/Police/
 변호인을 선임하지 못할 경우, 국선변호안이 선임될 것입니다.
 이 권리가 있음을 인지했습니까?
 
