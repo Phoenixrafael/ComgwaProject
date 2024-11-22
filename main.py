@@ -117,7 +117,7 @@ black/32/Police/
 변호인을 선임하지 못할 경우, 국선변호안이 선임될 것입니다.
 이 권리가 있음을 인지했습니까?
 
-'''), "level03")
+'''), "level01")
 
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
@@ -158,7 +158,7 @@ levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 3))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "intro"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level03"))
 
 levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
     ________
@@ -194,7 +194,7 @@ levelList.append(comgwa.LevelScene("level04", comgwa.Level("""
 
 pygame.key.set_repeat(500, 500)
 
-scenes = levelList + [cutscene1]
+scenes = [cutscene1] + levelList
 
 manager = comgwa.SceneManager(scenes)
 manager.run()
