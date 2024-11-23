@@ -504,7 +504,7 @@ class Player(Object):
         self.moving = self.playerState[1] if (playerState[0] == 1) else 0
 
 class Level():
-    def __init__(self, terrainStr, palette, objects, gridSize=(80, 80), movingTime=0.7):
+    def __init__(self, terrainStr, palette, objects, gridSize=(80, 80), movingTime=0.5, counter=None):
         t = terrainStr.split()
         self.terrainList = []
         for p in palette :
@@ -520,6 +520,7 @@ class Level():
         self.objects = objects
         self.gridSize = gridSize
         self.movingTime = movingTime
+        self.counter = counter
 
     def addObject(self, object):
         object.setParentMap(self.terrainList[0])
@@ -616,6 +617,7 @@ class LevelScene(Scene):
         self.dirtPalette = dirtPalette
         self.win = False
         self.levelClearSprite = pygame.image.load("asset//sprite//level_clear.png")
+
         def onStart_deco(initLevel) :
             def onStart(self):
                 """
@@ -634,6 +636,8 @@ class LevelScene(Scene):
             sprite = self.levelList[-1].getLevelSurface(tiktok() - self.anchor)
             self.surface.blit(sprite, (self.surface.get_size()[0]/2 - sprite.get_size()[0]/2
                                        , self.surface.get_size()[1]/2 - sprite.get_size()[1]/2))
+            if self.levelList[-1].counter != None :
+                self.surface.blit(self.levelList[-1].counter.getSprite(), (30, 30))
             if(len(self.levelQueue) != 0) :
                 if (tiktok() - self.anchor > self.levelList[-1].movingTime) :
                     self.levelList.append(self.levelQueue[0])
@@ -676,6 +680,9 @@ class LevelScene(Scene):
                 elif(event.key in [pygame.K_r]) :
                     if (self.animationOver() and len(self.levelList) > 1):
                         self.levelList = [self.levelList[0]]
+            if(self.levelList[-1].counter.count <= 0) :
+                if(self.levelList[-1].counter.doesCountDig and inp == 5) : inp = 0
+                if(self.levelList[-1].counter.doesCountMove and inp <= 4) : inp = 0
             if(inp == 0) : return
             nextLevel = self.getNextLevel(self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0], inp)
             if(nextLevel != None) :
@@ -717,9 +724,11 @@ class LevelScene(Scene):
                         getDirtPile.position = dirtPosition
                         getDirtPile.moving = (1+inp)%4+1
                         player.updateState((1, (1+inp)%4+1), newPosition)
+                        if(nextLevel.counter.doesCountMove) : nextLevel.counter.count -= 1
                     else : return None
                 else:
                     player.updateState((1, (1+inp)%4+1), newPosition)
+                    if(nextLevel.counter.doesCountMove) : nextLevel.counter.count -= 1
             else : return None
         else :
             player = None
@@ -736,6 +745,7 @@ class LevelScene(Scene):
                 player.updateState((2, player.playerState[1]), player.position)
                 nextLevel.addObject(Object(self.holePalette, digPosition))
                 nextLevel.addObject(Object(self.dirtPalette, dirtPosition, player.playerState[1]))
+                if (nextLevel.counter.doesCountDig): nextLevel.counter.count -= 1
             else :
                 return None
 
@@ -752,3 +762,21 @@ class LevelScene(Scene):
                             if(terr.name == "dirt") :
                                 terr.bitArray[obj1.position[1]][obj1.position[0]] = True
         return nextLevel
+
+class Counter():
+    def __init__(self, sprite, total, doesCountDig=True, doesCountMove=False):
+        self.sprite = sprite
+        self.count = total
+        self.doesCountDig = doesCountDig
+        self.doesCountMove = doesCountMove
+        self.font = pygame.font.Font("asset/font/Galmuri11-Bold.ttf", 80)
+
+    def getSprite(self):
+        counterSprite = pygame.Surface((200, 200)).convert_alpha()
+        counterSprite.fill((0, 0, 0, 0))
+        counterSprite.blit(pygame.transform.scale(self.sprite, (200, 200)), (0, 0))
+
+        textSprite = self.font.render(str(self.count), False, (255, 255, 255))
+        counterSprite.blit(textSprite, (100-textSprite.get_width()/2, 122-textSprite.get_height()/2))
+
+        return counterSprite

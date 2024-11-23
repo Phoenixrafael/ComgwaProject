@@ -2,22 +2,25 @@ import pygame, pygame.event, pygame.locals
 import comgwa
 from comgwa import getSpriteFromTileMap, getPlayerPalette
 
+pygame.init()
+pygame.display.set_mode((1280, 720))
+
 '''
 게임에 필요한 파일(Asset) 불러오기
 '''
 
-pygame.init()
-pygame.display.set_mode((1280, 720))
-
+# 캐릭터 이미지
 stanleySpriteTilemap = pygame.image.load("asset//sprite//character//stanley.png").convert_alpha()
 zeroSpriteTilemap = pygame.image.load("asset//sprite//character//zero.png").convert_alpha()
 
+#지형 타일맵
 dirtTilemap = pygame.image.load("asset//sprite//terrain//terrain_dirts.png").convert_alpha()
 wetDirtTilemap = pygame.image.load("asset//sprite//terrain//terrain_wetdirts.png").convert_alpha()
 iceTilemap = pygame.image.load("asset//sprite//terrain//terrain_ice.png").convert_alpha()
 fenceTilemap = pygame.image.load("asset//sprite//terrain//terrain_fence.png").convert_alpha()
 goalTilemap = pygame.image.load("asset//sprite//terrain//terrain_goal.png").convert_alpha()
 
+#오브젝트 스프라이트
 dirtPileSprite = pygame.image.load("asset//sprite//object//object_dirt.png").convert_alpha()
 holeSprite = pygame.image.load("asset//sprite//object//object_hole.png").convert_alpha()
 
@@ -26,6 +29,8 @@ wetDirtTerrain = comgwa.getTerrainDict(wetDirtTilemap)
 iceTerrain = comgwa.getTerrainDict(iceTilemap)
 fenceTerrain = comgwa.getTerrainDict(fenceTilemap)
 goalTerrain = comgwa.getTerrainDict(goalTilemap)
+
+counterSprite = pygame.image.load("asset//sprite//counter.png")
 
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
@@ -258,12 +263,12 @@ levelList.append(comgwa.LevelScene("level07", comgwa.Level("""
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (1, 1))
-    ], (50, 50), 0.3), holePalette, dirtPalette, "level08"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level08"))
 
 levelList.append(comgwa.LevelScene("level08", comgwa.Level("""
     _________
-    _OOOO____
-    _OOOOOOO_
+    __OO_____
+    __OOOOOO_
     _OGOFOOO_
     _OFFFGOO_
     _____GO__
@@ -290,6 +295,7 @@ levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (6, 6))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level10"))
+
 levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
     __OOO____
     OOO__O___
@@ -301,6 +307,20 @@ levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level11"))
+
+levelList.append(comgwa.LevelScene("level11", comgwa.Level("""
+    _______
+    _OOOOO_
+    _OOOOO_
+    _OGOOO_
+    _______
+    _______
+    _OOOGO_
+    _______
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (3, 3))
+    ], (60, 60), 0.3, comgwa.Counter(counterSprite, 3, True, False)), holePalette, dirtPalette, "level11"))
+levelList[-1].run()
 '''
 테스트용 코드
 '''
