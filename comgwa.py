@@ -476,11 +476,9 @@ class Object():
         r = 0 if (self.movingTime == 0) else 1 - deltaTime / self.movingTime
         r = easer(r)
 
-        curDeltaPos = (0, 0)
-        if(self.moving == 1) : curDeltaPos = (0, -1)
-        if(self.moving == 2) : curDeltaPos = (-1, 0)
-        if(self.moving == 3) : curDeltaPos = (0, +1)
-        if(self.moving == 4) : curDeltaPos = (+1, 0)
+        if(isinstance(self.moving, int)) :
+            self.moving = [(0, 0), (0, -1), (-1, 0), (0, 1), (1, 0)][self.moving]
+        curDeltaPos = self.moving
 
         surface.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(),
                      (self.gridSize[0] * (self.position[0] + curDeltaPos[0] * r), self.gridSize[1] * (self.position[1] + curDeltaPos[1] * r)))
@@ -543,6 +541,16 @@ class Level():
             return False
         for terr in self.terrainList:
             if(terr.name in ["fence"]) :
+                if(terr.bitArray[rowNo][columnNo]) :
+                    return True
+        return False
+
+    def isIce(self, columnNo, rowNo):
+        if( (not (0 <= columnNo < self.terrainList[0].columns))
+                or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
+            return False
+        for terr in self.terrainList:
+            if(terr.name in ["ice"]) :
                 if(terr.bitArray[rowNo][columnNo]) :
                     return True
         return False
@@ -708,7 +716,7 @@ class LevelScene(Scene):
                 nextLevel.objects[i].moving = 0
             i += 1
         if(inp != 5) :
-            deltaPos = [None, (0, -1), (-1, 0), (0, 1), (1, 0)][inp]
+            deltaPos = [(0, 0), (0, -1), (-1, 0), (0, 1), (1, 0)][inp]
             player = None
             for obj in nextLevel.objects :
                 if(obj.name in ["stanley", "zero"]) :
