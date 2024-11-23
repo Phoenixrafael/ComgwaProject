@@ -126,6 +126,9 @@ class SceneManager():
         self.scenes[0].run()
 
 class CutScene(Scene):
+    """
+    컷씬을 만들고 실행할 수 있는 객체입니다.
+    """
     def __init__(self, name, lineback, backgrounds, lines, nextSceneName, displaySize=(1280, 720)):
         self.name = name
         self.surface = pygame.display.set_mode(displaySize)
@@ -178,7 +181,8 @@ class CutScene(Scene):
                                 self.surface.fill((0, 0, 0))
                                 for image, position in self.background[self.lineindex]:
                                     self.surface.blit(image, position)
-                                self.surface.blit(self.lineback, (160, 470))
+                                if text_info[1] != (640, 360):
+                                    self.surface.blit(self.lineback, (160, 470))
                                 for uneffect_idx, uneffect_text_info in uneffect_texts:
                                     render = uneffect_text_info[5].render(
                                         uneffect_text_info[0], True, uneffect_text_info[4]
@@ -227,9 +231,16 @@ def makeLine(sentence, color, size, position, effect):
         position = (230, 608)
     elif position == "twoline2":
         position = (230, 658)
+    elif position == 'narration':
+        type = 1
+        position = (640, 360)
     return [sentence, position, type, effect, color, pygame.font.Font("asset/font/Galmuri11.ttf", size)]
 
 def makeScript(text):
+    """
+    :param string text: lines 리스트로 만들 대본
+    :return: 컷씬에 적용 가능한 대본 리스트 반환
+    """
     text_scenes = text.split('#')
     lines = [[] for _ in range(len(text_scenes))]
     for idx in range(len(text_scenes)):
@@ -239,13 +250,13 @@ def makeScript(text):
         size = int(infos[1])
         person = infos[2]
         lines[idx].append(makeLine(person, colorDict['black'], 35, 'person', 0))
-        if '\n' in infos[3].strip():
+        if person == 'Narration':
+            lines[idx].append(makeLine(infos[3].strip().replace('@', ''), color, size, 'narration', 1))
+        elif '\n' in infos[3].strip():
             lines[idx].append(makeLine(infos[3].strip().split('\n')[0], color, size, 'twoline1', 1))
             lines[idx].append(makeLine(infos[3].strip().split('\n')[1], color, size, 'twoline2', 1))
         else:
             lines[idx].append(makeLine(infos[3].strip(), color, size, 'oneline', 1))
-    for line in lines:
-        print(line)
     return lines
 
 

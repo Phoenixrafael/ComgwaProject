@@ -92,8 +92,10 @@ cutscenes.append(comgwa.CutScene("intro", lineback,
             [town, stanley_angry_right],
             [town, stanley_sad_right],
             [lawcourt],
+            [lawcourt],
             [lawcourt, stanley_sad_left],
             [lawcourt, stanley_happy_left],
+            [bus],
             [bus, stanley_normal_left]],
 comgwa.makeScript('''
 black/40/Zero/
@@ -125,6 +127,9 @@ black/32/Police/
 black/40/Stanley/
 네... 인지했습니다..
 #
+white/50/Narration/
+그렇게 법정으로 가게 된 Stanley...
+#
 black/40/Judge/
 Stanley, 그래서 Camp Green Lake와
 감옥 중 어디를 가겠니?
@@ -134,6 +139,9 @@ black/40/Stanley/
 #
 black/40/Stanley/
 Camp Green Lake로 갈게요!
+#
+white/50/Narration/
+깊이 잠에 들었던 Stanley...
 #
 black/40/Stanley/
 여...여기가 어디지?
@@ -204,7 +212,7 @@ levelList.append(comgwa.LevelScene("level04", comgwa.Level("""
     __OOO____
     OOO__O___
     OF_OOO___
-    OF__OOOOO
+    OFFFOOOOO
     OGO_O_O_O
     ___OO_O_O
     G__OO_OOO
