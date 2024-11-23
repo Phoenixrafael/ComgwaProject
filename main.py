@@ -79,18 +79,22 @@ zero_angry_right = comgwa.makeImage(pygame.transform.scale(zero_angry, image_siz
 
 ''' cutscene 만들기 '''
 
+cutscenes = []
 screen = pygame.display.set_mode((1280, 720))
 
-
-
-cutscene1 = comgwa.CutScene("intro", lineback,
+cutscenes.append(comgwa.CutScene("intro", lineback,
 [[town, zero_normal_left],
             [town, stanley_normal_right],
             [town, stanley_happy_right],
             [town, stanley_angry_right],
             [town, stanley_angry_right],
             [town, stanley_angry_right],
-            [town, stanley_angry_right]],
+            [town, stanley_angry_right],
+            [town, stanley_sad_right],
+            [lawcourt],
+            [lawcourt, stanley_sad_left],
+            [lawcourt, stanley_happy_left],
+            [bus, stanley_normal_left]],
 comgwa.makeScript('''
 black/40/Zero/
 헉...헉...
@@ -117,8 +121,27 @@ black/32/Police/
 black/32/Police/
 변호인을 선임하지 못할 경우, 국선변호안이 선임될 것입니다.
 이 권리가 있음을 인지했습니까?
+#
+black/40/Stanley/
+네... 인지했습니다..
+#
+black/40/Judge/
+Stanley, 그래서 Camp Green Lake와
+감옥 중 어디를 가겠니?
+#
+black/40/Stanley/
+'Camp Green Lake? 재밌어 보이는데?'
+#
+black/40/Stanley/
+Camp Green Lake로 갈게요!
+#
+black/40/Stanley/
+여...여기가 어디지?
+버..버스잖아?
 
-'''), "level01")
+
+
+'''), "level01"))
 
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
@@ -195,7 +218,7 @@ levelList.append(comgwa.LevelScene("level04", comgwa.Level("""
 
 pygame.key.set_repeat(500, 500)
 
-scenes = [cutscene1] + levelList
+scenes = cutscenes + levelList
 
 manager = comgwa.SceneManager(scenes)
 manager.run()
