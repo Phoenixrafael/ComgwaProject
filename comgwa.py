@@ -115,6 +115,7 @@ class SceneManager():
         self.scenes = scenes
 
     def loadScene(self, thisScene, sceneName):
+        # 다음 Scene을 불러오는 메소드입니다. 특정 씬이 종료될 때 반드시 이 메소드를 사용할 것.
         targetScene = None
         for scene in self.scenes:
             if(scene.name == sceneName): targetScene = scene
@@ -209,8 +210,8 @@ class CutScene(Scene):
 
                 if end: break
 
-        self.manager.loadScene(self, self.nextscene)
         pygame.event.clear()
+        self.manager.loadScene(self, self.nextscene)
 
 def makeLine(sentence, color, size, position, effect):
     """
