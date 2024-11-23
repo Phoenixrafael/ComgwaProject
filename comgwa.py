@@ -4,6 +4,7 @@ import sys, math, inspect
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : x**2
 easein = lambda x : x * (2-x)
+colorDict = {'white': (255, 255, 255), 'black': (0, 0, 0), 'red': (255, 0, 0), 'green': (0, 255, 0), 'blue': (0, 0, 255)}
 
 def smartCopy(obj, visited=None):
     """
@@ -131,66 +132,81 @@ class CutScene(Scene):
         self.lineback = lineback
         assert backgrounds, "배경이 없음"
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
-        self.background = backgrounds + [[backgrounds[-1][0]]] #배경 목록
-        self.lines = lines + [[]]
+        self.background = backgrounds #배경 목록
+        self.lines = lines
         self.lineindex = 0
         self.nextscene = nextSceneName
         pygame.display.flip()
 
     def run(self):
+        # 디버깅에 ChatGPT를 활용하였음.
         end = 0
         self.surface.fill((0, 0, 0))
         for image, position in self.background[self.lineindex]:
             if position == (0, 0):
                 self.surface.blit(image, position)
         pygame.display.flip()
-        while True:
+
+        running = True
+
+        while running:
             pygame.display.update()
             for event in pygame.event.get():
-                if event.type == pygame.locals.QUIT:
+                if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE:
-                    pygame.event.clear()
-                    if self.lineindex == len(self.lines):
-                        end = 1; break
-                    effect_texts, uneffect_texts = [], []
-                    for idx, text_info in enumerate(self.lines[self.lineindex]):
-                        if text_info[3] == 1:
-                            effect_texts.append((idx, text_info))
-                        else:
-                            uneffect_texts.append((idx, text_info))
-                    final_time = tiktok()
-                    for idx, text_info in effect_texts:
-                        i = 1
-                        while i <= len(text_info[0]):
-                            if tiktok() - final_time > 0.03:
+
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        # Space 키를 누를 때 처리
+                        if self.lineindex == len(self.lines):
+                            end = 1
+                            running = False
+                            break
+
+                        effect_texts, uneffect_texts = [], []
+                        for idx, text_info in enumerate(self.lines[self.lineindex]):
+                            if text_info[3] == 1:
+                                effect_texts.append((idx, text_info))
+                            else:
+                                uneffect_texts.append((idx, text_info))
+
+                        for idx, text_info in effect_texts:
+                            i = 1
+                            while i <= len(text_info[0]):
                                 text = text_info[0][:i]
-                                final_time = tiktok()
                                 self.surface.fill((0, 0, 0))
                                 for image, position in self.background[self.lineindex]:
                                     self.surface.blit(image, position)
                                 self.surface.blit(self.lineback, (160, 470))
                                 for uneffect_idx, uneffect_text_info in uneffect_texts:
-                                    render = uneffect_text_info[5].render(uneffect_text_info[0], True, uneffect_text_info[4])
+                                    render = uneffect_text_info[5].render(
+                                        uneffect_text_info[0], True, uneffect_text_info[4]
+                                    )
                                     if uneffect_text_info[2] == 1:
                                         self.surface.blit(render, render.get_rect(center=uneffect_text_info[1]))
                                     else:
                                         self.surface.blit(render, render.get_rect(midleft=uneffect_text_info[1]))
                                 render = text_info[5].render(text, True, text_info[4])
                                 if text_info[2] == 1:
-                                    self.surface.blit(render, render.get_rect(center = text_info[1]))
+                                    self.surface.blit(render, render.get_rect(center=text_info[1]))
                                 else:
-                                    self.surface.blit(render, render.get_rect(midleft = text_info[1]))
+                                    self.surface.blit(render, render.get_rect(midleft=text_info[1]))
                                 pygame.display.flip()
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        pygame.quit()
+                                        sys.exit()
+                                pygame.time.delay(30)
                                 i += 1
-                        uneffect_texts.append((idx, text_info))
-                    self.lineindex += 1
+                            uneffect_texts.append((idx, text_info))
 
-            if end:
-                self.manager.loadScene(self, self.nextscene)
-                pygame.event.clear()
-                break
+                        self.lineindex += 1  # 다음 씬으로 이동
+
+                if end: break
+
+        self.manager.loadScene(self, self.nextscene)
+        pygame.event.clear()
 
 def makeLine(sentence, color, size, position, effect):
     """
@@ -212,6 +228,26 @@ def makeLine(sentence, color, size, position, effect):
     elif position == "twoline2":
         position = (230, 658)
     return [sentence, position, type, effect, color, pygame.font.Font("asset/font/Galmuri11.ttf", size)]
+
+def makeScript(text):
+    text_scenes = text.split('#')
+    lines = [[] for _ in range(len(text_scenes))]
+    for idx in range(len(text_scenes)):
+        text_scenes[idx] = text_scenes[idx].strip()
+        infos = text_scenes[idx].split('/')
+        color = colorDict[infos[0]]
+        size = int(infos[1])
+        person = infos[2]
+        lines[idx].append(makeLine(person, colorDict['black'], 35, 'person', 0))
+        if '\n' in infos[3].strip():
+            lines[idx].append(makeLine(infos[3].strip().split('\n')[0], color, size, 'twoline1', 1))
+            lines[idx].append(makeLine(infos[3].strip().split('\n')[1], color, size, 'twoline2', 1))
+        else:
+            lines[idx].append(makeLine(infos[3].strip(), color, size, 'oneline', 1))
+    for line in lines:
+        print(line)
+    return lines
+
 
 def makeImage(image, type):
     if type == 0:
