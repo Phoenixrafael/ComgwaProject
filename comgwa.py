@@ -763,14 +763,16 @@ class LevelScene(Scene):
                 if(isinstance(obj.moving, int)) : obj.moving = [(0, 0), (0, -1), (-1, 0), (0, 1), (1, 0)][obj.moving]
                 movDelta = (-obj.moving[0], -obj.moving[1])
                 while not ((nextLevel.isIce(*obj.position) and
-                       (nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0])
-                       or nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]) != None))
+                       (nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[1])
+                       or nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[1]) != None))
                 or not nextLevel.isIce(*obj.position)) :
                     obj.position = (obj.position[0]+movDelta[0], obj.position[1]+movDelta[1])
                     obj.moving = (obj.moving[0]-movDelta[0], obj.moving[1]-movDelta[1])
-                    # print(obj.position, obj.moving)
-                    # print("isIce", nextLevel.isIce(*obj.position), "isWall", nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]),
-                    #       "getDirtPile", nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]))
+                    print(obj.name, obj.position, obj.moving)
+                    print("isIce", nextLevel.isIce(*obj.position), "isWall", nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]),
+                          "getDirtPile", nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]))
+                print("isIce", nextLevel.isIce(*obj.position), "isWall", nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]),
+                      "getDirtPile", nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]))
 
         for obj1 in nextLevel.objects:
             for obj2 in nextLevel.objects:

@@ -323,12 +323,12 @@ levelList.append(comgwa.LevelScene("level11", comgwa.Level("""
 
 levelList.append(comgwa.LevelScene("level12", comgwa.Level("""
     _______
-    _IIOOO_
-    _OIOOO_
     _OOOOO_
+    _OOOGO_
     _OOOOO_
-    _OOOOO_
-    _OOGOO_
+    _OIIII_
+    _OIIII_
+    _OIIFI_
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (1, 1))
