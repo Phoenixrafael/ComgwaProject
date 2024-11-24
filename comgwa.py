@@ -3,7 +3,7 @@ import sys, math, inspect
 
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : x**2
-easein = lambda x : x * (2-x)
+easein = lambda x : 1 - (1-x)**3
 colorDict = {'white': (255, 255, 255), 'black': (0, 0, 0), 'red': (255, 0, 0), 'green': (0, 255, 0), 'blue': (0, 0, 255)}
 
 def smartCopy(obj, visited=None):
@@ -519,6 +519,7 @@ class Level():
         self.gridSize = gridSize
         self.movingTime = movingTime
         self.counter = counter
+        self.playerDead = False
 
     def addObject(self, object):
         object.setParentMap(self.terrainList[0])
@@ -632,7 +633,6 @@ class LevelScene(Scene):
                 :param LevelScene self:
                 """
                 self.levelList = [initLevel]
-
                 self.anchor = tiktok()
 
             return onStart
@@ -691,6 +691,7 @@ class LevelScene(Scene):
             if(self.levelList[-1].counter.count <= 0) :
                 if(self.levelList[-1].counter.doesCountDig and inp == 5) : inp = 0
                 if(self.levelList[-1].counter.doesCountMove and inp <= 4) : inp = 0
+            if(self.levelList[-1].playerDead) : inp = 0
             if(inp == 0) : return
             nextLevel = self.getNextLevel(self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0], inp)
             if(nextLevel != None) :
@@ -757,6 +758,20 @@ class LevelScene(Scene):
             else :
                 return None
 
+        for obj in nextLevel.objects:
+            if(obj.moving not in [(0, 0), 0] and nextLevel.isIce(*obj.position)) :
+                if(isinstance(obj.moving, int)) : obj.moving = [(0, 0), (0, -1), (-1, 0), (0, 1), (1, 0)][obj.moving]
+                movDelta = (-obj.moving[0], -obj.moving[1])
+                while not ((nextLevel.isIce(*obj.position) and
+                       (nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0])
+                       or nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]) != None))
+                or not nextLevel.isIce(*obj.position)) :
+                    obj.position = (obj.position[0]+movDelta[0], obj.position[1]+movDelta[1])
+                    obj.moving = (obj.moving[0]-movDelta[0], obj.moving[1]-movDelta[1])
+                    # print(obj.position, obj.moving)
+                    # print("isIce", nextLevel.isIce(*obj.position), "isWall", nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]),
+                    #       "getDirtPile", nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]))
+
         for obj1 in nextLevel.objects:
             for obj2 in nextLevel.objects:
                 if (obj1.name == "dirtPile" and obj2.name == "hole"
@@ -769,6 +784,13 @@ class LevelScene(Scene):
                         for terr in nextLevel.terrainList:
                             if(terr.name == "dirt") :
                                 terr.bitArray[obj1.position[1]][obj1.position[0]] = True
+                if (obj1.name in ["zero", "stanley"] and obj2.name == "hole"
+                and obj1.position == obj2.position) :
+                    obj1.vanish = True
+                    nextLevel.playerDead = True
+                if (obj1.name in ["zero", "stanley"] and nextLevel.isEnd(*obj1.position)) :
+                    obj1.vanish = True
+                    nextLevel.playerDead = True
         return nextLevel
 
 class Counter():
