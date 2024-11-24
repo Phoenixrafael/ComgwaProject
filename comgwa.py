@@ -161,7 +161,11 @@ class CutScene(Scene):
                     sys.exit()
 
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_s:
+                        end = 1
+                        running = False
+
+                    elif event.key == pygame.K_SPACE:
                         # Space 키를 누를 때 처리
                         if self.lineindex == len(self.lines):
                             end = 1
@@ -202,9 +206,17 @@ class CutScene(Scene):
                                     if event.type == pygame.QUIT:
                                         pygame.quit()
                                         sys.exit()
+                                    if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                                        end = 1
+                                        running = False
+                                        break
+
+                                if end: break
                                 pygame.time.delay(30)
                                 i += 1
+
                             uneffect_texts.append((idx, text_info))
+                            if end: break
 
                         self.lineindex += 1  # 다음 씬으로 이동
 
