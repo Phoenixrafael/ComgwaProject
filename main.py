@@ -61,6 +61,12 @@ zero_normal = pygame.image.load("asset/sprite/cutscene/character/zeronormal.png"
 zero_sad = pygame.image.load("asset/sprite/cutscene/character/zerosad.png")
 zero_happy = pygame.image.load("asset/sprite/cutscene/character/zerohappy.png")
 zero_angry = pygame.image.load("asset/sprite/cutscene/character/zeroangry.png")
+warden_normal = pygame.image.load("asset/sprite/cutscene/character/wardennormal.png")
+warden_happy = pygame.image.load("asset/sprite/cutscene/character/wardenhappy.png")
+warden_angry = pygame.image.load("asset/sprite/cutscene/character/wardenangry.png")
+xray_normal = pygame.image.load("asset/sprite/cutscene/character/xraynormal.png")
+xray_happy = pygame.image.load("asset/sprite/cutscene/character/xrayhappy.png")
+lawyer_normal = pygame.image.load("asset/sprite/cutscene/character/lawyernormal.png")
 
 image_size = (450, 450)
 
@@ -81,6 +87,18 @@ zero_happy_left = comgwa.makeImage(pygame.transform.scale(zero_happy, image_size
 zero_happy_right = comgwa.makeImage(pygame.transform.scale(zero_happy, image_size), 2)
 zero_angry_left = comgwa.makeImage(pygame.transform.scale(zero_angry, image_size), 1)
 zero_angry_right = comgwa.makeImage(pygame.transform.scale(zero_angry, image_size), 2)
+warden_normal_left = comgwa.makeImage(pygame.transform.scale(warden_normal, image_size), 1)
+warden_normal_right = comgwa.makeImage(pygame.transform.scale(warden_normal, image_size), 2)
+warden_happy_left = comgwa.makeImage(pygame.transform.scale(warden_happy, image_size), 1)
+warden_happy_right = comgwa.makeImage(pygame.transform.scale(warden_happy, image_size), 2)
+warden_angry_left = comgwa.makeImage(pygame.transform.scale(warden_angry, image_size), 1)
+warden_angry_right = comgwa.makeImage(pygame.transform.scale(warden_angry, image_size), 2)
+xray_happy_left = comgwa.makeImage(pygame.transform.scale(xray_happy, image_size), 1)
+xray_happy_right = comgwa.makeImage(pygame.transform.scale(xray_happy, image_size), 2)
+xray_normal_left = comgwa.makeImage(pygame.transform.scale(xray_normal, image_size), 1)
+xray_normal_right = comgwa.makeImage(pygame.transform.scale(xray_normal, image_size), 2)
+lawyer_normal_left = comgwa.makeImage(pygame.transform.scale(lawyer_normal, image_size), 1)
+lawyer_normal_right = comgwa.makeImage(pygame.transform.scale(lawyer_normal, image_size), 2)
 
 ''' cutscene 만들기 '''
 
@@ -96,12 +114,14 @@ cutscenes.append(comgwa.CutScene("intro", lineback,
             [town, stanley_angry_right],
             [town, stanley_angry_right],
             [town, stanley_sad_right],
-            [lawcourt],
+            [],
             [lawcourt],
             [lawcourt, stanley_sad_left],
             [lawcourt, stanley_happy_left],
             [bus],
-            [bus, stanley_normal_left]],
+            [bus, stanley_normal_left],
+            [],
+            [camp1, stanley_normal_left]],
 comgwa.makeScript('''
 black/40/Zero/
 헉...헉...
@@ -151,7 +171,12 @@ white/50/Narration/
 black/40/Stanley/
 여...여기가 어디지?
 버..버스잖아?
-
+#
+white/50/Narration/
+다시 잠에 들어 버린 Stanley의 운명은...?
+#
+black/40/Stanley/
+여기가 어디죠...?
 
 
 '''), "level01"))
