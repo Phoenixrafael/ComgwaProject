@@ -688,9 +688,10 @@ class LevelScene(Scene):
                 elif(event.key in [pygame.K_r]) :
                     if (self.animationOver() and len(self.levelList) > 1):
                         self.levelList = [self.levelList[0]]
-            if(self.levelList[-1].counter.count <= 0) :
-                if(self.levelList[-1].counter.doesCountDig and inp == 5) : inp = 0
-                if(self.levelList[-1].counter.doesCountMove and inp <= 4) : inp = 0
+            if(self.levelList[-1].counter != None) :
+                if(self.levelList[-1].counter.count <= 0) :
+                    if(self.levelList[-1].counter.doesCountDig and inp == 5) : inp = 0
+                    if(self.levelList[-1].counter.doesCountMove and inp <= 4) : inp = 0
             if(self.levelList[-1].playerDead) : inp = 0
             if(inp == 0) : return
             nextLevel = self.getNextLevel(self.levelList[-1] if len(self.levelQueue) == 0 else self.levelQueue[0], inp)
@@ -733,11 +734,11 @@ class LevelScene(Scene):
                         getDirtPile.position = dirtPosition
                         getDirtPile.moving = (1+inp)%4+1
                         player.updateState((1, (1+inp)%4+1), newPosition)
-                        if(nextLevel.counter.doesCountMove) : nextLevel.counter.count -= 1
+                        if(nextLevel.counter != None and nextLevel.counter.doesCountMove) : nextLevel.counter.count -= 1
                     else : return None
                 else:
                     player.updateState((1, (1+inp)%4+1), newPosition)
-                    if(nextLevel.counter.doesCountMove) : nextLevel.counter.count -= 1
+                    if(nextLevel.counter != None and nextLevel.counter.doesCountMove) : nextLevel.counter.count -= 1
             else : return None
         else :
             player = None
@@ -754,7 +755,7 @@ class LevelScene(Scene):
                 player.updateState((2, player.playerState[1]), player.position)
                 nextLevel.addObject(Object(self.holePalette, digPosition))
                 nextLevel.addObject(Object(self.dirtPalette, dirtPosition, player.playerState[1]))
-                if (nextLevel.counter.doesCountDig): nextLevel.counter.count -= 1
+                if (nextLevel.counter != None and nextLevel.counter.doesCountDig): nextLevel.counter.count -= 1
             else :
                 return None
 
