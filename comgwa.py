@@ -587,7 +587,7 @@ class Level():
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
             return None
         for obj in self.objects :
-            if(obj.name == "dirtPile") :
+            if(obj.name == "dirtPile" and not obj.vanish) :
                 if(obj.position == (columnNo, rowNo)) :
                     return obj
         return None
@@ -759,7 +759,7 @@ class LevelScene(Scene):
                 return None
 
         for obj in nextLevel.objects:
-            if(obj.moving not in [(0, 0), 0] and nextLevel.isIce(*obj.position)) :
+            if(obj.name == "dirtPile" and obj.moving not in [(0, 0), 0] and nextLevel.isIce(*obj.position)) :
                 if(isinstance(obj.moving, int)) : obj.moving = [(0, 0), (0, -1), (-1, 0), (0, 1), (1, 0)][obj.moving]
                 movDelta = (-obj.moving[0], -obj.moving[1])
                 while not ((nextLevel.isIce(*obj.position) and
@@ -768,11 +768,6 @@ class LevelScene(Scene):
                 or not nextLevel.isIce(*obj.position)) :
                     obj.position = (obj.position[0]+movDelta[0], obj.position[1]+movDelta[1])
                     obj.moving = (obj.moving[0]-movDelta[0], obj.moving[1]-movDelta[1])
-                    print(obj.name, obj.position, obj.moving)
-                    print("isIce", nextLevel.isIce(*obj.position), "isWall", nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]),
-                          "getDirtPile", nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]))
-                print("isIce", nextLevel.isIce(*obj.position), "isWall", nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]),
-                      "getDirtPile", nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[0]))
 
         for obj1 in nextLevel.objects:
             for obj2 in nextLevel.objects:
@@ -786,6 +781,21 @@ class LevelScene(Scene):
                         for terr in nextLevel.terrainList:
                             if(terr.name == "dirt") :
                                 terr.bitArray[obj1.position[1]][obj1.position[0]] = True
+
+        for obj in nextLevel.objects:
+            if(obj.name in ["stanley", "zero"] and obj.moving not in [(0, 0), 0] and nextLevel.isIce(*obj.position)) :
+                if(isinstance(obj.moving, int)) : obj.moving = [(0, 0), (0, -1), (-1, 0), (0, 1), (1, 0)][obj.moving]
+                movDelta = (-obj.moving[0], -obj.moving[1])
+                while not ((nextLevel.isIce(*obj.position) and
+                       (nextLevel.isWall(obj.position[0]+movDelta[0], obj.position[1]+movDelta[1])
+                       or nextLevel.getDirtPile(obj.position[0]+movDelta[0], obj.position[1]+movDelta[1]) != None))
+                or not nextLevel.isIce(*obj.position)) :
+                    obj.position = (obj.position[0]+movDelta[0], obj.position[1]+movDelta[1])
+                    obj.moving = (obj.moving[0]-movDelta[0], obj.moving[1]-movDelta[1])
+
+
+        for obj1 in nextLevel.objects:
+            for obj2 in nextLevel.objects:
                 if (obj1.name in ["zero", "stanley"] and obj2.name == "hole"
                 and obj1.position == obj2.position) :
                     obj1.vanish = True
@@ -793,6 +803,7 @@ class LevelScene(Scene):
                 if (obj1.name in ["zero", "stanley"] and nextLevel.isEnd(*obj1.position)) :
                     obj1.vanish = True
                     nextLevel.playerDead = True
+
         return nextLevel
 
 class Counter():
