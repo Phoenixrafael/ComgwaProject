@@ -318,10 +318,23 @@ levelList.append(comgwa.LevelScene("level11", comgwa.Level("""
     _OOOGO_
     _______
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (1, 1))
+        comgwa.Player(zeroPalette, (0, 1), (1, 1))
     ], (60, 60), 0.3, comgwa.Counter(counterSprite, 3, True, False)), holePalette, dirtPalette, "level12"))
 
 levelList.append(comgwa.LevelScene("level12", comgwa.Level("""
+    __________
+    _OOOOOO_G_
+    __O__O____
+    __O__O____
+    __O__O____
+    __OOOO____
+    __________
+    """, palette, [
+        comgwa.Player(zeroPalette, (0, 2), (1, 1))
+    ], (60, 60), 0.3, comgwa.Counter(counterSprite, 20, False, True)), holePalette, dirtPalette, "level13"))
+
+
+levelList.append(comgwa.LevelScene("level13", comgwa.Level("""
     ____________
     __OOO_______
     _OOOOO__OGO_
@@ -332,23 +345,8 @@ levelList.append(comgwa.LevelScene("level12", comgwa.Level("""
     ___O________
     ____________
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 2), (1, 2))
-    ], (60, 60), 0.3, comgwa.Counter(counterSprite, 33, False, True)), holePalette, dirtPalette, "level13"))
-
-levelList[-1].run()
-
-levelList.append(comgwa.LevelScene("level12", comgwa.Level("""
-    _______
-    _OOOOO_
-    _OOOGO_
-    _OOOOO_
-    _OIIII_
-    _OIIIO_
-    _OIIFI_
-    _______
-    """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (1, 1))
-    ], (60, 60), 0.3, comgwa.Counter(counterSprite, 100, True, True)), holePalette, dirtPalette, "level13"))\
+        comgwa.Player(zeroPalette, (0, 2), (1, 2))
+    ], (60, 60), 0.3, comgwa.Counter(counterSprite, 33, False, True)), holePalette, dirtPalette, "level14"))
 
 '''
 테스트용 코드
