@@ -121,20 +121,33 @@ cutscenes.append(comgwa.CutScene("intro", lineback,
             [bus],
             [bus, stanley_normal_left],
             [],
-            [camp1, stanley_normal_left]],
+            [camp1, stanley_normal_left, warden_normal_right],
+            [camp1, stanley_normal_left, warden_happy_right],
+            [camp1, stanley_normal_left, warden_happy_right],
+            [camp1, stanley_normal_left, warden_happy_right],
+            [camp1, stanley_sad_left, warden_happy_right],
+            [camp1, stanley_normal_left, warden_normal_right],
+            [camp1, stanley_normal_left, warden_normal_right],
+            [camp1, stanley_normal_left, warden_angry_right],
+            [camp1, stanley_sad_left, warden_normal_right],
+            [camp1, stanley_normal_left, warden_normal_right],
+            [camp1, stanley_normal_left, warden_normal_right],
+            [camp1, stanley_sad_left, warden_angry_right],
+            [camp2, stanley_normal_left, warden_happy_right],
+            []],
 comgwa.makeScript('''
-black/40/Zero/
+black/35/Zero/
 헉...헉...
 일단 신발을 여기 두자..
 #
-black/40/Stanley/
+black/35/Stanley/
 어? 이 신발 뭐지?
 #
-black/40/Stanley/
+black/35/Stanley/
 주워 가면 아버지의 구두 냄새 제거 연구에
 도움이 되겠지? 주워 가야...
 #
-black/40/Police/
+black/35/Police/
 Clyde Livingstone의 신발을 훔친 범인이다!
 #
 black/32/Police/
@@ -149,35 +162,82 @@ black/32/Police/
 변호인을 선임하지 못할 경우, 국선변호안이 선임될 것입니다.
 이 권리가 있음을 인지했습니까?
 #
-black/40/Stanley/
+black/35/Stanley/
 네... 인지했습니다..
 #
 white/50/Narration/
 그렇게 법정으로 가게 된 Stanley...
 #
-black/40/Judge/
+black/35/Judge/
 Stanley, 그래서 Camp Green Lake와
 감옥 중 어디를 가겠니?
 #
-black/40/Stanley/
+black/35/Stanley/
 'Camp Green Lake? 재밌어 보이는데?'
 #
-black/40/Stanley/
+black/35/Stanley/
 Camp Green Lake로 갈게요!
 #
 white/50/Narration/
 깊이 잠에 들었던 Stanley...
 #
-black/40/Stanley/
+black/35/Stanley/
 여...여기가 어디지?
 버..버스잖아?
 #
 white/50/Narration/
-다시 잠에 들어 버린 Stanley의 운명은...?
+금세 다시 잠에 들어 버린 Stanley
 #
-black/40/Stanley/
+black/35/Stanley/
 여기가 어디죠...?
-
+#
+black/35/Warden/
+만나서 반갑다. Stanley.
+여기가 바로 Camp Green Lake란다.
+#
+black/35/Stanley/
+아... 그렇군요..
+제가 여기서 무엇을 하면 되나요?
+#
+black/35/Warden/
+지금부터 내가 Camp Green Lake의 규칙을
+설명해줄 테니 잘 듣도록.
+#
+black/35/Stanley/
+네..넵!
+#
+black/35/Warden/
+첫째, 매일 내가 지정한 장소에 구덩이를 판다.
+내가 지정한 장소는 X표가 되어 있을 것이다.
+#
+black/35/Stanley/
+자..잠시만요.
+구덩이를 왜 파야 하는 거죠?
+#
+black/35/Warden/
+그건 바로 너의 인격 수양을 위해서야.
+그리고 내 말을 중간에 끊지 말고 끝까지 듣도록 해라.
+#
+black/35/Stanley/
+아 네.. 죄송합니다.
+#
+black/35/Warden/
+둘째, 신기한 물건을 발견했을 경우 이를 즉시 보고할 것.
+이해했을 것이라고 믿는다.
+#
+black/35/Stanley/
+그럼 구덩이는 내일부터 파는 건가요?
+#
+black/35/Warden/
+무슨 소리! 구덩이는 오늘부터 파야지.
+일단 네가 생활할 D 캠프로 안내해줄 테니 따라와라.
+#
+black/35/Warden/
+너는 앞으로 주황색 작업복을 입게 될 거야.
+첫날은 매우 힘들 것이다. 행운을 빈다.
+#
+white/50/Narration/
+Stanley가 무사히 구덩이를 파도록 도와주자.
 
 '''), "level01"))
 
@@ -329,6 +389,7 @@ levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
     OGO_O_O_O
     ___OO_O_O
     G__OO_OOO
+    _________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level11"))
