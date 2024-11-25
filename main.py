@@ -240,6 +240,61 @@ Stanley가 무사히 구덩이를 파도록 도와주자.
 
 '''), "level01"))
 
+cutscenes.append(comgwa.CutScene("afterday3", lineback,
+[[camp2, stanley_normal_left],
+            [camp2, stanley_happy_left],
+            [camp2, stanley_happy_left, warden_normal_right],
+            [camp2, stanley_happy_left, warden_happy_right],
+            [camp2, stanley_sad_left, warden_happy_right],
+            [camp3, xray_normal_left],
+            [],
+            [camp3, xray_normal_left, stanley_normal_right],
+            [camp3, xray_normal_left, stanley_normal_right],
+            [camp3, xray_normal_left, stanley_normal_right],
+            [camp3, xray_normal_left, stanley_normal_right],
+            []],
+comgwa.makeScript("""
+black/35/Stanley/
+어? 저기 떨어져 있는 건 뭐지?
+#
+black/35/Stanley/
+뭔지 모르겠지만 신기한데?
+아 맞다, 소장님께 보고해야겠다.
+#
+black/35/Stanley/
+소장님, 저 신기한 걸 찾았어요!
+#
+black/35/Warden/
+이건 나한테 주고 오늘 하루는 들어가서 쉬도록 해라.
+#
+black/35/Stanley/
+'이미 오늘 팔 건 거의 다 팠는데...'
+네 감사합니다!
+#
+black/35/X-ray/
+'우와... 부럽다.'
+#
+white/50/Narration/
+잠시 후 X-ray가 Stanley를 불렀다
+#
+black/35/Stanley/
+왜... 무슨 일이야?
+#
+black/35/X-ray/
+별일은 아니고... 혹시 나중에도 신기한 물건을 찾으면
+나한테 주면 안 될까?
+#
+black/35/X-ray/
+내가 지금껏 몇 개월 동안 여기 있으면서
+너처럼 쉬어본 적이 없어.
+#
+black/35/Stanley/
+어... 알겠어...
+#
+white/50/Narration/
+계속 Stanley를 도와주자.
+
+"""), "level04"))
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
@@ -295,7 +350,7 @@ levelList.append(comgwa.LevelScene("level03", comgwa.Level("""
     ______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (4, 5))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level04"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday3"))
 
 levelList.append(comgwa.LevelScene("level04", comgwa.Level("""
     ____________
