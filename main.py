@@ -240,6 +240,14 @@ Stanley가 무사히 구덩이를 파도록 도와주자.
 
 '''), "level01"))
 
+cutscenes.append(comgwa.CutScene("afterday1", lineback,
+[[camp1, stanley_sad_left]],
+comgwa.makeScript("""
+black/35/Stanley/
+휴..역시 첫날은 쉽지 않구나...
+내일은 조금 더 편할까?
+"""), "level02"))
+
 cutscenes.append(comgwa.CutScene("afterday3", lineback,
 [[camp2, stanley_normal_left],
             [camp2, stanley_happy_left],
@@ -297,7 +305,20 @@ white/50/Narration/
 """), "level04"))
 
 cutscenes.append(comgwa.CutScene("afterday5", lineback,
-[[],
+[[camp1, stanley_normal_left],
+            [camp1, stanley_normal_left],
+            [camp1, stanley_normal_left, xray_normal_right],
+            [camp1, stanley_normal_left, xray_happy_right],
+            [camp1, stanley_normal_left, xray_happy_right],
+            [camp1, stanley_happy_left, xray_happy_right],
+            [],
+            [camp3, xray_happy_right],
+            [camp3, warden_normal_left, xray_happy_right],
+            [camp3, warden_happy_left, xray_happy_right],
+            [camp3, warden_happy_left, xray_happy_right],
+            [camp3, warden_happy_left, stanley_normal_right],
+            [camp3, warden_happy_left, stanley_sad_right],
+            [camp3, warden_happy_left, stanley_sad_right],
             []],
 comgwa.makeScript("""
 black/35/Stanley/
@@ -353,9 +374,14 @@ black/35/Stanley/
 '아무리 봐도 다른 목적이 있단 말이지.'
 #
 white/40/Narration/
-Warden이 땅을 파라고 하는
-진짜 이유가 있을까?
+Warden이 땅을 파라고 하는 진짜 이유가 있을까?
 """), "level06"))
+
+cutscenes.append(comgwa.CutScene("afterday10", lineback,
+[],
+comgwa.makeScript("""
+
+"""), "level11"))
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
@@ -383,7 +409,7 @@ levelList.append(comgwa.LevelScene("level01", comgwa.Level("""
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 2), (1, 4))
-    ], (60, 60), 0.2), holePalette, dirtPalette, "level02"))
+    ], (60, 60), 0.2), holePalette, dirtPalette, "afterday1"))
 
 levelList.append(comgwa.LevelScene("level02", comgwa.Level("""
     _________
@@ -435,7 +461,7 @@ levelList.append(comgwa.LevelScene("level05", comgwa.Level("""
     ____________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 2), (1, 2))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level06"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday5"))
 
 levelList.append(comgwa.LevelScene("level06", comgwa.Level("""
     ________
@@ -509,7 +535,7 @@ levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
     _________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level11"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday10"))
 
 
 levelList.append(comgwa.LevelScene("level11", comgwa.Level("""
