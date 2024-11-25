@@ -107,34 +107,34 @@ screen = pygame.display.set_mode((1280, 720))
 
 cutscenes.append(comgwa.CutScene("intro", lineback,
 [[town, zero_normal_left],
-            [town, stanley_normal_right],
-            [town, stanley_happy_right],
-            [town, stanley_angry_right],
-            [town, stanley_angry_right],
-            [town, stanley_angry_right],
-            [town, stanley_angry_right],
-            [town, stanley_sad_right],
-            [],
-            [lawcourt],
-            [lawcourt, stanley_sad_left],
-            [lawcourt, stanley_happy_left],
-            [bus],
-            [bus, stanley_normal_left],
-            [],
-            [camp1, stanley_normal_left, warden_normal_right],
-            [camp1, stanley_normal_left, warden_happy_right],
-            [camp1, stanley_normal_left, warden_happy_right],
-            [camp1, stanley_normal_left, warden_happy_right],
-            [camp1, stanley_sad_left, warden_happy_right],
-            [camp1, stanley_normal_left, warden_normal_right],
-            [camp1, stanley_normal_left, warden_normal_right],
-            [camp1, stanley_normal_left, warden_angry_right],
-            [camp1, stanley_sad_left, warden_normal_right],
-            [camp1, stanley_normal_left, warden_normal_right],
-            [camp1, stanley_normal_left, warden_normal_right],
-            [camp1, stanley_sad_left, warden_angry_right],
-            [camp2, stanley_normal_left, warden_happy_right],
-            []],
+[town, stanley_normal_right],
+[town, stanley_happy_right],
+[town, stanley_angry_right],
+[town, stanley_angry_right],
+[town, stanley_angry_right],
+[town, stanley_angry_right],
+[town, stanley_sad_right],
+[],
+[lawcourt],
+[lawcourt, stanley_sad_left],
+[lawcourt, stanley_happy_left],
+[bus],
+[bus, stanley_normal_left],
+[],
+[camp1, stanley_normal_left, warden_normal_right],
+[camp1, stanley_normal_left, warden_happy_right],
+[camp1, stanley_normal_left, warden_happy_right],
+[camp1, stanley_normal_left, warden_happy_right],
+[camp1, stanley_sad_left, warden_happy_right],
+[camp1, stanley_normal_left, warden_normal_right],
+[camp1, stanley_normal_left, warden_normal_right],
+[camp1, stanley_normal_left, warden_angry_right],
+[camp1, stanley_sad_left, warden_normal_right],
+[camp1, stanley_normal_left, warden_normal_right],
+[camp1, stanley_normal_left, warden_normal_right],
+[camp1, stanley_sad_left, warden_angry_right],
+[camp2, stanley_normal_left, warden_happy_right],
+[]],
 comgwa.makeScript('''
 black/35/Zero/
 헉...헉...
@@ -250,17 +250,17 @@ black/35/Stanley/
 
 cutscenes.append(comgwa.CutScene("afterday3", lineback,
 [[camp2, stanley_normal_left],
-            [camp2, stanley_happy_left],
-            [camp2, stanley_happy_left, warden_normal_right],
-            [camp2, stanley_happy_left, warden_happy_right],
-            [camp2, stanley_sad_left, warden_happy_right],
-            [camp3, xray_normal_left],
-            [],
-            [camp3, xray_normal_left, stanley_normal_right],
-            [camp3, xray_normal_left, stanley_normal_right],
-            [camp3, xray_normal_left, stanley_normal_right],
-            [camp3, xray_normal_left, stanley_normal_right],
-            []],
+[camp2, stanley_happy_left],
+[camp2, stanley_happy_left, warden_normal_right],
+[camp2, stanley_happy_left, warden_happy_right],
+[camp2, stanley_sad_left, warden_happy_right],
+[camp3, xray_normal_left],
+[],
+[camp3, xray_normal_left, stanley_normal_right],
+[camp3, xray_normal_left, stanley_normal_right],
+[camp3, xray_normal_left, stanley_normal_right],
+[camp3, xray_normal_left, stanley_normal_right],
+[]],
 comgwa.makeScript("""
 black/35/Stanley/
 어? 저기 떨어져 있는 건 뭐지?
@@ -306,20 +306,20 @@ white/50/Narration/
 
 cutscenes.append(comgwa.CutScene("afterday5", lineback,
 [[camp1, stanley_normal_left],
-            [camp1, stanley_normal_left],
-            [camp1, stanley_normal_left, xray_normal_right],
-            [camp1, stanley_normal_left, xray_happy_right],
-            [camp1, stanley_normal_left, xray_happy_right],
-            [camp1, stanley_happy_left, xray_happy_right],
-            [],
-            [camp3, xray_happy_right],
-            [camp3, warden_normal_left, xray_happy_right],
-            [camp3, warden_happy_left, xray_happy_right],
-            [camp3, warden_happy_left, xray_happy_right],
-            [camp3, warden_happy_left, stanley_normal_right],
-            [camp3, warden_happy_left, stanley_sad_right],
-            [camp3, warden_happy_left, stanley_sad_right],
-            []],
+[camp1, stanley_normal_left],
+[camp1, stanley_normal_left, xray_normal_right],
+[camp1, stanley_normal_left, xray_happy_right],
+[camp1, stanley_normal_left, xray_happy_right],
+[camp1, stanley_happy_left, xray_happy_right],
+[],
+[camp3, xray_happy_right],
+[camp3, warden_normal_left, xray_happy_right],
+[camp3, warden_happy_left, xray_happy_right],
+[camp3, warden_happy_left, xray_happy_right],
+[camp3, warden_happy_left, stanley_normal_right],
+[camp3, warden_happy_left, stanley_sad_right],
+[camp3, warden_happy_left, stanley_sad_right],
+[]],
 comgwa.makeScript("""
 black/35/Stanley/
 어...이게 뭐지...?
@@ -377,11 +377,33 @@ white/40/Narration/
 Warden이 땅을 파라고 하는 진짜 이유가 있을까?
 """), "level06"))
 
-cutscenes.append(comgwa.CutScene("afterday10", lineback,
-[],
+cutscenes.append(comgwa.CutScene("afterday9", lineback,
+[[camp1, stanley_normal_left, zero_normal_right],
+[camp1, stanley_normal_left, zero_normal_right],
+[camp1, stanley_normal_left, zero_normal_right],
+[camp1, stanley_normal_left, zero_normal_right],
+[camp1, stanley_normal_left, zero_normal_right],
+[camp1, stanley_normal_left, zero_normal_right]],
 comgwa.makeScript("""
-
-"""), "level11"))
+black/35/Stanley/
+안녕..? 넌 이름이 뭐야?
+#
+black/35/Zero/
+난 Zero야.
+#
+black/35/Stanley/
+만나서 반가워. 난 Stanley라고 해.
+#
+black/35/Zero/
+넌 어쩌다가 이곳에 오게 되었니?
+#
+black/35/Stanley/
+난 갑자기 억울하게 신발을 훔쳤다는 명목으로
+붙잡혀 왔어.
+#
+black/35/Zero/
+'신발...? 그렇다면 혹시...?'
+"""), "level10"))
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
@@ -521,7 +543,7 @@ levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
     _____________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (6, 6))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level10"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday9"))
 
 
 levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
