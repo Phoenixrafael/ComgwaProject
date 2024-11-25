@@ -435,12 +435,186 @@ black/35/Zero/
 '신발...? 그렇다면 혹시...?'
 """), "level10"))
 
-# cutscenes.append(comgwa.CutScene("afterday10", lineback, camp1,
-# [],
-# comgwa.makeScript("""
+cutscenes.append(comgwa.CutScene("afterday10", lineback, camp1,
+[
+[camp1_dark],
+[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_angry_left, zero_normal_right],
+[camp1_white, stanley_normal_left, zero_sad_right],
+[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_happy_left, zero_normal_right],
+[camp1_white, stanley_happy_left, zero_normal_right],
+[camp1_white, stanley_happy_left, zero_normal_right],
+[camp2_dark],
+[camp2_white, zero_sad_left],
+[camp2_white, zero_sad_left],
+[]
+],
+comgwa.makeScript("""
+white/50/Narration/
+부모님께 편지를 쓰던 Stanley
 #
-# """), "level11"))
+black/35/Zero/
+우와...
+#
+black/35/Stanley/
+왜 남이 쓰는 편지를 구경하는 거야?
+#
+black/35/Zero/
+나는 알파벳을 읽을 줄 몰라.
+혹시 나한테 알파벳 가르쳐줄 수 있니?
+#
+black/35/Stanley/
+음...
+#
+black/35/Zero/
+그 대신 내가 너의 구덩이를 대신 파 줄게.
+#
+black/35/Stanley/
+'오 그러면 완전 이득이잖아?'
+#
+black/35/Stanley/
+그래!
+#
+black/35/Stanley/
+그러면 얼마든지 내가 알파벳을 가르쳐 줄 수 있지!
+#
+white/50/Narration/
+열심히 구덩이를 판 Zero...
+#
+black/35/Zero/
+에휴 힘들다...
+#
+black/35/Zero/
+Stanley의 구덩이는 최대한 적게 이동하면서
+효율적으로 파야겠어.
+#
+white/50/Narration/
+Zero가 효율적으로 구덩이를 파도록 도와주자.
+"""), "level11"))
 
+cutscenes.append(comgwa.CutScene("afterday12", lineback, camp2,
+[[camp2_white, stanley_normal_left, zero_normal_right],
+[camp2_white, stanley_normal_left, zero_normal_right],
+[camp2_white, stanley_normal_left, zero_normal_right]],
+comgwa.makeScript("""
+black/35/Stanley/
+너 알파벳 아는 거 있어?
+#
+black/35/Zero/
+A, B, C, D, ...
+#
+black/35/Stanley/
+그 다음은 E야.
+"""), "level13"))
+
+cutscenes.append(comgwa.CutScene("afterday12", lineback, camp2,
+[[camp2_white, stanley_normal_left, zero_normal_right],
+[camp2_white, stanley_normal_left, zero_normal_right],
+[camp2_white, stanley_normal_left, zero_normal_right]],
+comgwa.makeScript("""
+black/35/Stanley/
+너 알파벳 아는 거 있어?
+#
+black/35/Zero/
+A, B, C, D, ...
+#
+black/35/Stanley/
+그 다음은 E야.
+"""), "level13"))
+
+cutscenes.append(comgwa.CutScene("afterday15", lineback, camp2,
+[[camp1_white, warden_angry_left, stanley_angry_right],
+[camp1_white, warden_angry_left, stanley_normal_right],
+[camp1_white, warden_angry_left, stanley_sad_right],
+[camp1_white, warden_angry_left, stanley_angry_right],
+[camp1_white, warden_angry_left, stanley_angry_right],
+[camp1_white, warden_angry_left, stanley_angry_right],
+[camp1_white, warden_angry_left, stanley_angry_right],
+[camp1_white, warden_angry_left, zero_normal_right],
+[camp1_white, warden_angry_left, zero_sad_right],
+[camp1_white, warden_angry_left, zero_sad_right],
+[camp1_white, warden_normal_left, zero_angry_right],
+[camp1_white, warden_angry_left, stanley_normal_right],
+[camp1_white, warden_angry_left, stanley_normal_right],
+[camp1_white, warden_happy_left, stanley_sad_right],
+[],
+[camp2_white, stanley_sad_left],
+[camp2_white, stanley_normal_left],
+[camp3_white, stanley_normal_left],
+[camp3_white, stanley_normal_right],
+[camp3_dark]],
+comgwa.makeScript("""
+black/35/Warden/
+잠시만, Stanley.
+너 왜 땅을 파지 않니?
+#
+black/35/Stanley/
+저... 저 Zero에게 알파벳을 가르쳐주는 대신
+Zero가 제 구덩이를 대신 파주기로 했어요
+#
+black/35/Warden/
+구덩이를 파는 건 남이 대신해도
+되는 일이 아니야!
+#
+black/35/Stanley/
+어차피 인격 수양은 명목이잖아요!
+#
+black/35/Warden/
+무슨 소리니! Stanley!
+어서 구덩이이나 파!
+#
+black/35/Stanley/
+저는 알파벳을 가르쳐주면서 인격을
+수양하고 있다고요!
+#
+black/35/Warden/
+그래? 어디 잘 가르쳤는지나 한 번 볼까?
+#
+black/35/Warden/
+Zero, h-a-t을 어떻게 발음하니?
+#
+black/35/Zero/
+...
+#
+black/35/Warden/
+푸흡! 기초적인 발음도 못하네!
+Zero 너는 머릿속에 들은 게 없어.
+#
+black/35/Zero/
+'안 되겠다. 난 여기를 떠나야겠어.'
+#
+black/35/Stanley/
+너 갑자기 어디 가! Zero!
+#
+black/35/Warden/
+괜찮아. 어차피 이 인근에는 물 한 방울조차
+없어서 다시 돌아올 수밖에 없어.
+#
+black/35/Warden/
+이 기회에 안 그래도 거슬리던
+Zero 관련 파일을 영구 삭제해야겠군.
+#
+white/50/Narration/
+힌편, Stanley...
+#
+black/35/Stanley/
+하... Zero가 없으니까 무언가 허전해..
+#
+black/35/Stanley/
+어쩔 수 없다. 나도 Zero를 따라가야겠어.
+#
+black/35/Stanley/
+여기는 흙이 젖어 있네.
+#
+black/35/Stanley/
+뭐야 이 흙은 안 파지잖아?
+#
+white/50/Narration/
+Stanley의 여정을 계속 따라가보자.
+
+"""), "level16"))
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
@@ -449,7 +623,6 @@ palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("goal", goalTerrain, {'G'})]
 dirtPalette = ("dirtPile", [(dirtPileSprite, 0)])
 holePalette = ("hole", [(holeSprite, 0)])
-
 stanleyPalette = ("stanley", stanleySpriteTilemap)
 zeroPalette = ("stanley", zeroSpriteTilemap)
 
@@ -654,7 +827,7 @@ levelList.append(comgwa.LevelScene("level14", comgwa.Level("""
     _______
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
-    ], (60, 60), 0.3, comgwa.Counter(counterSprite, 100, True, False)), holePalette, dirtPalette, "level15"))
+    ], (60, 60), 0.3, comgwa.Counter(counterSprite, 6, True, False)), holePalette, dirtPalette, "level15"))
 
 levelList.append(comgwa.LevelScene("level18", comgwa.Level("""
     _______
