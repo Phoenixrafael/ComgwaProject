@@ -134,11 +134,10 @@ class CutScene(Scene):
         self.name = name
         self.surface = pygame.display.set_mode(displaySize)
         self.lineback = lineback
-        assert backgrounds, "배경이 없음"
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
         self.background = backgrounds #배경 목록
         self.lines = lines
-        self.lineindex = 0
+        self.lineindex = 0 # 몇 번째 대사를 실행할지 결정
         self.nextscene = nextSceneName
         pygame.display.flip()
 
@@ -152,6 +151,7 @@ class CutScene(Scene):
         pygame.display.flip()
 
         running = True
+        delay_time = 30 # 글자 간 시간 간격
 
         while running:
             pygame.display.update()
@@ -161,9 +161,17 @@ class CutScene(Scene):
                     sys.exit()
 
                 elif event.type == pygame.KEYDOWN:
+                    # s키를 입력할 경우 컷씬 스킵
                     if event.key == pygame.K_s:
                         end = 1
                         running = False
+
+                    #위아래 방향키로 대사 속도 조절
+                    elif event.key == pygame.K_UP:
+                        if delay_time > 0: delay_time -= 3
+
+                    elif event.key == pygame.K_DOWN:
+                        if delay_time < 90: delay_time += 3
 
                     elif event.key == pygame.K_SPACE:
                         # Space 키를 누를 때 처리
@@ -210,9 +218,14 @@ class CutScene(Scene):
                                         end = 1
                                         running = False
                                         break
+                                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+                                        if delay_time > 0: delay_time -= 3
+
+                                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+                                        if delay_time < 90: delay_time += 3
 
                                 if end: break
-                                pygame.time.delay(30)
+                                pygame.time.delay(delay_time)
                                 i += 1
 
                             uneffect_texts.append((idx, text_info))
@@ -274,6 +287,7 @@ def makeScript(text):
 
 
 def makeImage(image, type):
+    """type에 따라 좌우 반전 이미지를 만드는 함수 """
     if type == 0:
         return [image, (0, 0)]
     if type == 1:
