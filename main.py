@@ -623,6 +623,7 @@ palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("goal", goalTerrain, {'G'})]
 dirtPalette = ("dirtPile", [(dirtPileSprite, 0)])
 holePalette = ("hole", [(holeSprite, 0)])
+
 stanleyPalette = ("stanley", stanleySpriteTilemap)
 zeroPalette = ("stanley", zeroSpriteTilemap)
 
@@ -826,7 +827,7 @@ levelList.append(comgwa.LevelScene("level14", comgwa.Level("""
     _OOOOO_
     _______
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (3, 6))
+        comgwa.Player(zeroPalette, (0, 1), (3, 6))
     ], (60, 60), 0.3, comgwa.Counter(counterSprite, 6, True, False)), holePalette, dirtPalette, "level15"))
 
 levelList.append(comgwa.LevelScene("level18", comgwa.Level("""
@@ -846,6 +847,20 @@ levelList.append(comgwa.LevelScene("level18", comgwa.Level("""
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level19"))
 
+levelList.append(comgwa.LevelScene("level19", comgwa.Level("""
+    ________
+    _OOOOOO_
+    _OOOOOO_
+    _OOOIII_
+    _OOOIII_
+    _FFFF_F_
+    _FOOO_F_
+    _OOOOOG_
+    ________
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (1, 1))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level20"))
+levelList[-1].run()
 
 '''
 테스트용 코드
