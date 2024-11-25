@@ -642,6 +642,12 @@ class Level():
                         return False
         return True
 
+    def isOutOfBounds(self, columnNo, rowNo):
+        if( (not (0 <= columnNo < self.terrainList[0].columns))
+                or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
+            return True
+        return False
+
 class LevelScene(Scene):
     def __init__(self, levelName, initialLevel, holePalette, dirtPalette, nextSceneName):
         self.levelList = []
@@ -802,12 +808,12 @@ class LevelScene(Scene):
                         and obj1.position == obj2.position):
                     obj1.vanish = True
                     obj2.vanish = True
-                if (obj1.name == "dirtPile" and nextLevel.isEnd(*obj1.position)) :
-                    obj1.vanish = True
-                    if(nextLevel.isEnd(*obj1.position) == 1):
-                        for terr in nextLevel.terrainList:
-                            if(terr.name == "dirt") :
-                                terr.bitArray[obj1.position[1]][obj1.position[0]] = True
+            if (obj1.name == "dirtPile" and nextLevel.isEnd(*obj1.position)) :
+                obj1.vanish = True
+                if(nextLevel.isEnd(*obj1.position) == 1 and not nextLevel.isOutOfBounds(*obj1.position)):
+                    for terr in nextLevel.terrainList:
+                        if(terr.name == "dirt") :
+                            terr.bitArray[obj1.position[1]][obj1.position[0]] = True
 
         for obj in nextLevel.objects:
             if(obj.name in ["stanley", "zero"] and obj.moving not in [(0, 0), 0] and nextLevel.isIce(*obj.position)) :
@@ -819,7 +825,6 @@ class LevelScene(Scene):
                 or not nextLevel.isIce(*obj.position)) :
                     obj.position = (obj.position[0]+movDelta[0], obj.position[1]+movDelta[1])
                     obj.moving = (obj.moving[0]-movDelta[0], obj.moving[1]-movDelta[1])
-
 
         for obj1 in nextLevel.objects:
             for obj2 in nextLevel.objects:
