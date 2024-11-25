@@ -296,6 +296,67 @@ white/50/Narration/
 
 """), "level04"))
 
+cutscenes.append(comgwa.CutScene("afterday5", lineback,
+[[],
+            []],
+comgwa.makeScript("""
+black/35/Stanley/
+어...이게 뭐지...?
+쓰읍...이런 거 찾으면 X-ray 주기로 했는데..
+#
+black/35/Stanley/
+K...B...라고 적혀 있네.
+하...그래도 X-ray 줘야겠지?
+#
+black/35/Stanley/
+X-ray! 나 여기 신기한 물건을 찾았어.
+네가 저번에 부탁했던 대로 너 주려고.
+#
+black/35/X-ray/
+고마워 Stanley! 소장님...!
+#
+black/35/Stanley/
+자..잠시만. 너 오늘 구덩이 거의 다 팠잖아.
+내일 아침에 발견한 척하고 내일 쉬는 게 어때?
+#
+black/35/X-ray/
+오 그거 좋은 생각인데?
+아무튼 고마워!
+#
+white/50/Narration/
+다음 날...
+#
+black/35/X-ray/
+소장님! 저 여기서 신기한 물건을 찾았어요!
+어서 와보세요!
+#
+black/35/Warden/
+어디 보자꾸나. K.B...?
+X-ray, 이거 어디에서 났니?
+#
+black/35/X-ray/
+여기 제가 파려고 하자마자 나왔어요.
+#
+black/35/Warden/
+일단 너는 오늘 하루 쉬도록 해라.
+그리고 다른 학생들, 모두 여기로 와봐.
+#
+black/35/Warden/
+모두들 이 근처를 크게 파도록 해라.
+알겠나?
+#
+black/35/Stanley/
+네...
+#
+black/35/Stanley/
+'흠... 인격 수양을 목적으로 파는 게 맞아..?'
+'아무리 봐도 다른 목적이 있단 말이지.'
+#
+white/40/Narration/
+Warden이 땅을 파라고 하는
+진짜 이유가 있을까?
+"""), "level06"))
+
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
            ("ice", iceTerrain, {'I'}),
