@@ -36,21 +36,51 @@ lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
 
 #배경 이미지
-mountain = pygame.image.load("asset/sprite/background/bigThumb.png")
+bigThumb = pygame.image.load("asset/sprite/background/bigThumb.png")
 bus = pygame.image.load("asset/sprite/background/bus.png")
 camp1 = pygame.image.load("asset/sprite/background/camp1.png")
 camp2 = pygame.image.load("asset/sprite/background/camp2.png")
 camp3 = pygame.image.load("asset/sprite/background/camp3.png")
-lawcourt = pygame.image.load("asset/sprite/background/lawCourt.png")
+lawCourt = pygame.image.load("asset/sprite/background/lawCourt.png")
 town = pygame.image.load("asset/sprite/background/town.png")
+bigThumb_dark = pygame.image.load("asset/sprite/background/bigThumb_dark.png")
+bigThumb_white = pygame.image.load("asset/sprite/background/bigThumb_white.png")
+bus_dark = pygame.image.load("asset/sprite/background/bus_dark.png")
+bus_white = pygame.image.load("asset/sprite/background/bus_white.png")
+camp1_dark = pygame.image.load("asset/sprite/background/camp1_dark.png")
+camp1_white = pygame.image.load("asset/sprite/background/camp1_white.png")
+camp2_dark = pygame.image.load("asset/sprite/background/camp2_dark.png")
+camp2_white = pygame.image.load("asset/sprite/background/camp2_white.png")
+camp3_dark = pygame.image.load("asset/sprite/background/camp3_dark.png")
+camp3_white = pygame.image.load("asset/sprite/background/camp3_white.png")
+lawCourt_dark = pygame.image.load("asset/sprite/background/lawCourt_dark.png")
+lawCourt_white = pygame.image.load("asset/sprite/background/lawCourt_white.png")
+town_dark = pygame.image.load("asset/sprite/background/town_dark.png")
+town_white = pygame.image.load("asset/sprite/background/town_white.png")
 
-mountain = comgwa.makeImage(pygame.transform.scale(mountain, (1280, 720)), 0)
+# 배경 이미지 변환
+bigThumb = comgwa.makeImage(pygame.transform.scale(bigThumb, (1280, 720)), 0)
 bus = comgwa.makeImage(pygame.transform.scale(bus, (1280, 720)), 0)
 camp1 = comgwa.makeImage(pygame.transform.scale(camp1, (1280, 720)), 0)
 camp2 = comgwa.makeImage(pygame.transform.scale(camp2, (1280, 720)), 0)
 camp3 = comgwa.makeImage(pygame.transform.scale(camp3, (1280, 720)), 0)
-lawcourt = comgwa.makeImage(pygame.transform.scale(lawcourt, (1280, 720)), 0)
+lawCourt = comgwa.makeImage(pygame.transform.scale(lawCourt, (1280, 720)), 0)
 town = comgwa.makeImage(pygame.transform.scale(town, (1280, 720)), 0)
+bigThumb_dark = comgwa.makeImage(pygame.transform.scale(bigThumb_dark, (1280, 720)), 0)
+bigThumb_white = comgwa.makeImage(pygame.transform.scale(bigThumb_white, (1280, 720)), 0)
+bus_dark = comgwa.makeImage(pygame.transform.scale(bus_dark, (1280, 720)), 0)
+bus_white = comgwa.makeImage(pygame.transform.scale(bus_white, (1280, 720)), 0)
+camp1_dark = comgwa.makeImage(pygame.transform.scale(camp1_dark, (1280, 720)), 0)
+camp1_white = comgwa.makeImage(pygame.transform.scale(camp1_white, (1280, 720)), 0)
+camp2_dark = comgwa.makeImage(pygame.transform.scale(camp2_dark, (1280, 720)), 0)
+camp2_white = comgwa.makeImage(pygame.transform.scale(camp2_white, (1280, 720)), 0)
+camp3_dark = comgwa.makeImage(pygame.transform.scale(camp3_dark, (1280, 720)), 0)
+camp3_white = comgwa.makeImage(pygame.transform.scale(camp3_white, (1280, 720)), 0)
+lawCourt_dark = comgwa.makeImage(pygame.transform.scale(lawCourt_dark, (1280, 720)), 0)
+lawCourt_white = comgwa.makeImage(pygame.transform.scale(lawCourt_white, (1280, 720)), 0)
+town_dark = comgwa.makeImage(pygame.transform.scale(town_dark, (1280, 720)), 0)
+town_white = comgwa.makeImage(pygame.transform.scale(town_white, (1280, 720)), 0)
+
 
 # 인물 이미지
 stanley_normal = pygame.image.load("asset/sprite/cutscene/character/stanleynormal.png")
@@ -105,36 +135,36 @@ lawyer_normal_right = comgwa.makeImage(pygame.transform.scale(lawyer_normal, ima
 cutscenes = []
 screen = pygame.display.set_mode((1280, 720))
 
-cutscenes.append(comgwa.CutScene("intro", lineback,
-[[town, zero_normal_left],
-[town, stanley_normal_right],
-[town, stanley_happy_right],
-[town, stanley_angry_right],
-[town, stanley_angry_right],
-[town, stanley_angry_right],
-[town, stanley_angry_right],
-[town, stanley_sad_right],
+cutscenes.append(comgwa.CutScene("intro", lineback, town,
+[[town_white, zero_normal_left],
+[town_white, stanley_normal_right],
+[town_white, stanley_happy_right],
+[town_white, stanley_angry_right],
+[town_white, stanley_angry_right],
+[town_white, stanley_angry_right],
+[town_white, stanley_angry_right],
+[town_white, stanley_sad_right],
 [],
-[lawcourt],
-[lawcourt, stanley_sad_left],
-[lawcourt, stanley_happy_left],
-[bus],
-[bus, stanley_normal_left],
+[lawCourt],
+[lawCourt_white, stanley_sad_left],
+[lawCourt_white, stanley_happy_left],
+[bus_dark],
+[bus_white, stanley_normal_left],
 [],
-[camp1, stanley_normal_left, warden_normal_right],
-[camp1, stanley_normal_left, warden_happy_right],
-[camp1, stanley_normal_left, warden_happy_right],
-[camp1, stanley_normal_left, warden_happy_right],
-[camp1, stanley_sad_left, warden_happy_right],
-[camp1, stanley_normal_left, warden_normal_right],
-[camp1, stanley_normal_left, warden_normal_right],
-[camp1, stanley_normal_left, warden_angry_right],
-[camp1, stanley_sad_left, warden_normal_right],
-[camp1, stanley_normal_left, warden_normal_right],
-[camp1, stanley_normal_left, warden_normal_right],
-[camp1, stanley_sad_left, warden_angry_right],
-[camp2, stanley_normal_left, warden_happy_right],
-[]],
+[camp1_white, stanley_normal_left, warden_normal_right],
+[camp1_white, stanley_normal_left, warden_happy_right],
+[camp1_white, stanley_normal_left, warden_happy_right],
+[camp1_white, stanley_normal_left, warden_happy_right],
+[camp1_white, stanley_sad_left, warden_happy_right],
+[camp1_white, stanley_normal_left, warden_normal_right],
+[camp1_white, stanley_normal_left, warden_normal_right],
+[camp1_white, stanley_normal_left, warden_angry_right],
+[camp1_white, stanley_sad_left, warden_normal_right],
+[camp1_white, stanley_normal_left, warden_normal_right],
+[camp1_white, stanley_normal_left, warden_normal_right],
+[camp1_white, stanley_sad_left, warden_angry_right],
+[camp2_white, stanley_normal_left, warden_happy_right],
+[camp2_dark]],
 comgwa.makeScript('''
 black/35/Zero/
 헉...헉...
@@ -240,26 +270,26 @@ Stanley가 무사히 구덩이를 파도록 도와주자.
 
 '''), "level01"))
 
-cutscenes.append(comgwa.CutScene("afterday1", lineback,
-[[camp1, stanley_sad_left]],
+cutscenes.append(comgwa.CutScene("afterday1", lineback, camp1,
+[[camp1_white, stanley_sad_left]],
 comgwa.makeScript("""
 black/35/Stanley/
 휴..역시 첫날은 쉽지 않구나...
 내일은 조금 더 편할까?
 """), "level02"))
 
-cutscenes.append(comgwa.CutScene("afterday3", lineback,
-[[camp2, stanley_normal_left],
-[camp2, stanley_happy_left],
-[camp2, stanley_happy_left, warden_normal_right],
-[camp2, stanley_happy_left, warden_happy_right],
-[camp2, stanley_sad_left, warden_happy_right],
-[camp3, xray_normal_left],
+cutscenes.append(comgwa.CutScene("afterday3", lineback, camp2,
+[[camp2_white, stanley_normal_left],
+[camp2_white, stanley_happy_left],
+[camp2_white, stanley_happy_left, warden_normal_right],
+[camp2_white, stanley_happy_left, warden_happy_right],
+[camp2_white, stanley_sad_left, warden_happy_right],
+[camp3_white, xray_normal_left],
 [],
-[camp3, xray_normal_left, stanley_normal_right],
-[camp3, xray_normal_left, stanley_normal_right],
-[camp3, xray_normal_left, stanley_normal_right],
-[camp3, xray_normal_left, stanley_normal_right],
+[camp3_white, xray_normal_left, stanley_normal_right],
+[camp3_white, xray_normal_left, stanley_normal_right],
+[camp3_white, xray_normal_left, stanley_normal_right],
+[camp3_white, xray_normal_left, stanley_normal_right],
 []],
 comgwa.makeScript("""
 black/35/Stanley/
@@ -304,21 +334,21 @@ white/50/Narration/
 
 """), "level04"))
 
-cutscenes.append(comgwa.CutScene("afterday5", lineback,
-[[camp1, stanley_normal_left],
-[camp1, stanley_normal_left],
-[camp1, stanley_normal_left, xray_normal_right],
-[camp1, stanley_normal_left, xray_happy_right],
-[camp1, stanley_normal_left, xray_happy_right],
-[camp1, stanley_happy_left, xray_happy_right],
+cutscenes.append(comgwa.CutScene("afterday5", lineback, camp1,
+[[camp1_white, stanley_normal_left],
+[camp1_white, stanley_normal_left],
+[camp1_white, stanley_normal_left, xray_normal_right],
+[camp1_white, stanley_normal_left, xray_happy_right],
+[camp1_white, stanley_normal_left, xray_happy_right],
+[camp1_white, stanley_happy_left, xray_happy_right],
 [],
-[camp3, xray_happy_right],
-[camp3, warden_normal_left, xray_happy_right],
-[camp3, warden_happy_left, xray_happy_right],
-[camp3, warden_happy_left, xray_happy_right],
-[camp3, warden_happy_left, stanley_normal_right],
-[camp3, warden_happy_left, stanley_sad_right],
-[camp3, warden_happy_left, stanley_sad_right],
+[camp3_white, xray_happy_right],
+[camp3_white, warden_normal_left, xray_happy_right],
+[camp3_white, warden_happy_left, xray_happy_right],
+[camp3_white, warden_happy_left, xray_happy_right],
+[camp3_white, warden_happy_left, stanley_normal_right],
+[camp3_white, warden_happy_left, stanley_sad_right],
+[camp3_white, warden_happy_left, stanley_sad_right],
 []],
 comgwa.makeScript("""
 black/35/Stanley/
@@ -377,13 +407,13 @@ white/40/Narration/
 Warden이 땅을 파라고 하는 진짜 이유가 있을까?
 """), "level06"))
 
-cutscenes.append(comgwa.CutScene("afterday9", lineback,
-[[camp1, stanley_normal_left, zero_normal_right],
-[camp1, stanley_normal_left, zero_normal_right],
-[camp1, stanley_normal_left, zero_normal_right],
-[camp1, stanley_normal_left, zero_normal_right],
-[camp1, stanley_normal_left, zero_normal_right],
-[camp1, stanley_normal_left, zero_normal_right]],
+cutscenes.append(comgwa.CutScene("afterday9", lineback, camp1,
+[[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_normal_left, zero_normal_right],
+[camp1_white, stanley_normal_left, zero_normal_right]],
 comgwa.makeScript("""
 black/35/Stanley/
 안녕..? 넌 이름이 뭐야?
@@ -404,6 +434,13 @@ black/35/Stanley/
 black/35/Zero/
 '신발...? 그렇다면 혹시...?'
 """), "level10"))
+
+# cutscenes.append(comgwa.CutScene("afterday10", lineback, camp1,
+# [],
+# comgwa.makeScript("""
+#
+# """), "level11"))
+
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),

@@ -5,6 +5,7 @@ tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : x**2
 easein = lambda x : 1 - (1-x)**3
 colorDict = {'white': (255, 255, 255), 'black': (0, 0, 0), 'red': (255, 0, 0), 'green': (0, 255, 0), 'blue': (0, 0, 255)}
+delay_time = 30 # 글자 간 시간 간격
 
 def smartCopy(obj, visited=None):
     """
@@ -130,9 +131,10 @@ class CutScene(Scene):
     """
     컷씬을 만들고 실행할 수 있는 객체입니다.
     """
-    def __init__(self, name, lineback, backgrounds, lines, nextSceneName, displaySize=(1280, 720)):
+    def __init__(self, name, lineback, bg_initial, backgrounds, lines, nextSceneName, displaySize=(1280, 720)):
         self.name = name
         self.surface = pygame.display.set_mode(displaySize)
+        self.bg_initial = bg_initial
         self.lineback = lineback
         assert len(backgrounds) == len(lines), "배경 수와 대사 수가 불일치함"
         self.background = backgrounds #배경 목록
@@ -142,16 +144,14 @@ class CutScene(Scene):
         pygame.display.flip()
 
     def run(self):
+        global delay_time
         # 디버깅에 ChatGPT를 활용하였음.
         end = 0
         self.surface.fill((0, 0, 0))
-        for image, position in self.background[self.lineindex]:
-            if position == (0, 0):
-                self.surface.blit(image, position)
+        self.surface.blit(self.bg_initial[0], (0, 0))
         pygame.display.flip()
 
         running = True
-        delay_time = 30 # 글자 간 시간 간격
 
         while running:
             pygame.display.update()
@@ -275,13 +275,14 @@ def makeScript(text):
         color = colorDict[infos[0]]
         size = int(infos[1])
         person = infos[2]
-        lines[idx].append(makeLine(person, colorDict['black'], 35, 'person', 0))
         if person == 'Narration':
-            lines[idx].append(makeLine(infos[3].strip().replace('@', ''), color, size, 'narration', 1))
-        elif '\n' in infos[3].strip():
+            lines[idx].append(makeLine(infos[3].strip(), color, size, 'narration', 1))
+        else:
+            lines[idx].append(makeLine(person, colorDict['black'], 35, 'person', 0))
+        if person != 'Narration' and '\n' in infos[3].strip():
             lines[idx].append(makeLine(infos[3].strip().split('\n')[0], color, size, 'twoline1', 1))
             lines[idx].append(makeLine(infos[3].strip().split('\n')[1], color, size, 'twoline2', 1))
-        else:
+        elif person != 'Narration':
             lines[idx].append(makeLine(infos[3].strip(), color, size, 'oneline', 1))
     return lines
 
