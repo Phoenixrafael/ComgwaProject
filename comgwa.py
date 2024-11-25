@@ -180,6 +180,7 @@ class CutScene(Scene):
                             running = False
                             break
 
+                        # 텍스트 출력 효과를 적용할 텍스트만 선별
                         effect_texts, uneffect_texts = [], []
                         for idx, text_info in enumerate(self.lines[self.lineindex]):
                             if text_info[3] == 1:
@@ -187,6 +188,7 @@ class CutScene(Scene):
                             else:
                                 uneffect_texts.append((idx, text_info))
 
+                        #텍스트 출력 효과 적용
                         for idx, text_info in effect_texts:
                             i = 1
                             while i <= len(text_info[0]):
@@ -196,6 +198,8 @@ class CutScene(Scene):
                                     self.surface.blit(image, position)
                                 if text_info[1] != (640, 360):
                                     self.surface.blit(self.lineback, (160, 470))
+
+                                # 효과 없는 텍스트부터 출력
                                 for uneffect_idx, uneffect_text_info in uneffect_texts:
                                     render = uneffect_text_info[5].render(
                                         uneffect_text_info[0], True, uneffect_text_info[4]
@@ -218,6 +222,7 @@ class CutScene(Scene):
                                         end = 1
                                         running = False
                                         break
+                                    # 위아래 방향키로 글자 출력 속도 조절
                                     elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                                         if delay_time > 0: delay_time -= 3
 
