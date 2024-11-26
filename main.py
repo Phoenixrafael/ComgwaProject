@@ -696,6 +696,39 @@ black/35/Zero/
 그럼 일단 왔던 길을 되짚어보자.
 """), "level22"))
 
+cutscenes.append(comgwa.CutScene("afterday23", lineback, bigThumb,
+[[bigThumb_white, zero_normal_left, stanley_normal_right],
+[bigThumb_white, zero_normal_left, stanley_normal_right]],
+comgwa.makeScript("""
+black/35/Zero/
+Stanley... 확실해?
+K.B. 그거 근처를 파면 보물이 있을까?
+#
+black/35/Stanley/
+나를 믿어. 서둘러서 가자.
+"""), "level24"))
+
+cutscenes.append(comgwa.CutScene("afterday27", lineback, bigThumb,
+[[bigThumb_white, stanley_happy_left, zero_normal_right],
+ [bigThumb_white, stanley_normal_left, zero_normal_right],
+ [bigThumb_white, stanley_normal_left, zero_normal_right],
+ [bigThumb_dark]],
+comgwa.makeScript("""
+black/35/Stanley/
+저...저기 Camp Green Lake가 보인다!
+#
+black/35/Zero/
+쉿, 우리 좀 조용히 하자.
+#
+black/35/Stanley/
+내가 K.B.를 찾았던 게 아마...
+아 저쪽이다!
+#
+white/50/Narration/
+Stanley와 Zero의 마지막 땅굴을 도와주자.
+"""), "level28"))
+
+
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
