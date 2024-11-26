@@ -1382,8 +1382,11 @@ def SelectScreen_onEvent(self, event) :
     if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
         for i,button in enumerate(self.buttons) :
             if(button.checkClicked(pygame.mouse.get_pos())) :
-                if(self.progress >= i+1) :
-                    self.manager.loadScene(self, "level" + ("0" if i+1 < 10 else "") + str(i+1))
+                if self.progress >= i+1:
+                    if f"afterday{i}" in [cs.name for cs in cutscenes]:
+                        self.manager.loadScene(self, f"afterday{i}")
+                    else:
+                        self.manager.loadScene(self, "level" + ("0" if i+1 < 10 else "") + str(i+1))
 
 selectScene = comgwa.Scene("SelectScreen", SelectScreen_onStart, SelectScreen_onUpdate, SelectScreen_onEvent)
 
