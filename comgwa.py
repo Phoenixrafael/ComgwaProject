@@ -249,6 +249,7 @@ class CutScene(Scene):
                 if end: break
 
         pygame.event.clear()
+        self.lineindex = 0
         self.manager.loadScene(self, self.nextscene)
 
 def makeLine(sentence, color, size, position, effect):

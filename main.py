@@ -548,8 +548,8 @@ black/35/Stanley/
 Zero가 제 구덩이를 대신 파주기로 했어요.
 #
 black/35/Warden/
-구덩이를 파는 건 남이 대신해도
-되는 일이 아니야!
+구덩이를 파는 건 남이 대신해도 되는 일이
+아니야!
 #
 black/35/Stanley/
 어차피 인격 수양은 명목이잖아요!
@@ -559,8 +559,8 @@ black/35/Warden/
 어서 구덩이이나 파!
 #
 black/35/Stanley/
-저는 알파벳을 가르쳐주면서 인격을
-수양하고 있다고요!
+저는 알파벳을 가르쳐주면서 인격을 수양하고
+있다고요!
 #
 black/35/Warden/
 그래? 어디 잘 가르쳤는지나 한 번 볼까?
@@ -659,15 +659,15 @@ cutscenes.append(comgwa.CutScene("afterday21", lineback, bigThumb,
 ],
 comgwa.makeScript("""
 black/35/Stanley/
-그런데 우리 이렇게 도망쳐 나와서 살면
-평생 도난자로 살게 되는 걸까..?
+그런데 우리 이렇게 도망쳐 나와서 살면 평생
+도난자로 살게 되는 걸까..?
 #
 black/35/Zero/
 음...
 #
 black/35/Stanley/
-나는 내가 죽는 것보다도 나의 생사를
-부모님이 모르신다는 것이 너무 두려워.
+나는 내가 죽는 것보다도 나의 생사를 부모님이
+모르신다는 것이 너무 두려워.
 #
 black/35/Zero/
 그럼 우리는 어떻게 하지?
@@ -680,13 +680,12 @@ black/35/Zero/
 어째서?
 #
 black/35/Stanley/
-우리가 매일 구덩이를 파는 데에는
-다른 이유가 있어.
+우리가 매일 구덩이를 파는 데에는 다른 이유가
+있어.
 #
 black/35/Stanley/
 Warden은 분명히 보물을 찾고 있어.
-저번에 K.B.를 보고 보였던 반응을 보면
-거의 확실해.
+저번에 K.B.를 보고 보였던 반응을 보면 거의 확실해.
 #
 black/35/Stanley/
 그러니까 다시 말하자면 우리가 Camp Green
@@ -704,6 +703,7 @@ cutscenes.append(comgwa.CutScene("afterday23", lineback, bigThumb,
 [bigThumb_white, zero_normal_left, stanley_normal_right],
 [bigThumb_white, zero_normal_left, stanley_normal_right],
 [bigThumb_white, zero_normal_left, stanley_normal_right],
+[],
 []],
 comgwa.makeScript("""
 black/35/Zero/
@@ -721,7 +721,10 @@ black/35/Stanley/
 우리 좀 서둘러야겠다.
 #
 white/50/Narration/
-Yellow spotted lizard기 등장하면 효율적으로 땅을 파자.
+Yellow spotted lizard 등장!
+#
+white/50/Narration/
+lizard가 오면 효율적으로 땅을 파자.
 """), "level24"))
 
 cutscenes.append(comgwa.CutScene("afterday27", lineback, bigThumb,
@@ -741,7 +744,7 @@ black/35/Stanley/
 아 저쪽이다!
 #
 white/50/Narration/
-Stanley와 Zero의 마지막 땅굴을 도와주자.
+Stanley와 Zero의 마지막 구덩이를 도와주자.
 """), "level28"))
 
 
@@ -797,22 +800,21 @@ black/35/Warden/
 도망쳤던 애들이 돌아와서 찾아줄 줄이야.
 #
 black/35/Warden/
-음.. 그런데 yellow spotted lizard
-떄문에 도저히 접근할 수가 없군.
+음.. 그런데 yellow spotted lizard 떄문에 도저히
+접근할 수가 없군.
 #
 black/35/Stanley/
-'으윽.. yellow spotted lizard가
-내 발을 기어오르는 것 같아.'
+'으윽.. yellow spotted lizard가 내 발을
+기어오르는 것 같아.'
 #
 black/35/Stanley/
 '어...엄마! 나 이대로 죽는 거 아니죠?'
 #
 black/35/X-ray/
-Stanley, 얼마 전에 듣기로는
-너는 아무 잘못이 없대.
+Stanley, 얼마 전에 듣기로 너는 아무 잘못이 없대.
 #
 white/50/Narration/
-이때 의문의 한 여성이 등장한다
+이때 의문의 한 여성이 등장한다.
 #
 black/35/???/
 안녕하세요?
@@ -844,19 +846,18 @@ black/35/Stanley/
 아까 전에 여기 땅을 파서 나왔어요.
 #
 black/35/Warden/
-웃기는 소리! 저 애들이 여기로 숨어들어와서
-가방을 훔친 거요!
+웃기는 소리! 저 애들이 여기로 숨어들어와서 가방을
+훔친 거요!
 #
 black/35/Lawyer/
-일단, Stanley, 너는 내가 변호사로서
-충고하건데, 아무 말도 하지 말아라.
+일단, Stanley, 너는 내가 변호사로서 충고하건데,
+아무 말도 하지 말아라.
 #
 white/50/Narration/
-갑자기 yellow-spotted-lizard가 사라진다.
+갑자기 yellow spotted lizard가 사라진다.
 #
 black/35/Warden/
-성가신 놈들이 드디어 갔군.
-내 가방 내놔!
+성가신 놈들이 드디어 갔군. 내 가방 내놔!
 #
 black/35/Zero/
 여기 S..t..a...
@@ -892,12 +893,12 @@ black/35/Warden/
 Ze..Zero 파일이요? 잠시만요...
 #
 black/35/Warden/
-Zero 파일이 아무래도 사이버 공간 속의
-블랙홀에 빠져버린 것 같아요.
+Zero 파일이 아무래도 사이버 공간 속의 블랙홀에
+빠져버린 것 같아요.
 #
 black/35/Lawyer/
-그렇다면 당신에게 Zero를 데리고 있을
-권한이 없다는 뜻이군요.
+그렇다면 당신에게 Zero를 데리고 있을 권한이
+없다는 뜻이군요.
 #
 black/35/Lawyer/
 Zero, 너도 같이 가자꾸나.
@@ -906,7 +907,7 @@ white/50/Narration/
 그렇게 Stanley와 Zero는 변호사와 함께 떠났다.
 #
 white/50/Narration/
-그 이후 비 한 방울 오지 않던 Camp Green Lake에는
+이후 비 한 방울 오지 않던 Camp Green Lake에
 #
 white/50/Narration/
 빗방울 하나가 떨어졌다.
@@ -915,6 +916,7 @@ white/50/Narration/
 Made by 박시을 & 김도윤
 """), "SelectScreen"))
 
+cutscenes[-1].run()
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
@@ -1382,7 +1384,10 @@ def SelectScreen_onEvent(self, event) :
         for i,button in enumerate(self.buttons) :
             if(button.checkClicked(pygame.mouse.get_pos())) :
                 if(self.progress >= i+1) :
-                    self.manager.loadScene(self, "level" + ("0" if i+1 < 10 else "") + str(i+1))
+                    if f"afterday{i}" in [cs.name for cs in cutscenes]:
+                        self.manager.loadScene(self, f"afterday{i}")
+                    else:
+                        self.manager.loadScene(self, "level" + ("0" if i+1 < 10 else "") + str(i+1))
 
 selectScene = comgwa.Scene("SelectScreen", SelectScreen_onStart, SelectScreen_onUpdate, SelectScreen_onEvent)
 
