@@ -727,8 +727,17 @@ levelList.append(comgwa.LevelScene("level08", comgwa.Level("""
         comgwa.Player(stanleyPalette, (0, 1), (7, 6))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level09"))
 
-
 levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
+    OOO___OOO_
+    OFFFO_OOOO
+    OOGO__OOO_
+    OFFFO_OOOO
+    OOO___OOO_
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (7, 2))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday9"))
+
+levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
     _____________
     _FFFFFFFF__O_
     _FOOOOOOF__O_
@@ -743,20 +752,7 @@ levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
     _____________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (6, 6))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday9"))
-
-
-levelList.append(comgwa.LevelScene("level10", comgwa.Level("""
-    OOO___OOO_
-    OFFFO_OOO_
-    OOGOFOOOO_
-    OFFFO_OOO_
-    OOO___OOO_
-    """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (7, 2))
     ], (60, 60), 0.3), holePalette, dirtPalette, "afterday10"))
-
-levelList[-1].run()
 
 levelList.append(comgwa.LevelScene("level11", comgwa.Level("""
     _______
