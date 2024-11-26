@@ -916,8 +916,6 @@ white/50/Narration/
 Made by 박시을 & 김도윤
 """), "SelectScreen"))
 
-cutscenes[-1].run()
-
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
            ("ice", iceTerrain, {'I'}),
@@ -1316,8 +1314,9 @@ levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
     _OOGOO_
     _______
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 2), (1, 4))
-    ], (60, 60), 0.2), holePalette, dirtPalette, "afterday28"))
+        comgwa.Player(stanleyPalette, (0, 1), (1, 1))
+    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 100, False, True, (0, 0, 0))), holePalette, dirtPalette, "afterday28"))
+
 
 '''
 타이틀 스크린
@@ -1384,10 +1383,7 @@ def SelectScreen_onEvent(self, event) :
         for i,button in enumerate(self.buttons) :
             if(button.checkClicked(pygame.mouse.get_pos())) :
                 if(self.progress >= i+1) :
-                    if f"afterday{i}" in [cs.name for cs in cutscenes]:
-                        self.manager.loadScene(self, f"afterday{i}")
-                    else:
-                        self.manager.loadScene(self, "level" + ("0" if i+1 < 10 else "") + str(i+1))
+                    self.manager.loadScene(self, "level" + ("0" if i+1 < 10 else "") + str(i+1))
 
 selectScene = comgwa.Scene("SelectScreen", SelectScreen_onStart, SelectScreen_onUpdate, SelectScreen_onEvent)
 
