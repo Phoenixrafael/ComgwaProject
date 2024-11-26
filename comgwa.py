@@ -859,18 +859,19 @@ class LevelScene(Scene):
         return nextLevel
 
 class Counter():
-    def __init__(self, sprite, total, doesCountDig=True, doesCountMove=False):
+    def __init__(self, sprite, total, doesCountDig=True, doesCountMove=False, textColor=(255, 255, 255)):
         self.sprite = sprite
         self.count = total
         self.doesCountDig = doesCountDig
         self.doesCountMove = doesCountMove
         self.font = pygame.font.Font("asset/font/Galmuri11-Bold.ttf", 80)
+        self.textColor = textColor
 
     def getSprite(self):
         counterSprite = pygame.Surface((200, 200)).convert_alpha()
         counterSprite.fill((0, 0, 0, 0))
         counterSprite.blit(pygame.transform.scale(self.sprite, (200, 200)), (0, 0))
-        textSprite = self.font.render(str(self.count), False, (255, 255, 255))
+        textSprite = self.font.render(str(self.count), False, self.textColor)
         counterSprite.blit(textSprite, (100-textSprite.get_width()/2, 122-textSprite.get_height()/2))
 
         return counterSprite

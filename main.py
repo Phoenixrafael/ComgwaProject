@@ -33,6 +33,7 @@ fenceTerrain = comgwa.getTerrainDict(fenceTilemap)
 goalTerrain = comgwa.getTerrainDict(goalTilemap)
 
 counterSprite = pygame.image.load("asset//sprite//counter.png")
+lizardCounterSprite = pygame.image.load("asset//sprite//lizardCounter.png")
 
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
@@ -1088,6 +1089,21 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
     ], (60, 60), 0.3), holePalette, dirtPalette, "level25"))
 
 
+levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
+    __OOO____
+    OOO__O___
+    OF_OOO___
+    OFFFOOOOO
+    OGO_O_O_O
+    ___OO_O_O
+    G__OO_OOO
+    _________
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 1), (3, 6))
+    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 10, False, True, (0, 0, 0))), holePalette, dirtPalette, "level25"))
+
+levelList[-1].run()
+
 '''
 타이틀 스크린
 '''
@@ -1147,7 +1163,6 @@ def SelectScreen_onUpdate(self) :
     self.surface.blit(titleBackgroundSprite, ((ratio * 960)-960, 0))
     for button in self.buttons :
         button.blitSprite(self.surface)
-
 
 def SelectScreen_onEvent(self, event) :
     if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
