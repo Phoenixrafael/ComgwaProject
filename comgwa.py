@@ -834,7 +834,7 @@ class LevelScene(Scene):
 
         for obj1 in nextLevel.objects:
             for obj2 in nextLevel.objects:
-                if (obj1.name in ["zero", "stanley"] and obj2.name == "hole"
+                if (obj1.name in ["zero", "stanley"] and obj2.name == "hole" and (not obj2.vanish)
                 and obj1.position == obj2.position) :
                     obj1.vanish = True
                     nextLevel.playerDead = True
