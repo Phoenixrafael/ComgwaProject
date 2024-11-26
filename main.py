@@ -1090,17 +1090,17 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
 
 
 levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
-    __OOO____
-    OOO__O___
-    OF_OOO___
-    OFFFOOOOO
-    OGO_O_O_O
-    ___OO_O_O
-    G__OO_OOO
-    _________
+    ___________
+    _OOIIIIIOO_
+    _OOIIIIIOO_
+    _OOIIIIIOO_
+    _OOIIIIIOO_
+    _OOIIIIIOG_
+    _OOIIIIIOO_
+    ___________
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (3, 6))
-    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 10, False, True, (0, 0, 0))), holePalette, dirtPalette, "level25"))
+        comgwa.Player(stanleyPalette, (0, 1), (1, 1))
+    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 100, False, True, (0, 0, 0))), holePalette, dirtPalette, "level25"))
 
 levelList[-1].run()
 
