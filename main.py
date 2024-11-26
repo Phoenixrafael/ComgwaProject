@@ -138,7 +138,7 @@ lawyer_normal_right = comgwa.makeImage(pygame.transform.scale(lawyer_normal, ima
 cutscenes = []
 screen = pygame.display.set_mode((1280, 720))
 
-cutscenes.append(comgwa.CutScene("intro", lineback, town,
+cutscenes.append(comgwa.CutScene("afterday0", lineback, town,
 [[town_white, zero_normal_left],
 [town_white, stanley_normal_right],
 [town_white, stanley_happy_right],
@@ -545,7 +545,7 @@ black/35/Warden/
 #
 black/35/Stanley/
 저... 저 Zero에게 알파벳을 가르쳐주는 대신
-Zero가 제 구덩이를 대신 파주기로 했어요
+Zero가 제 구덩이를 대신 파주기로 했어요.
 #
 black/35/Warden/
 구덩이를 파는 건 남이 대신해도
@@ -701,7 +701,10 @@ black/35/Zero/
 
 cutscenes.append(comgwa.CutScene("afterday23", lineback, bigThumb,
 [[bigThumb_white, zero_normal_left, stanley_normal_right],
-[bigThumb_white, zero_normal_left, stanley_normal_right]],
+[bigThumb_white, zero_normal_left, stanley_normal_right],
+[bigThumb_white, zero_normal_left, stanley_normal_right],
+[bigThumb_white, zero_normal_left, stanley_normal_right],
+[]],
 comgwa.makeScript("""
 black/35/Zero/
 Stanley... 확실해?
@@ -709,6 +712,16 @@ K.B. 그거 근처를 파면 보물이 있을까?
 #
 black/35/Stanley/
 나를 믿어. 서둘러서 가자.
+#
+black/35/Zero/
+잇 저건...
+yellow spotted lizard잖아?
+#
+black/35/Stanley/
+우리 좀 서둘러야겠다.
+#
+white/50/Narration/
+Yellow spotted lizard기 등장하면 효율적으로 땅을 파자.
 """), "level24"))
 
 cutscenes.append(comgwa.CutScene("afterday27", lineback, bigThumb,
@@ -731,6 +744,176 @@ white/50/Narration/
 Stanley와 Zero의 마지막 땅굴을 도와주자.
 """), "level28"))
 
+
+cutscenes.append(comgwa.CutScene("afterday28", lineback, camp1,
+[[camp1_white, stanley_happy_left],
+[camp1_white, stanley_normal_left, warden_happy_right],
+[camp1_white, stanley_normal_left, warden_happy_right],
+[camp1_white, stanley_normal_left, warden_normal_right],
+[camp1_white, stanley_sad_left],
+[camp1_white, stanley_sad_left],
+[camp1_white, stanley_sad_left, xray_normal_right],
+[camp1_dark],
+[camp1_white, lawyer_normal_left, warden_normal_right],
+[camp1_white, lawyer_normal_left, warden_normal_right],
+[camp1_white, lawyer_normal_left, warden_normal_right],
+[camp1_white, lawyer_normal_left, warden_angry_right],
+[camp1_white, lawyer_normal_left, warden_angry_right],
+[camp1_white, lawyer_normal_left, warden_angry_right],
+[camp1_dark],
+[camp2_white, stanley_normal_left, lawyer_normal_right],
+[camp2_white, stanley_normal_left, lawyer_normal_right],
+[camp1_white, lawyer_normal_left, warden_angry_right],
+[camp1_white, lawyer_normal_left, warden_angry_right],
+[camp2_dark],
+[camp2_white, zero_normal_left, warden_angry_right],
+[camp2_white, zero_normal_left, warden_angry_right],
+[camp2_white, zero_happy_left, warden_angry_right],
+[camp2_white, lawyer_normal_left, warden_angry_right],
+[camp2_white, lawyer_normal_left, warden_angry_right],
+[camp2_white, lawyer_normal_left, stanley_normal_right],
+[camp2_white, lawyer_normal_left, stanley_sad_right],
+[camp2_white, lawyer_normal_left, stanley_sad_right],
+[camp2_white, lawyer_normal_left, stanley_sad_right],
+[camp2_white, lawyer_normal_left, warden_angry_right],
+[camp2_white, lawyer_normal_left, warden_angry_right],
+[camp2_white, lawyer_normal_left, warden_angry_right],
+[camp2_white, lawyer_normal_left, warden_angry_right],
+[camp2_white, lawyer_normal_left, zero_normal_right],
+[camp2_dark],
+[camp1_dark],
+[camp1_dark],
+[]],
+comgwa.makeScript("""
+black/35/Stanley/
+우와! 보물 상자가 있는 듯한데?
+#
+black/35/Warden/
+다들 수고했다.
+이제 그 상자는 내게 주도록.
+#
+black/35/Warden/
+내가 여태껏 수 년에 걸쳐 찾던 걸
+도망쳤던 애들이 돌아와서 찾아줄 줄이야.
+#
+black/35/Warden/
+음.. 그런데 yellow spotted lizard
+떄문에 도저히 접근할 수가 없군.
+#
+black/35/Stanley/
+'으윽.. yellow spotted lizard가
+내 발을 기어오르는 것 같아.'
+#
+black/35/Stanley/
+'어...엄마! 나 이대로 죽는 거 아니죠?'
+#
+black/35/X-ray/
+Stanley, 얼마 전에 듣기로는
+너는 아무 잘못이 없대.
+#
+white/50/Narration/
+이때 의문의 한 여성이 등장한다
+#
+black/35/???/
+안녕하세요?
+#
+black/35/Warden/
+당신은 누구죠?
+#
+black/35/Lawyer/
+저는 Stanley의 변호사입니다.
+Stanley가 무죄로 판명되어 데리러 왔습니다.
+#
+black/35/Lawyer/
+Stanley는 어디에 있죠?
+#
+black/35/Warden/
+Stanley는 저기 구덩이에 빠져 있어요.
+#
+black/35/Lawyer/
+Stanley가 다치면 당신을 고소할 겁니다.
+빨리 풀어주시죠.
+#
+white/50/Narration/
+변호사가 직접 Zero에게 다가간다
+#
+black/35/Lawyer/
+이 가방은 뭐니?
+#
+black/35/Stanley/
+아까 전에 여기 땅을 파서 나왔어요.
+#
+black/35/Warden/
+웃기는 소리! 저 애들이 여기로 숨어들어와서
+가방을 훔친 거요!
+#
+black/35/Lawyer/
+일단, Stanley, 너는 내가 변호사로서
+충고하건데, 아무 말도 하지 말아라.
+#
+white/50/Narration/
+갑자기 yellow-spotted-lizard가 사라진다.
+#
+black/35/Warden/
+성가신 놈들이 드디어 갔군.
+내 가방 내놔!
+#
+black/35/Zero/
+여기 S..t..a...
+Stanley라고 적혀 있는데?
+#
+black/35/Zero/
+이 가방은 Stanley의 것이에요.
+#
+black/35/Lawyer/
+아까 자신의 것이라고 하지 않으셨나요?
+Warden?
+#
+black/35/Warden/
+어...그게...
+#
+black/35/Lawyer/
+Stanley, 우리는 얼른 가자꾸나.
+#
+black/35/Stanley/
+어..네...
+#
+black/35/Lawyer/
+왜 자꾸 머뭇거리니? Stanley?
+#
+black/35/Stanley/
+Zero는 어떻게 해요?
+#
+black/35/Lawyer/
+휴...Warden 씨!
+Zero 관련 파일 좀 주세요!
+#
+black/35/Warden/
+Ze..Zero 파일이요? 잠시만요...
+#
+black/35/Warden/
+Zero 파일이 아무래도 사이버 공간 속의
+블랙홀에 빠져버린 것 같아요.
+#
+black/35/Lawyer/
+그렇다면 당신에게 Zero를 데리고 있을
+권한이 없다는 뜻이군요.
+#
+black/35/Lawyer/
+Zero, 너도 같이 가자꾸나.
+#
+white/50/Narration/
+그렇게 Stanley와 Zero는 변호사와 함께 떠났다.
+#
+white/50/Narration/
+그 이후 비 한 방울 오지 않던 Camp Green Lake에는
+#
+white/50/Narration/
+빗방울 하나가 떨어졌다.
+#
+white/50/Narration/
+Made by 박시을 & 김도윤
+"""), "SelectScreen"))
 
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
@@ -985,7 +1168,7 @@ levelList.append(comgwa.LevelScene("level17", comgwa.Level("""
     _OOGOO_
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (2, 1)),
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level18"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday17"))
 
 levelList.append(comgwa.LevelScene("level18", comgwa.Level("""
     _______
@@ -1015,7 +1198,7 @@ levelList.append(comgwa.LevelScene("level19", comgwa.Level("""
     _________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (5, 3))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level20"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday19"))
 
 levelList.append(comgwa.LevelScene("level20", comgwa.Level("""
     __________
@@ -1045,7 +1228,7 @@ levelList.append(comgwa.LevelScene("level21", comgwa.Level("""
     ________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (1, 3))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level22"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday21"))
 
 levelList.append(comgwa.LevelScene("level22", comgwa.Level("""
     __________
@@ -1073,7 +1256,7 @@ levelList.append(comgwa.LevelScene("level23", comgwa.Level("""
     ________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (1, 1))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level24"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday23"))
 
 levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
     __OOO____
@@ -1089,7 +1272,7 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
     ], (60, 60), 0.3), holePalette, dirtPalette, "level25"))
 
 
-levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
+levelList.append(comgwa.LevelScene("level25", comgwa.Level("""
     __OOO____
     OOO__O___
     OF_OOO___
@@ -1100,9 +1283,41 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
     _________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
-    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 10, False, True, (0, 0, 0))), holePalette, dirtPalette, "level25"))
+    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 10, False, True, (0, 0, 0))), holePalette, dirtPalette, "level26"))
 
-levelList[-1].run()
+levelList.append(comgwa.LevelScene("level26", comgwa.Level("""
+    _______
+    _______
+    _____G_
+    _____O_
+    _OOGOO_
+    _______
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 2), (1, 4))
+    ], (60, 60), 0.2), holePalette, dirtPalette, "level27"))
+
+levelList.append(comgwa.LevelScene("level27", comgwa.Level("""
+    _______
+    _______
+    _____G_
+    _____O_
+    _OOGOO_
+    _______
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 2), (1, 4))
+    ], (60, 60), 0.2), holePalette, dirtPalette, "afterday27"))
+
+levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
+    _______
+    _______
+    _____G_
+    _____O_
+    _OOGOO_
+    _______
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 2), (1, 4))
+    ], (60, 60), 0.2), holePalette, dirtPalette, "afterlevel28"))
+
 
 '''
 타이틀 스크린
