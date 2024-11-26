@@ -1285,7 +1285,6 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
         comgwa.Player(stanleyPalette, (0, 1), (1, 1))
     ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 100, False, True, (0, 0, 0))), holePalette, dirtPalette, "level25"))
 
-levelList[-1].run()
 
 '''
 타이틀 스크린
