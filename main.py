@@ -872,7 +872,7 @@ levelList.append(comgwa.LevelScene("level19", comgwa.Level("""
         comgwa.Player(stanleyPalette, (0, 1), (5, 3))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level20"))
 
-levelList.append(comgwa.LevelScene("level20", comgwa.Level("""
+levelList.append(comgwa.LevelScene("level22", comgwa.Level("""
     ________
     _OOOOOO_
     _OOOOOO_
@@ -884,11 +884,13 @@ levelList.append(comgwa.LevelScene("level20", comgwa.Level("""
     ________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (1, 1))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level21"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "level23"))
 
+levelList[-1].run()
 '''
 테스트용 코드
 '''
+
 
 pygame.key.set_repeat(500, 500)
 
