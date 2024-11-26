@@ -284,6 +284,7 @@ cutscenes.append(comgwa.CutScene("afterday3", lineback, camp2,
 [camp2_white, stanley_happy_left, warden_normal_right],
 [camp2_white, stanley_happy_left, warden_happy_right],
 [camp2_white, stanley_sad_left, warden_happy_right],
+[camp2_white, stanley_sad_left, warden_happy_right],
 [camp3_white, xray_normal_left],
 [],
 [camp3_white, xray_normal_left, stanley_normal_right],
@@ -307,6 +308,8 @@ black/35/Warden/
 #
 black/35/Stanley/
 '이미 오늘 팔 건 거의 다 팠는데...'
+#
+black/35/Stanley/
 네 감사합니다!
 #
 black/35/X-ray/
@@ -724,6 +727,7 @@ levelList.append(comgwa.LevelScene("level08", comgwa.Level("""
         comgwa.Player(stanleyPalette, (0, 1), (7, 6))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level09"))
 
+
 levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
     _____________
     _FFFFFFFF__O_
@@ -840,7 +844,6 @@ levelList.append(comgwa.LevelScene("level17", comgwa.Level("""
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (2, 1)),
     ], (60, 60), 0.3), holePalette, dirtPalette, "level18"))
-
 
 levelList.append(comgwa.LevelScene("level18", comgwa.Level("""
     _______
