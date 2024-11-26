@@ -1046,8 +1046,8 @@ levelList.append(comgwa.LevelScene("level08", comgwa.Level("""
     ], (60, 60), 0.3), holePalette, dirtPalette, "level09"))
 
 levelList.append(comgwa.LevelScene("level09", comgwa.Level("""
-    OOO___OOO_
-    OFFFO_OOOO
+    O_____OOO_
+    OFFF__OOO_
     OOGO__OOO_
     OFFFO_OOOO
     OOO___OOO_
@@ -1279,10 +1279,22 @@ levelList.append(comgwa.LevelScene("level25", comgwa.Level("""
     _OOGOO_
     _______
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 2), (1, 4))
+        comgwa.Player(stanleyPalette, (0, 1), (2, 1))
     ], (60, 60), 0.2), holePalette, dirtPalette, "level26"))
 
 levelList.append(comgwa.LevelScene("level26", comgwa.Level("""
+    _________OOO_
+    _________OOOO
+    _________OOOO
+    G________OOOO
+    _________OOOO
+    _________OOOO
+    _________OOO_
+    """, palette, [
+        comgwa.Player(stanleyPalette, (0, 4), (11, 3))
+    ], (60, 60), 0.2), holePalette, dirtPalette, "level27"))
+
+levelList.append(comgwa.LevelScene("level27", comgwa.Level("""
     __OOO____
     OOO__O___
     OF_OOO___
@@ -1293,18 +1305,7 @@ levelList.append(comgwa.LevelScene("level26", comgwa.Level("""
     _________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
-    ], (60, 60), 0.3), holePalette, dirtPalette, "level27"))
-
-levelList.append(comgwa.LevelScene("level27", comgwa.Level("""
-    _______
-    _______
-    _____G_
-    _____O_
-    _OOGOO_
-    _______
-    """, palette, [
-        comgwa.Player(stanleyPalette, (0, 2), (1, 4))
-    ], (60, 60), 0.2), holePalette, dirtPalette, "afterday27"))
+    ], (60, 60), 0.3), holePalette, dirtPalette, "afterday27"))
 
 levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
     _______
@@ -1314,7 +1315,7 @@ levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
     _OOGOO_
     _______
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (1, 1))
+        comgwa.Player(stanleyPalette, (0, 1), (1, 4))
     ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 100, False, True, (0, 0, 0))), holePalette, dirtPalette, "afterday28"))
 
 
