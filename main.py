@@ -1,3 +1,5 @@
+from turtledemo.sorting_animate import start_qsort
+
 import pygame, pygame.event, pygame.locals
 import comgwa
 from comgwa import getSpriteFromTileMap, getPlayerPalette
@@ -741,6 +743,13 @@ holePalette = ("hole", [(holeSprite, 0)])
 stanleyPalette = ("stanley", stanleySpriteTilemap)
 zeroPalette = ("stanley", zeroSpriteTilemap)
 
+titleBackgroundSprite = pygame.image.load("asset//sprite//interface//titleScreen_faded_loop.png")
+titleImageSprite = pygame.image.load("asset//sprite//interface//title.png")
+buttonSprite = pygame.image.load("asset//sprite//interface//smallButton.png")
+clearButtonSprite = pygame.image.load("asset//sprite//interface//smallButton_clear.png")
+bigButtonSprite = pygame.image.load("asset//sprite//interface//bigButton.png")
+selectButtonSprite = pygame.image.load("asset//sprite//interface//smallButton_select.png")
+
 '''
 레벨 리스트
 '''
@@ -1080,12 +1089,82 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
 
 
 '''
+타이틀 스크린
+'''
+
+# (comgwa.LevelScene("TitleScreenTest", comgwa.Level("""
+#     OOOFF_______OOO
+#     OOOOFF_____OOOO
+#     OOOGOF____OOOOO
+#     __OOFFO__OOOO__
+#     __FFFWWOOOO____
+#     ____OWWWOOII___
+#     _____OOIIIIOO__
+#     ________OIIOOO_
+#     __________OO___
+#     """, palette, [
+#         comgwa.Player(stanleyPalette, (0, 1), (1, 1)),
+#         comgwa.Object(dirtPalette, (9, 4)),
+#         comgwa.Object(dirtPalette, (9, 3)),
+#         comgwa.Object(holePalette, (8, 5)),
+#         comgwa.Object(holePalette, (1, 2)),
+#         comgwa.Object(holePalette, (12, 1)),
+#         comgwa.Object(holePalette, (11, 3)),
+#     ], (60, 60), 0.3), holePalette, dirtPalette, "")).run()
+
+def TitleScreen_onStart(self) :
+    self.loopTime = 10
+    self.anchorTime = comgwa.tiktok()
+    self.startButton = comgwa.Button(bigButtonSprite, 500, (640, 570), "GAME START", (255, 255, 255), 0.9, True)
+
+def TitleScreen_onUpdate(self) :
+    ratio = ((comgwa.tiktok() - self.anchorTime)/self.loopTime) % 1.0
+    self.surface.blit(titleBackgroundSprite, ((ratio * 960)-960, 0))
+    self.surface.blit(titleImageSprite, (160, 50))
+    self.startButton.blitSprite(self.surface)
+
+
+def TitleScreen_onEvent(self, event) :
+    if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
+        if(self.startButton.checkClicked(pygame.mouse.get_pos())) :
+            self.manager.loadScene(self, "SelectScreen")
+
+titleScene = comgwa.Scene("TitleScreen", TitleScreen_onStart, TitleScreen_onUpdate, TitleScreen_onEvent)
+
+def SelectScreen_onStart(self) :
+    self.loopTime = 10
+    self.anchorTime = comgwa.tiktok()
+    self.buttons = []
+    self.progress = comgwa.GetProgress()
+    for i in range(4) :
+        for j in range(7) :
+            self.buttons.append(comgwa.Button(
+                (buttonSprite if (self.progress < i*7+j+1) else (selectButtonSprite if self.progress == i*7+j+1 else clearButtonSprite)),
+                150, (640+(-3+j)*160, 360+160*(-1.5+i)), str(i*7+j+1), (255, 255, 255)))
+
+def SelectScreen_onUpdate(self) :
+    ratio = ((comgwa.tiktok() - self.anchorTime)/self.loopTime) % 1.0
+    self.surface.blit(titleBackgroundSprite, ((ratio * 960)-960, 0))
+    for button in self.buttons :
+        button.blitSprite(self.surface)
+
+
+def SelectScreen_onEvent(self, event) :
+    if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
+        for i,button in enumerate(self.buttons) :
+            if(button.checkClicked(pygame.mouse.get_pos())) :
+                if(self.progress >= i+1) :
+                    self.manager.loadScene(self, "level" + ("0" if i+1 < 10 else "") + str(i+1))
+
+selectScene = comgwa.Scene("SelectScreen", SelectScreen_onStart, SelectScreen_onUpdate, SelectScreen_onEvent)
+
+'''
 테스트용 코드
 '''
 
 pygame.key.set_repeat(500, 500)
 
-scenes = cutscenes + levelList
+scenes = [titleScene, selectScene] + cutscenes + levelList
 
 manager = comgwa.SceneManager(scenes)
 manager.run()

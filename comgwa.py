@@ -56,6 +56,14 @@ def smartCopy(obj, visited=None):
     # 복사할 수 없는 경우 그냥 리턴
     return obj
 
+def SaveProgress(things) :
+    with open('save//saveData.txt', 'w') as file :
+        file.write(str(things))
+
+def GetProgress() :
+    with open('save//saveData.txt', 'r') as file :
+        return int(file.readline())
+
 class Scene():
     """
     게임의 한 장면을 맡는 Scene이라는 객체란다.
@@ -672,7 +680,7 @@ class LevelScene(Scene):
                 """
                 self.levelList = [initLevel]
                 self.anchor = tiktok()
-
+                self.backButton = Button(pygame.image.load("asset//sprite//interface//smallButton.png"), 100, (1220, 60), "<")
             return onStart
 
         def onUpdate(self):
@@ -692,12 +700,15 @@ class LevelScene(Scene):
             if(self.levelList[-1].isWin() and self.animationOver() and not self.win) :
                 self.win = True
                 self.winAnchor = tiktok()
+                SaveProgress(max(GetProgress(), int(self.name[5:])+1))
             if(self.win) :
                 alphaSprite = pygame.Surface((1280, 720)).convert_alpha()
                 alphaSprite.fill((0, 0, 0, 0))
                 alphaSprite.blit(self.levelClearSprite, (0, 0))
                 alphaSprite.fill((255, 255, 255, 255 * easein(min((tiktok() - self.winAnchor) / 0.5, 1))), special_flags=pygame.BLEND_RGBA_MULT)
                 self.surface.blit(alphaSprite, (0, 0))
+
+            self.backButton.blitSprite(self.surface)
 
         def onEvent(self, event):
             """
@@ -709,6 +720,9 @@ class LevelScene(Scene):
                         self.manager.loadScene(self, nextSceneName)
                 return
             inp = 0
+            if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
+                if(self.backButton.checkClicked(pygame.mouse.get_pos())) :
+                    self.manager.loadScene(self, "TitleScreen")
             if(event.type == pygame.KEYDOWN) :
                 if(event.key in [pygame.K_UP, pygame.K_w]) :
                     inp = 1
@@ -856,8 +870,27 @@ class Counter():
         counterSprite = pygame.Surface((200, 200)).convert_alpha()
         counterSprite.fill((0, 0, 0, 0))
         counterSprite.blit(pygame.transform.scale(self.sprite, (200, 200)), (0, 0))
-
         textSprite = self.font.render(str(self.count), False, (255, 255, 255))
         counterSprite.blit(textSprite, (100-textSprite.get_width()/2, 122-textSprite.get_height()/2))
 
         return counterSprite
+
+class Button() :
+    def __init__(self, sprite, width, centerPosition, message, messageColor = (255, 255, 255), size = 1.0, isBig=False):
+        self.sprite = pygame.transform.scale(sprite, (width, int(width * sprite.get_size()[1] / sprite.get_size()[0])))
+        self.width = width
+        self.centerPosition = centerPosition
+        self.topLeftPosition = (int(centerPosition[0]-self.sprite.get_size()[0]/2), int(centerPosition[1]-self.sprite.get_size()[1]/2))
+        self.font = pygame.font.Font("asset/font/Galmuri11-Bold.ttf", 100)
+        self.textSprite = self.font.render(message, False, messageColor)
+        self.textSprite = pygame.transform.scale(self.textSprite, (int(self.textSprite.get_size()[0] / self.textSprite.get_size()[1] * self.sprite.get_size()[1] * 0.4 * size), self.sprite.get_size()[1] * 0.4 * size))
+        if(not isBig) : self.textTopLeftPosition = (int(centerPosition[0]-self.textSprite.get_size()[0]*1.15/2), int(centerPosition[1]-self.textSprite.get_size()[1]*1.5/2))
+        else : self.textTopLeftPosition = (int(centerPosition[0]-self.textSprite.get_size()[0]/2), int(centerPosition[1]-self.textSprite.get_size()[1]*1.5/2))
+
+    def checkClicked(self, mousePos):
+        return ((self.topLeftPosition[0] <= mousePos[0] <= self.topLeftPosition[0] + self.sprite.get_size()[0])
+                and (self.topLeftPosition[1] <= mousePos[1] <= self.topLeftPosition[1] + self.sprite.get_size()[1]))
+
+    def blitSprite(self, surface):
+        surface.blit(self.sprite, self.topLeftPosition)
+        surface.blit(self.textSprite, self.textTopLeftPosition)
