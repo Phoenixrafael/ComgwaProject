@@ -527,7 +527,8 @@ cutscenes.append(comgwa.CutScene("afterday15", lineback, camp1,
 [camp1_white, warden_normal_left, zero_angry_right],
 [camp1_white, warden_angry_left, stanley_normal_right],
 [camp1_white, warden_angry_left, stanley_normal_right],
-[camp1_white, warden_happy_left, stanley_sad_right],
+[camp1_white, warden_happy_left],
+[camp1_white, warden_happy_left],
 [],
 [camp2_white, stanley_sad_left],
 [camp2_white, stanley_normal_left],
@@ -569,7 +570,7 @@ black/35/Zero/
 #
 black/35/Warden/
 푸흡! 기초적인 발음도 못하네!
-Zero 너는 머릿속에 들은 게 없어.
+Zero, 너는 머릿속에 들은 게 없어.
 #
 black/35/Zero/
 '안 되겠다. 난 여기를 떠나야겠어.'
@@ -582,7 +583,11 @@ black/35/Warden/
 없어서 다시 돌아올 수밖에 없어.
 #
 black/35/Warden/
-이 기회에 안 그래도 거슬리던
+아 그런데 저러다가 Zero가 죽으면
+처치가 상당히 곤란한데..
+#
+black/35/Warden/
+이 기회에 그냥
 Zero 관련 파일을 영구 삭제해야겠군.
 #
 white/50/Narration/
@@ -604,6 +609,93 @@ white/50/Narration/
 Stanley의 여정을 계속 따라가보자.
 
 """), "level16"))
+
+cutscenes.append(comgwa.CutScene("afterday17", lineback, bigThumb,
+[[bigThumb_white, zero_normal_left, stanley_normal_right],
+[bigThumb_white, zero_normal_left, stanley_normal_right],
+[bigThumb_white, zero_sad_left, stanley_normal_right]],
+comgwa.makeScript("""
+black/35/Zero/
+Stanley... 사실은
+#
+black/35/Stanley/
+응? 왜?
+#
+black/35/Zero/
+네가 훔친 것으로 오해받은 그 신발
+그거 내가 훔친 거야...
+"""), "level18"))
+
+cutscenes.append(comgwa.CutScene("afterday19", lineback, bigThumb,
+[[bigThumb_white, zero_normal_left, stanley_normal_right],
+[bigThumb_white, zero_normal_left, stanley_normal_right],
+[bigThumb_white, zero_normal_left, stanley_normal_right]],
+comgwa.makeScript("""
+black/35/Stanley/
+산이 왜 이렇게 높을까...
+#
+black/35/Zero/
+그러게. 이제 만년설도 보이는 것 같아.
+#
+black/35/Stanley/
+이제 얼음도 보여..!
+"""), "level20"))
+
+cutscenes.append(comgwa.CutScene("afterday21", lineback, bigThumb,
+[[bigThumb_white, zero_normal_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_sad_right],
+[bigThumb_white, zero_sad_left, stanley_normal_right],
+[bigThumb_white, zero_sad_left, stanley_happy_right],
+[bigThumb_white, zero_sad_left, stanley_normal_right],
+],
+comgwa.makeScript("""
+black/35/Stanley/
+그런데 우리 이렇게 도망쳐 나와서 살면
+평생 도난자로 살게 되는 걸까..?
+#
+black/35/Zero/
+음...
+#
+black/35/Stanley/
+나는 내가 죽는 것보다도 나의 생사를
+부모님이 모르신다는 것이 너무 두려워.
+#
+black/35/Zero/
+그럼 우리는 어떻게 하지?
+#
+black/35/Stanley/
+음... 내 생각에는 우리가 Camp Green Lake로
+돌아가야 해.
+#
+black/35/Zero/
+어째서?
+#
+black/35/Stanley/
+우리가 매일 구덩이를 파는 데에는
+다른 이유가 있어.
+#
+black/35/Stanley/
+Warden은 분명히 보물을 찾고 있어.
+저번에 K.B.를 보고 보였던 반응을 보면
+거의 확실해.
+#
+black/35/Stanley/
+그러니까 다시 말하자면 우리가 Camp Green
+Lake로 돌아가서 보물을 찾기만 하면
+#
+black/35/Stanley/
+도망자 인생에서는 벗어날 수 있을 거야!
+#
+black/35/Zero/
+그럼 일단 왔던 길을 되짚어보자.
+"""), "level22"))
+
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
            ("wetDirt", wetDirtTerrain, {'W'}),
