@@ -284,6 +284,7 @@ cutscenes.append(comgwa.CutScene("afterday3", lineback, camp2,
 [camp2_white, stanley_happy_left, warden_normal_right],
 [camp2_white, stanley_happy_left, warden_happy_right],
 [camp2_white, stanley_sad_left, warden_happy_right],
+[camp2_white, stanley_sad_left, warden_happy_right],
 [camp3_white, xray_normal_left],
 [],
 [camp3_white, xray_normal_left, stanley_normal_right],
@@ -307,6 +308,8 @@ black/35/Warden/
 #
 black/35/Stanley/
 '이미 오늘 팔 건 거의 다 팠는데...'
+#
+black/35/Stanley/
 네 감사합니다!
 #
 black/35/X-ray/
@@ -886,7 +889,6 @@ levelList.append(comgwa.LevelScene("level22", comgwa.Level("""
         comgwa.Player(stanleyPalette, (0, 1), (1, 1))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level23"))
 
-levelList[-1].run()
 '''
 테스트용 코드
 '''
