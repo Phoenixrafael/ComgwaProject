@@ -1,6 +1,6 @@
 from turtledemo.sorting_animate import start_qsort
 
-import pygame, pygame.event, pygame.locals
+import pygame, pygame.event
 import comgwa
 from comgwa import getSpriteFromTileMap, getPlayerPalette
 
@@ -1171,18 +1171,14 @@ levelList.append(comgwa.LevelScene("level17", comgwa.Level("""
     ], (60, 60), 0.3), holePalette, dirtPalette, "afterday17"))
 
 levelList.append(comgwa.LevelScene("level18", comgwa.Level("""
-    _______
-    ___G___
-    _______
-    _______
-    _______
-    _______
-    _WWWWW_
-    _WWWWW_
-    _OOOOO_
-    _OOOOO_
-    _OOOOO_
-    _______
+    _G______
+    _O____OG
+    __OOOO__
+    __OOOO__
+    __OOOO__
+    __OOOO__
+    GO____O_
+    ______G_
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (3, 6))
     ], (60, 60), 0.3), holePalette, dirtPalette, "level19"))
@@ -1282,14 +1278,20 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
 
 levelList.append(comgwa.LevelScene("level25", comgwa.Level("""
     _______
+    ___G___
     _______
-    _____G_
-    _____O_
-    _OOGOO_
+    _______
+    _______
+    _______
+    _WWWWW_
+    _WWWWW_
+    _OOOOO_
+    _OOOOO_
+    _OOOOO_
     _______
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (2, 1))
-    ], (60, 60), 0.2), holePalette, dirtPalette, "level26"))
+        comgwa.Player(stanleyPalette, (0, 4), (3, 6))
+    ], (60, 60), 0.2, comgwa.Counter(lizardCounterSprite, 7, True, False, (0, 0, 0))), holePalette, dirtPalette, "level27"))
 
 levelList.append(comgwa.LevelScene("level26", comgwa.Level("""
     _________OOO_
