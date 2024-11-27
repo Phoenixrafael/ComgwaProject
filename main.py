@@ -468,7 +468,7 @@ black/35/Stanley/
 왜 남이 쓰는 편지를 구경하는 거야?
 #
 black/35/Zero/
-나는 알파벳을 읽을 줄 몰라.
+칫, 어차피 나는 알파벳을 읽을 줄 몰라.
 혹시 나한테 알파벳 가르쳐줄 수 있니?
 #
 black/35/Stanley/
@@ -619,7 +619,7 @@ cutscenes.append(comgwa.CutScene("afterday17", lineback, bigThumb,
 [bigThumb_white, zero_sad_left, stanley_normal_right]],
 comgwa.makeScript("""
 black/35/Zero/
-Stanley... 사실은
+저기.. Stanley... 사실은...
 #
 black/35/Stanley/
 응? 왜?
@@ -635,13 +635,14 @@ cutscenes.append(comgwa.CutScene("afterday19", lineback, bigThumb,
 [bigThumb_white, zero_normal_left, stanley_normal_right]],
 comgwa.makeScript("""
 black/35/Stanley/
-산이 왜 이렇게 높을까...
+산이 왜 이렇게 높을까...?
 #
 black/35/Zero/
 그러게. 이제 만년설도 보이는 것 같아.
 #
 black/35/Stanley/
-이제 얼음도 보여..!
+자, 잠깐만! 바닥에 얼음이 있잖아?
+미끄러지지 않게 조심해야겠어.
 """), "level20"))
 
 cutscenes.append(comgwa.CutScene("afterday21", lineback, bigThumb,
@@ -677,7 +678,8 @@ black/35/Stanley/
 돌아가야 해.
 #
 black/35/Zero/
-어째서?
+어, 어째서?
+그 지옥으로 다시 돌아가겠다고?
 #
 black/35/Stanley/
 우리가 매일 구덩이를 파는 데에는 다른 이유가
@@ -695,7 +697,7 @@ black/35/Stanley/
 도망자 인생에서는 벗어날 수 있을 거야!
 #
 black/35/Zero/
-그럼 일단 왔던 길을 되짚어보자.
+...그럼 일단 왔던 길을 되짚어보자.
 """), "level22"))
 
 cutscenes.append(comgwa.CutScene("afterday23", lineback, bigThumb,
@@ -714,23 +716,24 @@ black/35/Stanley/
 나를 믿어. 서둘러서 가자.
 #
 black/35/Zero/
-잇 저건...
-yellow spotted lizard잖아?
+자...잠깐만.. 저건...
+yellow spotted lizard잖아???
 #
 black/35/Stanley/
-우리 좀 서둘러야겠다.
+Zero, 진정해.
+지체하지 말고 빨리 여기를 떠야겠어.
 #
 white/50/Narration/
-Yellow spotted lizard 등장!
+Yellow spotted lizard가 나타났다!
 #
 white/50/Narration/
-lizard가 오면 효율적으로 땅을 파자.
+모든 움직임을 최소화하고, 빨리 탈출하자.
 """), "level24"))
 
 cutscenes.append(comgwa.CutScene("afterday27", lineback, bigThumb,
 [[bigThumb_white, stanley_happy_left, zero_normal_right],
  [bigThumb_white, stanley_normal_left, zero_normal_right],
- [bigThumb_white, stanley_normal_left, zero_normal_right],
+ [bigThumb_white, stanley_happy_left, zero_happy_right],
  [bigThumb_dark]],
 comgwa.makeScript("""
 black/35/Stanley/
@@ -741,7 +744,7 @@ black/35/Zero/
 #
 black/35/Stanley/
 내가 K.B.를 찾았던 게 아마...
-아 저쪽이다!
+아 저쪽이다! 저기에 보물이 있을거야!
 #
 white/50/Narration/
 Stanley와 Zero의 마지막 구덩이를 도와주자.
@@ -755,7 +758,6 @@ cutscenes.append(comgwa.CutScene("afterday28", lineback, camp1,
 [camp1_white, stanley_normal_left, warden_normal_right],
 [camp1_white, stanley_sad_left],
 [camp1_white, stanley_sad_left],
-[camp1_white, stanley_sad_left, xray_normal_right],
 [camp1_dark],
 [camp1_white, lawyer_normal_left, warden_normal_right],
 [camp1_white, lawyer_normal_left, warden_normal_right],
@@ -800,7 +802,7 @@ black/35/Warden/
 도망쳤던 애들이 돌아와서 찾아줄 줄이야.
 #
 black/35/Warden/
-음.. 그런데 yellow spotted lizard 떄문에 도저히
+음.. 그런데 yellow spotted lizard 때문에 도저히
 접근할 수가 없군.
 #
 black/35/Stanley/
@@ -809,9 +811,6 @@ black/35/Stanley/
 #
 black/35/Stanley/
 '어...엄마! 나 이대로 죽는 거 아니죠?'
-#
-black/35/X-ray/
-Stanley, 얼마 전에 듣기로 너는 아무 잘못이 없대.
 #
 white/50/Narration/
 이때 의문의 한 여성이 등장한다.
