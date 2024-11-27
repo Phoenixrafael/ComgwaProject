@@ -850,7 +850,7 @@ Stanley가 다치면 당신을 고소할 겁니다.
 빨리 풀어주시죠.
 #
 white/50/Narration/
-변호사가 직접 Zero에게 다가간다
+변호사가 Stanley와 Zero에게 다가간다
 #
 black/35/Lawyer/
 이 가방은 뭐니?
