@@ -694,8 +694,8 @@ black/35/Zero/
 그 지옥으로 다시 돌아가겠다고?
 #
 black/35/Stanley/
-우리가 매일 구덩이를 파는 데에는 다른 이유가
-있어.
+우리가 매일 구덩이를 파는 건
+인격 수양의 목적이 아니야.
 #
 black/35/Stanley/
 Warden은 분명히 보물을 찾고 있어.
@@ -709,7 +709,8 @@ black/35/Stanley/
 도망자 인생에서는 벗어날 수 있을 거야!
 #
 black/35/Zero/
-...그럼 일단 왔던 길을 되짚어보자.
+...좋아. 보물만 찾고 다시 빠져나오는거지?
+그럼 일단 왔던 길을 되짚어보자.
 """), "level22"))
 
 cutscenes.append(comgwa.CutScene("afterday23", lineback, bigThumb,
@@ -732,8 +733,8 @@ black/35/Zero/
 yellow spotted lizard잖아???
 #
 black/35/Stanley/
-Zero, 진정해.
-지체하지 말고 빨리 여기를 떠야겠어.
+Zero, 진정하고 빨리 움직이자.
+여기 더 있다간 곧 그것들이 우릴 발견할거야.
 #
 white/50/Narration/
 Yellow spotted lizard가 나타났다!
@@ -753,6 +754,7 @@ black/35/Stanley/
 #
 black/35/Zero/
 쉿, 우리 좀 조용히 하자.
+그래서, 보물을 찾으려면 어디를 파야 해?
 #
 black/35/Stanley/
 내가 K.B.를 찾았던 게 아마...
