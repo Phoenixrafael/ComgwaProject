@@ -681,6 +681,7 @@ class LevelScene(Scene):
                 self.levelList = [initLevel]
                 self.anchor = tiktok()
                 self.backButton = Button(pygame.image.load("asset//sprite//interface//smallButton.png"), 100, (1220, 60), "<")
+                self.win = False
             return onStart
 
         def onUpdate(self):
