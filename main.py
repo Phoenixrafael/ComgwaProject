@@ -1280,8 +1280,8 @@ levelList.append(comgwa.LevelScene("level24", comgwa.Level("""
     _OOIIIIIIII__
     _OOIIIIIIII__
     _OOIIIIIIII__
-    _OOIIIIIIII__
-    _OOIIIIIIII__
+    _WWIIIIIIII__
+    _WWIIIIIIII__
     _WWFWWWOOOO__
     _WWFWWWOOOO__
     _WWFWWWOOOO__
