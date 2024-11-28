@@ -1,6 +1,7 @@
 import pygame, pygame.event, pygame.locals
-import sys, math, inspect
+import sys, inspect
 
+# 단순 함수 및 변수 관리
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : x**2
 easein = lambda x : 1 - (1-x)**3
@@ -11,7 +12,7 @@ def smartCopy(obj, visited=None):
     """
     chatGPT를 사용하여 구현한 deepcopy의 개선 버전입니다.
     :param obj: 복사할 오브젝트를 뜻합니다.
-    :param visited: 해당 오브젝트를 이미 복사했는지의 여부를 체크합니다.
+    :param visited: 해당 오브젝트를 이미 복사했는지 여부를 확인합니다.
     :return:
     """
     if visited is None:
@@ -53,27 +54,29 @@ def smartCopy(obj, visited=None):
             setattr(copy_obj, key, smartCopy(value, visited))
         return copy_obj
 
-    # 복사할 수 없는 경우 그냥 리턴
+    # 복사할 수 없을 시 그냥 리턴
     return obj
 
+# 현재까지의 진척 상황 저장
 def SaveProgress(things) :
     with open('save//saveData.txt', 'w') as file :
         file.write(str(things))
 
+# 진척 상황을 불러옴.
 def GetProgress() :
     with open('save//saveData.txt', 'r') as file :
         return int(file.readline())
 
 class Scene():
     """
-    게임의 한 장면을 맡는 Scene이라는 객체란다.
-    Scene에서 변수 선언은 전역변수를 쓰지 말고, 모두 self.~~와 같은 형태로 선언해줘.
-    :param string name: Scene의 이름을 정의해. 얘는 SceneManager에서 원하는 Scene을 불러올 때 사용한단다.
-    :param callable onStart: Scene이 처음 실행될 때 실행될 함수야. 주로 변수 초기화와 같은 기능을 할 때 쓰렴.
-    :param callable onUpdate: Scene이 실행되는 동안 매 틱마다 실행되는 함수란다.
-    :param callable onEvent: Scene에서 키보드를 누르거나 마우스를 누르는 등 이벤트가 있을 때 호출되는 함수란다.
-    :param int tick: 해당 Scene에서 사용할 fps를 나타내는 변수야. 기본값은 60이란다.
-    :param (int, int) displaySize: 해당 Scene의 화면 크기를 나타내는 변수야. 기본값은 (1280, 720)이란다.
+    게임의 한 장면을 맡는 Scene 객체
+    Scene에서 변수 선언은 전역변수를 쓰지 말고, 모두 self.~~와 같은 형태로 선언함.
+    :param string name: Scene의 이름을 정의해. 얘는 SceneManager에서 원하는 Scene을 불러올 때 사용함.
+    :param callable onStart: Scene이 처음 실행될 때 실행될 함수야. 주로 변수 초기화와 같은 기능을 할 때 사용
+    :param callable onUpdate: Scene이 실행되는 동안 매 틱마다 실행되는 함수
+    :param callable onEvent: Scene에서 키보드를 누르거나 마우스를 누르는 등 이벤트가 있을 때 호출되는 함수.
+    :param int tick: 해당 Scene에서 사용할 fps를 나타내는 변수야. 기본값 60
+    :param (int, int) displaySize: 해당 Scene의 화면 크기를 나타내는 변수. 기본값은 (1280, 720)
     """
     def __init__(self, name, onStart=None, onUpdate=None, onEvent=None, tick=60, displaySize=(1280, 720)):
         assert onStart == None or callable(onStart), "onStart는 함수여야합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
@@ -95,11 +98,13 @@ class Scene():
         self.manager = None
         self.stop = False
 
+    # 만들어진 Scene 객체를 실행함.
     def run(self):
         self.stop = False
         self.onStart(self)
         pygame.event.clear()
         while True:
+            # 화면 띄우기
             self.surface.fill((0, 0, 0))
             self.stop = self.stop or self.onUpdate(self)
             pygame.display.update()
@@ -114,11 +119,11 @@ class Scene():
 
 class SceneManager():
     """
-    여러 개의 Scene들을 합쳐서 관리하는 개쩌는 객체입니다.
-    :param list[Scene] scenes: 관리할 Scene 객체의 리스트입니다.
+    여러 개의 Scene들을 합쳐서 관리하는 객체
+    :param list[Scene] scenes: 관리할 Scene 객체의 리스트
     """
     def __init__(self, scenes):
-        #assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재합니다;; 똥강아지야;"
+        #assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재"
         for scene in scenes:
             scene.manager = self
         self.scenes = scenes
@@ -132,7 +137,8 @@ class SceneManager():
             thisScene.stop = True
             targetScene.run()
     
-    def run(self) :
+    def run(self):
+        # Scene 실행을 시작함.
         self.scenes[0].run()
 
 class CutScene(Scene):
@@ -217,6 +223,7 @@ class CutScene(Scene):
                                     else:
                                         self.surface.blit(render, render.get_rect(midleft=uneffect_text_info[1]))
                                 render = text_info[5].render(text, True, text_info[4])
+                                # 텍스트 종류에 따라 다르게 화면에 표시
                                 if text_info[2] == 1:
                                     self.surface.blit(render, render.get_rect(center=text_info[1]))
                                 else:
@@ -237,6 +244,7 @@ class CutScene(Scene):
                                     elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                                         if delay_time < 90: delay_time += 3
 
+                                # end == 1이면 종료 처리
                                 if end: break
                                 pygame.time.delay(delay_time)
                                 i += 1
@@ -300,7 +308,6 @@ def makeScript(text):
             lines[idx].append(makeLine(infos[3].strip(), color, size, 'oneline', 1))
     return lines
 
-
 def makeImage(image, type):
     """type에 따라 좌우 반전 이미지를 만드는 함수 """
     if type == 0:
@@ -312,12 +319,12 @@ def makeImage(image, type):
 
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """
-    타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
-    :param sprite: 자를 타일맵 스프라이트를 지정해.
-    :param int column: 몇번째 열의 스프라이트를 가져올지 지정해. (가장 왼쪽이 0)
-    :param int row: 몇번째 행의 스프라이트를 가져올지 지정해. (가장 위쪽이 0)
-    :param (int, int) size: 타일맵의 스프라이트 크기를 지정해. 기본값인 (32, 32)에서 바뀔 일은 딱히 없을거야.
-    :return 자른 이미지를 리턴한단다.
+    타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수.
+    :param sprite: 자를 타일맵 스프라이트 지정
+    :param int column: 몇번째 열의 스프라이트를 가져올지 지정 (가장 왼쪽이 0)
+    :param int row: 몇번째 행의 스프라이트를 가져올지 지정 (가장 위쪽이 0)
+    :param (int, int) size: 타일맵의 스프라이트 크기를 지정. 기본값은 (32, 32)
+    :return 자른 이미지를 리턴.
     """
     croppedSprite = pygame.Surface(size).convert_alpha()
     croppedSprite.fill((0, 0, 0, 0))
@@ -326,13 +333,13 @@ def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
 
 def getTerrainDict(terrainTilemapSprite) :
     """
-    어쩌고저쩌고.png 파일을 실제 맵에 놓을 수 있는 파일의 형태로 바꿔주는 아이입니다. 아마도?
-    :param terrainTilemapSprite: 어쩌고저쩌고.png 파일을 load한 아이를 여따 넣으세요.
-    :return: terrainDict라고 불리우는 정제된 무언가를 내놓습니다.
+    어쩌고저쩌고.png 파일을 실제 맵에 놓을 수 있는 파일의 형태로 바꾸는 함수
+    :param terrainTilemapSprite: 어쩌고저쩌고.png 파일을 load한 변수를 받는 파라미터
+    :return: terrainDict라고 불리우는 정제된 값을 반환함.
     """
     terrain = terrainTilemapSprite
     terrainDict = dict()
-    # 0으로 시작하는 아이는 빈 칸입니다.
+    # 0으로 시작하는 아이는 빈칸입니다.
     terrainDict[(0,)] = getSpriteFromTileMap(terrain, 5, 3)
     # 1로 시작하는 아이는 (1, W연결, A연결, S연결, D연결)을 의미합니다.
     terrainDict[(1, 0, 0, 1, 1)] = getSpriteFromTileMap(terrain, 0, 0)
@@ -351,13 +358,13 @@ def getTerrainDict(terrainTilemapSprite) :
     terrainDict[(1, 0, 1, 0, 1)] = getSpriteFromTileMap(terrain, 1, 3)
     terrainDict[(1, 0, 1, 0, 0)] = getSpriteFromTileMap(terrain, 2, 3)
     terrainDict[(1, 0, 0, 0, 0)] = getSpriteFromTileMap(terrain, 3, 3)
-    # 2로 시작하는 아이는 (2, 좌상비어있음, 우상비어있음, 우하비어있음, 좌하비어있음)을 의미합니다.
+    # 2로 시작하는 아이는 (2, 좌상 비어있음, 우상 비어있음, 우하 비어있음, 좌하 비어있음)을 의미합니다.
     terrainDict[(2, 1)] = getSpriteFromTileMap(terrain, 4, 0)
     terrainDict[(2, 2)] = getSpriteFromTileMap(terrain, 5, 0)
     terrainDict[(2, 3)] = getSpriteFromTileMap(terrain, 6, 0)
     terrainDict[(2, 4)] = getSpriteFromTileMap(terrain, 7, 0)
     terrainDict[(3, 0)] = getSpriteFromTileMap(terrain, 4, 3)
-    # 3, 4으로 시작하는 아이는 (연결중이면3아니면4, 좌측연결여부, 우측연결여부)을 의미합니다.
+    # 3, 4으로 시작하는 아이는 (연결 중이면 3 아니면 4, 좌측 연결 여부, 우측 연결 여부)을 의미합니다.
     terrainDict[(3, 0, 0)] = getSpriteFromTileMap(terrain, 7, 2)
     terrainDict[(3, 0, 1)] = getSpriteFromTileMap(terrain, 4, 2)
     terrainDict[(3, 1, 0)] = getSpriteFromTileMap(terrain, 6, 2)
@@ -391,8 +398,8 @@ def getPlayerPalette(playerTilemapSprite, state, playerName="stanley"):
 class Tilemap():
     """
     게임의 타일맵을 관리하는 클래스입니다.
-    :param int columns: 열의 개수를 의미합니다.
-    :param int rows: 열의 개수를 의미합니다.
+    :param int columns: 열의 개수
+    :param int rows: 행의 개수
     """
     def __init__(self, name, columns, rows, gridSize=(80, 80)) :
         self.name = name
@@ -410,25 +417,28 @@ class Tilemap():
                     mergedTile.blit(pygame.transform.scale(sprite, self.gridSize).convert_alpha(), (j * self.gridSize[0], i * self.gridSize[1]))
         return mergedTile
 
+    # 스프라이트 추가하는 메소드
     def addSprite(self, columnNo, rowNo, sprite):
         self.spriteList[columnNo][rowNo].append(sprite)
 
+    # 스프라이트 삭제하는 메소드
     def deleteSprite(self, columnNo, rowNo, sprite):
         try :
             self.spriteList[columnNo][rowNo].remove(sprite)
         except :
             print("Warning : couldn't remove a sprite")
 
+    # 스프라이트 초기화
     def clearSprites(self):
         self.spriteList = [[[] for i in range(self.rows)] for j in range(self.columns)]
 
 class TerrainMap(Tilemap):
     """
-    게임의 지형(같은 애들끼리 연결되서 막 난리나는 애들)을 관리하는 클래스일껄?
-    :param string mapStr: _는 빈 칸, 나머지 아무 문자는 채운 칸을 의미할껄?
-    :param dictionary terrainDict: 그냥 내가 위에 만들어놓은 어쩌고Terrain으로 끝나는 그거 넣으면 될껄?
-    :param int height: 얼마나 높게 띄울건지 정하는거일껄?
-    :param (int, int) gridSize: 한 칸이 어느정도 사이즈로 표시될지일껄?
+    게임의 지형(같은 애들끼리 연결되서 막 난리나는 애들)을 관리하는 클래스
+    :param string mapStr: _는 빈 칸, 나머지 아무 문자는 채운 칸을 의미
+    :param dictionary terrainDict: 위에서 구현한 terrainDict를 사용함.
+    :param int height: 얼마나 높게 띄울지 지정.
+    :param (int, int) gridSize: 한 칸이 어느 정도 사이즈로 표시될지 정함.
     """
     def __init__(self, name, mapStr, terrainDict, height=1, gridSize=(80, 80)):
         self.updateMap(mapStr)
@@ -436,6 +446,7 @@ class TerrainMap(Tilemap):
         self.height = height
         super().__init__(name, len(self.bitArray[0]), len(self.bitArray), gridSize)
 
+    # mapStr을 리스트 형태로 변환
     def updateMap(self, mapStr):
         lines = [i for i in list(mapStr.split()) if i != ""]
         self.bitArray = []
@@ -445,11 +456,13 @@ class TerrainMap(Tilemap):
                 bits.append(0 if char=='_' else 1)
             self.bitArray.append(bits)
 
+    # 맵의 [i][j]번째 인덱스를 불러옴.
     def getBit(self, i, j):
         if(not (0 <= i < len(self.bitArray))) : return 0
         if(not (0 <= j < len(self.bitArray[0]))) : return 0
         return self.bitArray[i][j]
 
+    # Sprite를 맵에 놓는 메소드
     def placeSprite(self, i, j):
         if(self.getBit(i, j)) :
             if(self.height) : self.addSprite(j, i, self.terrainDict[(3, 0)])
@@ -468,6 +481,7 @@ class TerrainMap(Tilemap):
                 if(self.getBit(i-k, j)) :
                     self.addSprite(j, i, self.terrainDict[(3 if (self.height == k) else 4, self.getBit(i - k, j - 1), self.getBit(i - k, j + 1))])
 
+    # Map과 Sprite를 병합하는 메소드
     def getMapSprite(self):
         self.clearSprites()
         for i in range(len(self.bitArray)) :
@@ -478,12 +492,12 @@ class TerrainMap(Tilemap):
 
 class Object():
     """
-    오브젝트 어쩌고 클래스
-    :param string name: 이름 여따.
-    :param palette: ("이름", [(스프라이트, 시간) 리스트]) 여따.
-    :param (int, int) position: 위치 (열번호, 행번호) 여따. 왼쪽 위가 (0, 0)임.
-    :param int moving: 안움직이면0/위로움직이면1/왼쪽움직이면2/아래쪽움직이면3/오른쪽움직이면4
-    :param bool vanish: 이새끼는 움직이고 나서 사라지나요?
+    맵에 위치한 구덩이, 흙 등의 오브젝트를 관리하는 클래스
+    :param string name: 이름
+    :param palette: ("이름", [(스프라이트, 시간) 리스트]).
+    :param (int, int) position: 위치 (열번호, 행번호) - 왼쪽 위가 (0, 0)
+    :param int moving: 안 움직이면 0/위로 움직이면 1/왼쪽으로 움직이면 2/아래쪽으로 움직이면 3/오른쪽으로 움직이면 4
+    :param bool vanish: 이동 후 오브젝트가 삭제되는 경우 True, 아니면 False
     """
     def __init__(self, palette, position, moving=0, vanish=False):
         self.name = palette[0]
@@ -496,11 +510,13 @@ class Object():
         self.rows = 0
         self.movingTime = 0
 
+    # 원본 맵을 가져오는 메소드
     def setParentMap(self, parentMap):
         self.gridSize = parentMap.gridSize
         self.columns = parentMap.columns
         self.rows = parentMap.rows
 
+    # 오브젝트 스프라이트를 불러옴
     def getObjectSprite(self, deltaTime=0):
         surface = pygame.Surface((self.gridSize[0] * self.columns, self.gridSize[1] * self.rows)).convert_alpha()
         surface.fill((0, 0, 0, 0))
@@ -542,6 +558,15 @@ class Player(Object):
         self.moving = self.playerState[1] if (playerState[0] == 1) else 0
 
 class Level():
+    """
+    레벨을 만들고 관리하는 클래스
+    :param string terrainStr: string 형태로 맵을 가져옴.
+    :param palette: 타일맵을 만들기 위한 기본 객체를 모아놓음.
+    :param list objects: 플레이어, 흙, 구덩이 등의 오브젝트를 모아놓음.
+    :param gridSize: 맵 한 칸의 크기를 지정함.
+    :param float movingTime: 플레이어 1회 이동 시 걸리는 시간
+    :param counter: 이동 횟수, 땅파기 횟수 등을 측정하는 카운터 객체.
+    """
     def __init__(self, terrainStr, palette, objects, gridSize=(80, 80), movingTime=0.5, counter=None):
         t = terrainStr.split()
         self.terrainList = []
@@ -561,11 +586,13 @@ class Level():
         self.counter = counter
         self.playerDead = False
 
+    # 오브잭트 추가
     def addObject(self, object):
         object.setParentMap(self.terrainList[0])
         object.movingTime = self.movingTime
         self.objects.append(object)
 
+    # 화면에 레벨을 표시하기 위한 메소드
     def getLevelSurface(self, deltaTime):
         mergedTile = pygame.Surface((self.gridSize[0] * self.terrainList[0].columns, self.gridSize[1] * self.terrainList[0].rows)).convert_alpha()
         mergedTile.fill((0, 0, 0, 0))
@@ -576,6 +603,7 @@ class Level():
             mergedTile.blit(obj.getObjectSprite(deltaTime), (0, -self.gridSize[1]*0.33) if obj.name in ["stanley", "zero"] else (0, 0))
         return mergedTile
 
+    # 벽 판별 메소드
     def isWall(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
@@ -586,6 +614,7 @@ class Level():
                     return True
         return False
 
+    # 얼음 판별 메소드
     def isIce(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
@@ -596,6 +625,7 @@ class Level():
                     return True
         return False
 
+    # 끝났는지 확인하는 메소드
     def isEnd(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
@@ -612,6 +642,7 @@ class Level():
         else :
             return 0
 
+    # 구덩이 확인하는 메소드
     def isHole(self, columnNo, rowNo):
         if ((not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows))):
@@ -622,6 +653,7 @@ class Level():
                     return True
         return False
 
+    # 특정 위치에 흙 더미가 있다면 흙 더미를 return하고 없으면 None 반환
     def getDirtPile(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
@@ -632,6 +664,7 @@ class Level():
                     return obj
         return None
 
+    # 팔 수 있는지 확인하는 메소드
     def isDiggable(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
@@ -645,6 +678,7 @@ class Level():
                     return False
         return True
 
+    # 성공 여부를 확인하는 메소드
     def isWin(self):
         goalTerrain = None
         for terr in self.terrainList:
@@ -656,6 +690,7 @@ class Level():
                         return False
         return True
 
+    # 경계 바깥으로 나가는지 확인하는 메소드
     def isOutOfBounds(self, columnNo, rowNo):
         if( (not (0 <= columnNo < self.terrainList[0].columns))
                 or (not (0 <= rowNo < self.terrainList[0].rows)) ) :
@@ -663,6 +698,7 @@ class Level():
         return False
 
 class LevelScene(Scene):
+    # 플레이할 레벨을 Scene 형태의 객체로 구현함.
     def __init__(self, levelName, initialLevel, holePalette, dirtPalette, nextSceneName):
         self.levelList = []
         self.levelQueue = []
@@ -675,9 +711,6 @@ class LevelScene(Scene):
 
         def onStart_deco(initLevel) :
             def onStart(self):
-                """
-                :param LevelScene self:
-                """
                 self.levelList = [initLevel]
                 self.anchor = tiktok()
                 self.backButton = Button(pygame.image.load("asset//sprite//interface//smallButton.png"), 100, (1220, 60), "<")
@@ -685,9 +718,6 @@ class LevelScene(Scene):
             return onStart
 
         def onUpdate(self):
-            """
-            :param LevelScene self:
-            """
             sprite = self.levelList[-1].getLevelSurface(tiktok() - self.anchor)
             self.surface.blit(sprite, (self.surface.get_size()[0]/2 - sprite.get_size()[0]/2
                                        , self.surface.get_size()[1]/2 - sprite.get_size()[1]/2))
@@ -712,19 +742,17 @@ class LevelScene(Scene):
             self.backButton.blitSprite(self.surface)
 
         def onEvent(self, event):
-            """
-            :param LevelScene self:
-            """
-            if(self.win) :
+
+            if(self.win) : # 끝난 경우 다음 씬 불러오기
                 if (event.type == pygame.KEYDOWN):
                     if (event.key == pygame.K_SPACE):
                         self.manager.loadScene(self, nextSceneName)
                 return
             inp = 0
-            if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
+            if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) : # 뒤로가기 누른 경우
                 if(self.backButton.checkClicked(pygame.mouse.get_pos())) :
                     self.manager.loadScene(self, "TitleScreen")
-            if(event.type == pygame.KEYDOWN) :
+            if(event.type == pygame.KEYDOWN) : # 플레이어 움직임 감지하여 작업 수행
                 if(event.key in [pygame.K_UP, pygame.K_w]) :
                     inp = 1
                 elif(event.key in [pygame.K_LEFT, pygame.K_a]) :
@@ -757,11 +785,13 @@ class LevelScene(Scene):
                         self.levelQueue.append(nextLevel)
         super().__init__(levelName, onStart_deco(initialLevel), onUpdate, onEvent)
 
+    # 플레이어 움직임 시의 애니메이션이 끝났는지 확인하는 메소드
     def animationOver(self):
         return tiktok() - self.anchor > self.levelList[-1].movingTime
 
+    # 다음 상태를 가져오는 메소드
     def getNextLevel(self, level, inp):
-        nextLevel = smartCopy(level)
+        nextLevel = smartCopy(level) # 뒤로가기를 위해 이전 상태를 저장함.
         i = 0
         for _ in range(len(nextLevel.objects)) :
             if(nextLevel.objects[i].vanish) :
@@ -859,6 +889,7 @@ class LevelScene(Scene):
         return nextLevel
 
 class Counter():
+    # 이동 횟수나 땅파기 횟수를 세기 위한 메소드
     def __init__(self, sprite, total, doesCountDig=True, doesCountMove=False, textColor=(255, 255, 255)):
         self.sprite = sprite
         self.count = total
@@ -866,6 +897,7 @@ class Counter():
         self.doesCountMove = doesCountMove
         self.font = pygame.font.Font("asset/font/Galmuri11-Bold.ttf", 80)
         self.textColor = textColor
+
 
     def getSprite(self):
         counterSprite = pygame.Surface((200, 200)).convert_alpha()
@@ -877,6 +909,7 @@ class Counter():
         return counterSprite
 
 class Button() :
+    # 특정 레벨을 플레이하기 위해 들어가는 버튼 클래스
     def __init__(self, sprite, width, centerPosition, message, messageColor = (255, 255, 255), size = 1.0, isBig=False):
         self.sprite = pygame.transform.scale(sprite, (width, int(width * sprite.get_size()[1] / sprite.get_size()[0])))
         self.width = width
@@ -888,10 +921,12 @@ class Button() :
         if(not isBig) : self.textTopLeftPosition = (int(centerPosition[0]-self.textSprite.get_size()[0]*1.15/2), int(centerPosition[1]-self.textSprite.get_size()[1]*1.5/2))
         else : self.textTopLeftPosition = (int(centerPosition[0]-self.textSprite.get_size()[0]/2), int(centerPosition[1]-self.textSprite.get_size()[1]*1.5/2))
 
+    #클릭 여부 확인
     def checkClicked(self, mousePos):
         return ((self.topLeftPosition[0] <= mousePos[0] <= self.topLeftPosition[0] + self.sprite.get_size()[0])
                 and (self.topLeftPosition[1] <= mousePos[1] <= self.topLeftPosition[1] + self.sprite.get_size()[1]))
 
+    # 화면에 클릭 반영
     def blitSprite(self, surface):
         surface.blit(self.sprite, self.topLeftPosition)
         surface.blit(self.textSprite, self.textTopLeftPosition)
