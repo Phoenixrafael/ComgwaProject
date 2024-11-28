@@ -15,14 +15,14 @@ pygame.display.set_mode((1280, 720))
 stanleySpriteTilemap = pygame.image.load("asset//sprite//character//stanley.png").convert_alpha()
 zeroSpriteTilemap = pygame.image.load("asset//sprite//character//zero.png").convert_alpha()
 
-#지형 타일맵
+# 지형 타일맵
 dirtTilemap = pygame.image.load("asset//sprite//terrain//terrain_dirts.png").convert_alpha()
 wetDirtTilemap = pygame.image.load("asset//sprite//terrain//terrain_wetdirts.png").convert_alpha()
 iceTilemap = pygame.image.load("asset//sprite//terrain//terrain_ice.png").convert_alpha()
 fenceTilemap = pygame.image.load("asset//sprite//terrain//terrain_fence.png").convert_alpha()
 goalTilemap = pygame.image.load("asset//sprite//terrain//terrain_goal.png").convert_alpha()
 
-#오브젝트 스프라이트
+# 오브젝트 스프라이트
 dirtPileSprite = pygame.image.load("asset//sprite//object//object_dirt.png").convert_alpha()
 holeSprite = pygame.image.load("asset//sprite//object//object_hole.png").convert_alpha()
 
@@ -37,6 +37,10 @@ lizardCounterSprite = pygame.image.load("asset//sprite//lizardCounter.png")
 
 lineback = pygame.image.load("asset/sprite/cutscene/lineback.png")
 lineback = pygame.transform.scale(lineback, (1000, 250))
+
+# 음악
+background = pygame.mixer.Sound("asset/music/background.mp3")
+background.play(-1)
 
 #배경 이미지
 bigThumb = pygame.image.load("asset/sprite/background/bigThumb.png")

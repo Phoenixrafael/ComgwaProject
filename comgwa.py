@@ -287,7 +287,6 @@ def makeScript(text):
         text_scenes[idx] = text_scenes[idx].strip()
         infos = text_scenes[idx].split('/')
         color = colorDict[infos[0]]
-        print(infos[0])
         size = int(infos[1])
         person = infos[2]
         if person == 'Narration':
@@ -857,7 +856,6 @@ class LevelScene(Scene):
                 if (obj1.name in ["zero", "stanley"] and nextLevel.isEnd(*obj1.position)) :
                     obj1.vanish = True
                     nextLevel.playerDead = True
-
         return nextLevel
 
 class Counter():
