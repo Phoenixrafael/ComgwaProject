@@ -1383,17 +1383,21 @@ def TitleScreen_onStart(self) :
     self.loopTime = 10
     self.anchorTime = comgwa.tiktok()
     self.startButton = comgwa.Button(bigButtonSprite, 500, (640, 570), "GAME START", (255, 255, 255), 0.9, True)
+    self.keySettingButton = comgwa.Button(bigButtonSprite, 250, (140, 60), "how to play", (255, 255, 255), 0.9, True)
 
 def TitleScreen_onUpdate(self) :
     ratio = ((comgwa.tiktok() - self.anchorTime)/self.loopTime) % 1.0
     self.surface.blit(titleBackgroundSprite, ((ratio * 960)-960, 0))
     self.surface.blit(titleImageSprite, (160, 50))
     self.startButton.blitSprite(self.surface)
+    self.keySettingButton.blitSprite(self.surface)
 
 def TitleScreen_onEvent(self, event) :
     if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
         if(self.startButton.checkClicked(pygame.mouse.get_pos())) :
             self.manager.loadScene(self, "SelectScreen")
+        if(self.keySettingButton.checkClicked(pygame.mouse.get_pos())) :
+            self.manager.loadScene(self, "KeySettingScreen")
 
 titleScene = comgwa.Scene("TitleScreen", TitleScreen_onStart, TitleScreen_onUpdate, TitleScreen_onEvent)
 
@@ -1426,13 +1430,30 @@ def SelectScreen_onEvent(self, event) :
 
 selectScene = comgwa.Scene("SelectScreen", SelectScreen_onStart, SelectScreen_onUpdate, SelectScreen_onEvent)
 
+def KeySettingScreen_onStart(self) :
+    self.loopTime = 10
+    self.anchorTime = comgwa.tiktok()
+    self.toTitleButton = comgwa.Button(buttonSprite, 100, (1220, 60), "<")
+
+def KeySettingScreen_onUpdate(self) :
+    ratio = ((comgwa.tiktok() - self.anchorTime)/self.loopTime) % 1.0
+    self.surface.blit(titleBackgroundSprite, ((ratio * 960)-960, 0))
+    self.toTitleButton.blitSprite(self.surface)
+
+def KeySettingScreen_onEvent(self, event) :
+    if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
+        if(self.toTitleButton.checkClicked(pygame.mouse.get_pos())) :
+            self.manager.loadScene(self, "TitleScreen")
+
+keySettingScreen = comgwa.Scene("KeySettingScreen", KeySettingScreen_onStart, KeySettingScreen_onUpdate, KeySettingScreen_onEvent)
+
 '''
 테스트용 코드
 '''
 
 pygame.key.set_repeat(500, 500)
 
-scenes = [titleScene, selectScene] + cutscenes + levelList
+scenes = [titleScene, selectScene, keySettingScreen] + cutscenes + levelList
 
 manager = comgwa.SceneManager(scenes)
 manager.run()
