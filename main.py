@@ -1,9 +1,8 @@
-from turtledemo.sorting_animate import start_qsort
-
 import pygame, pygame.event
 import comgwa
 from comgwa import getSpriteFromTileMap, getPlayerPalette
 
+# 기본 설정
 pygame.init()
 pygame.display.set_mode((1280, 720))
 

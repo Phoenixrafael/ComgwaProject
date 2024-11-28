@@ -1,6 +1,7 @@
 import pygame, pygame.event, pygame.locals
-import sys, math, inspect
+import sys, inspect
 
+# 단순 함수 및 변수 관리
 tiktok = lambda : pygame.time.get_ticks() / 1000
 easer = lambda x : x**2
 easein = lambda x : 1 - (1-x)**3
@@ -11,7 +12,7 @@ def smartCopy(obj, visited=None):
     """
     chatGPT를 사용하여 구현한 deepcopy의 개선 버전입니다.
     :param obj: 복사할 오브젝트를 뜻합니다.
-    :param visited: 해당 오브젝트를 이미 복사했는지의 여부를 체크합니다.
+    :param visited: 해당 오브젝트를 이미 복사했는지 여부를 확인합니다.
     :return:
     """
     if visited is None:
@@ -53,27 +54,29 @@ def smartCopy(obj, visited=None):
             setattr(copy_obj, key, smartCopy(value, visited))
         return copy_obj
 
-    # 복사할 수 없는 경우 그냥 리턴
+    # 복사할 수 없을 시 그냥 리턴
     return obj
 
+# 현재까지의 진척 상황 저장
 def SaveProgress(things) :
     with open('save//saveData.txt', 'w') as file :
         file.write(str(things))
 
+# 진척 상황을 불러옴.
 def GetProgress() :
     with open('save//saveData.txt', 'r') as file :
         return int(file.readline())
 
 class Scene():
     """
-    게임의 한 장면을 맡는 Scene이라는 객체란다.
-    Scene에서 변수 선언은 전역변수를 쓰지 말고, 모두 self.~~와 같은 형태로 선언해줘.
-    :param string name: Scene의 이름을 정의해. 얘는 SceneManager에서 원하는 Scene을 불러올 때 사용한단다.
-    :param callable onStart: Scene이 처음 실행될 때 실행될 함수야. 주로 변수 초기화와 같은 기능을 할 때 쓰렴.
-    :param callable onUpdate: Scene이 실행되는 동안 매 틱마다 실행되는 함수란다.
-    :param callable onEvent: Scene에서 키보드를 누르거나 마우스를 누르는 등 이벤트가 있을 때 호출되는 함수란다.
-    :param int tick: 해당 Scene에서 사용할 fps를 나타내는 변수야. 기본값은 60이란다.
-    :param (int, int) displaySize: 해당 Scene의 화면 크기를 나타내는 변수야. 기본값은 (1280, 720)이란다.
+    게임의 한 장면을 맡는 Scene 객체
+    Scene에서 변수 선언은 전역변수를 쓰지 말고, 모두 self.~~와 같은 형태로 선언함.
+    :param string name: Scene의 이름을 정의해. 얘는 SceneManager에서 원하는 Scene을 불러올 때 사용함.
+    :param callable onStart: Scene이 처음 실행될 때 실행될 함수야. 주로 변수 초기화와 같은 기능을 할 때 사용
+    :param callable onUpdate: Scene이 실행되는 동안 매 틱마다 실행되는 함수
+    :param callable onEvent: Scene에서 키보드를 누르거나 마우스를 누르는 등 이벤트가 있을 때 호출되는 함수.
+    :param int tick: 해당 Scene에서 사용할 fps를 나타내는 변수야. 기본값 60
+    :param (int, int) displaySize: 해당 Scene의 화면 크기를 나타내는 변수. 기본값은 (1280, 720)
     """
     def __init__(self, name, onStart=None, onUpdate=None, onEvent=None, tick=60, displaySize=(1280, 720)):
         assert onStart == None or callable(onStart), "onStart는 함수여야합니다;; 아무것도 안 넣고 싶으면 None을 넣으세요ㅠㅠ"
@@ -95,11 +98,13 @@ class Scene():
         self.manager = None
         self.stop = False
 
+    # 만들어진 Scene 객체를 실행함.
     def run(self):
         self.stop = False
         self.onStart(self)
         pygame.event.clear()
         while True:
+            # 화면 띄우기
             self.surface.fill((0, 0, 0))
             self.stop = self.stop or self.onUpdate(self)
             pygame.display.update()
@@ -114,11 +119,11 @@ class Scene():
 
 class SceneManager():
     """
-    여러 개의 Scene들을 합쳐서 관리하는 개쩌는 객체입니다.
-    :param list[Scene] scenes: 관리할 Scene 객체의 리스트입니다.
+    여러 개의 Scene들을 합쳐서 관리하는 객체
+    :param list[Scene] scenes: 관리할 Scene 객체의 리스트
     """
     def __init__(self, scenes):
-        #assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재합니다;; 똥강아지야;"
+        #assert all([isinstance(scene, Scene) for scene in scenes]), "Scene이 아닌 원소가 존재"
         for scene in scenes:
             scene.manager = self
         self.scenes = scenes
@@ -132,7 +137,8 @@ class SceneManager():
             thisScene.stop = True
             targetScene.run()
     
-    def run(self) :
+    def run(self):
+        # Scene 실행을 시작함.
         self.scenes[0].run()
 
 class CutScene(Scene):
@@ -152,6 +158,7 @@ class CutScene(Scene):
         pygame.display.flip()
 
     def run(self):
+        # 컷씬을 실행함.
         global delay_time
         # 디버깅에 ChatGPT를 활용하였음.
         end = 0
@@ -237,6 +244,7 @@ class CutScene(Scene):
                                     elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                                         if delay_time < 90: delay_time += 3
 
+                                # end == 1이면 종료 처리
                                 if end: break
                                 pygame.time.delay(delay_time)
                                 i += 1
@@ -301,7 +309,6 @@ def makeScript(text):
             lines[idx].append(makeLine(infos[3].strip(), color, size, 'oneline', 1))
     return lines
 
-
 def makeImage(image, type):
     """type에 따라 좌우 반전 이미지를 만드는 함수 """
     if type == 0:
@@ -313,12 +320,12 @@ def makeImage(image, type):
 
 def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
     """
-    타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수란다.
-    :param sprite: 자를 타일맵 스프라이트를 지정해.
-    :param int column: 몇번째 열의 스프라이트를 가져올지 지정해. (가장 왼쪽이 0)
-    :param int row: 몇번째 행의 스프라이트를 가져올지 지정해. (가장 위쪽이 0)
-    :param (int, int) size: 타일맵의 스프라이트 크기를 지정해. 기본값인 (32, 32)에서 바뀔 일은 딱히 없을거야.
-    :return 자른 이미지를 리턴한단다.
+    타일맵 스프라이트에서 특정 열과 행에 있는 이미지만 잘라 리턴하는 함수.
+    :param sprite: 자를 타일맵 스프라이트 지정
+    :param int column: 몇번째 열의 스프라이트를 가져올지 지정 (가장 왼쪽이 0)
+    :param int row: 몇번째 행의 스프라이트를 가져올지 지정 (가장 위쪽이 0)
+    :param (int, int) size: 타일맵의 스프라이트 크기를 지정. 기본값은 (32, 32)
+    :return 자른 이미지를 리턴.
     """
     croppedSprite = pygame.Surface(size).convert_alpha()
     croppedSprite.fill((0, 0, 0, 0))
@@ -327,9 +334,9 @@ def getSpriteFromTileMap(sprite, column, row, size=(32, 32)) :
 
 def getTerrainDict(terrainTilemapSprite) :
     """
-    어쩌고저쩌고.png 파일을 실제 맵에 놓을 수 있는 파일의 형태로 바꿔주는 아이입니다. 아마도?
-    :param terrainTilemapSprite: 어쩌고저쩌고.png 파일을 load한 아이를 여따 넣으세요.
-    :return: terrainDict라고 불리우는 정제된 무언가를 내놓습니다.
+    어쩌고저쩌고.png 파일을 실제 맵에 놓을 수 있는 파일의 형태로 바꾸는 함수입니다.
+    :param terrainTilemapSprite: 어쩌고저쩌고.png 파일을 load한 변수를 받는 파라미터입니다.
+    :return: terrainDict라고 불리우는 정제된 값을 반환함.
     """
     terrain = terrainTilemapSprite
     terrainDict = dict()
