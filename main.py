@@ -60,6 +60,8 @@ lawCourt_dark = pygame.image.load("asset/sprite/background/lawCourt_dark.png")
 lawCourt_white = pygame.image.load("asset/sprite/background/lawCourt_white.png")
 town_dark = pygame.image.load("asset/sprite/background/town_dark.png")
 town_white = pygame.image.load("asset/sprite/background/town_white.png")
+ending1 = pygame.image.load("asset/sprite/screen/ending1.png")
+ending2 = pygame.image.load("asset/sprite/screen/ending2.png")
 
 # 배경 이미지 변환
 bigThumb = comgwa.makeImage(pygame.transform.scale(bigThumb, (1280, 720)), 0)
@@ -83,6 +85,8 @@ lawCourt_dark = comgwa.makeImage(pygame.transform.scale(lawCourt_dark, (1280, 72
 lawCourt_white = comgwa.makeImage(pygame.transform.scale(lawCourt_white, (1280, 720)), 0)
 town_dark = comgwa.makeImage(pygame.transform.scale(town_dark, (1280, 720)), 0)
 town_white = comgwa.makeImage(pygame.transform.scale(town_white, (1280, 720)), 0)
+ending1 = comgwa.makeImage(pygame.transform.scale(ending1, (1280, 720)), 0)
+ending2 = comgwa.makeImage(pygame.transform.scale(ending2, (1280, 720)), 0)
 
 
 # 인물 이미지
@@ -802,7 +806,8 @@ cutscenes.append(comgwa.CutScene("afterday28", lineback, camp1,
 [camp2_dark],
 [camp1_dark],
 [camp1_dark],
-[]],
+[ending1],
+[ending2]],
 comgwa.makeScript("""
 black/35/Stanley/
 우와! 보물 상자가 있는 듯한데?
@@ -925,8 +930,11 @@ white/50/Narration/
 white/50/Narration/
 빗방울 하나가 떨어졌다.
 #
-white/50/Narration/
-Made by 박시을 & 김도윤
+white/1/Narration/
+.
+#
+white/1/Narration/
+.
 """), "SelectScreen"))
 
 palette = [("dirt", dirtTerrain, {'O', 'W', 'I', 'F', 'G'}, 0),
@@ -942,10 +950,13 @@ zeroPalette = ("stanley", zeroSpriteTilemap)
 
 titleBackgroundSprite = pygame.image.load("asset//sprite//interface//titleScreen_faded_loop.png")
 titleImageSprite = pygame.image.load("asset//sprite//interface//title.png")
+howToPlaySprite = pygame.image.load("asset//sprite//screen//howtoplay.png")
 buttonSprite = pygame.image.load("asset//sprite//interface//smallButton.png")
 clearButtonSprite = pygame.image.load("asset//sprite//interface//smallButton_clear.png")
 bigButtonSprite = pygame.image.load("asset//sprite//interface//bigButton.png")
 selectButtonSprite = pygame.image.load("asset//sprite//interface//smallButton_select.png")
+
+howToPlaySprite = pygame.transform.scale(howToPlaySprite, (1280, 720))
 
 '''
 레벨 리스트
@@ -1438,6 +1449,7 @@ def KeySettingScreen_onStart(self) :
 def KeySettingScreen_onUpdate(self) :
     ratio = ((comgwa.tiktok() - self.anchorTime)/self.loopTime) % 1.0
     self.surface.blit(titleBackgroundSprite, ((ratio * 960)-960, 0))
+    self.surface.blit(howToPlaySprite, (0, 0))
     self.toTitleButton.blitSprite(self.surface)
 
 def KeySettingScreen_onEvent(self, event) :

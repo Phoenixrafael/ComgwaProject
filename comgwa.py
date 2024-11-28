@@ -287,6 +287,7 @@ def makeScript(text):
         text_scenes[idx] = text_scenes[idx].strip()
         infos = text_scenes[idx].split('/')
         color = colorDict[infos[0]]
+        print(infos[0])
         size = int(infos[1])
         person = infos[2]
         if person == 'Narration':
