@@ -1329,7 +1329,7 @@ levelList.append(comgwa.LevelScene("level27", comgwa.Level("""
     __OOO____
     OOO__O___
     OF_OOO___
-    OFFFOOOOO
+    OFFFOOOOO 
     OGO_O_O_O
     ___OO_O_O
     G__OO_OOO
@@ -1339,16 +1339,23 @@ levelList.append(comgwa.LevelScene("level27", comgwa.Level("""
     ], (80, 80), 0.3, comgwa.Counter(lizardCounterSprite, 98, True, True, (0, 0, 0))), holePalette, dirtPalette, "afterday27"))
 
 levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
-    _______
-    _______
-    _____G_
-    _____O_
-    _OOGOO_
-    _______
+    ________
+    ___OOO__
+    __OOOOO_
+    _____OO_
+    _____WO_
+    ________
+    _OOOOOO_
+    _OOOO_O_
+    ______O_
+    ________
+    ______G_
+    ________
     """, palette, [
-        comgwa.Player(stanleyPalette, (0, 1), (1, 4))
+        comgwa.Player(stanleyPalette, (0, 1), (2, 7))
     ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 100, False, True, (0, 0, 0))), holePalette, dirtPalette, "afterday28"))
 
+levelList[-1].run()
 
 '''
 타이틀 스크린
