@@ -1343,7 +1343,7 @@ levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
     ___OOO__
     __OOOOO_
     _____OO_
-    _____WO_
+    _____OO_
     ________
     _OOOOOO_
     _OOOO_O_
@@ -1353,9 +1353,7 @@ levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
     ________
     """, palette, [
         comgwa.Player(stanleyPalette, (0, 1), (2, 7))
-    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 100, False, True, (0, 0, 0))), holePalette, dirtPalette, "afterday28"))
-
-levelList[-1].run()
+    ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 60, True, True, (0, 0, 0))), holePalette, dirtPalette, "afterday28"))
 
 '''
 타이틀 스크린
@@ -1391,7 +1389,6 @@ def TitleScreen_onUpdate(self) :
     self.surface.blit(titleBackgroundSprite, ((ratio * 960)-960, 0))
     self.surface.blit(titleImageSprite, (160, 50))
     self.startButton.blitSprite(self.surface)
-
 
 def TitleScreen_onEvent(self, event) :
     if(event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) :
