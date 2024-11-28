@@ -1366,7 +1366,7 @@ levelList.append(comgwa.LevelScene("level28", comgwa.Level("""
     ], (60, 60), 0.3, comgwa.Counter(lizardCounterSprite, 60, True, True, (0, 0, 0))), holePalette, dirtPalette, "afterday28"))
 
 '''
-타이틀 스크린
+타이틀 스크린: 초반 게임 시작 화면에서 무한히 이동하는 맵의 모습
 '''
 
 # (comgwa.LevelScene("TitleScreenTest", comgwa.Level("""
@@ -1410,6 +1410,9 @@ def TitleScreen_onEvent(self, event) :
             self.manager.loadScene(self, "KeySettingScreen")
 
 titleScene = comgwa.Scene("TitleScreen", TitleScreen_onStart, TitleScreen_onUpdate, TitleScreen_onEvent)
+"""
+SelectScene: 몇 레벨을 플레이할지 정할 수 있는 화면
+"""
 
 def SelectScreen_onStart(self) :
     self.loopTime = 10
@@ -1440,6 +1443,10 @@ def SelectScreen_onEvent(self, event) :
 
 selectScene = comgwa.Scene("SelectScreen", SelectScreen_onStart, SelectScreen_onUpdate, SelectScreen_onEvent)
 
+"""
+KeySettingScene: How to Do를 설명하는 페이지
+"""
+
 def KeySettingScreen_onStart(self) :
     self.loopTime = 10
     self.anchorTime = comgwa.tiktok()
@@ -1458,12 +1465,9 @@ def KeySettingScreen_onEvent(self, event) :
 
 keySettingScreen = comgwa.Scene("KeySettingScreen", KeySettingScreen_onStart, KeySettingScreen_onUpdate, KeySettingScreen_onEvent)
 
-'''
-테스트용 코드
-'''
-
 pygame.key.set_repeat(500, 500)
 
+# 완성한 Scene 전체 모음
 scenes = [titleScene, selectScene, keySettingScreen] + cutscenes + levelList
 
 manager = comgwa.SceneManager(scenes)
